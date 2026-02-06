@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RaycastDrawer : MonoBehaviour
+public static class RaycastDrawer
 {
     public static RaycastData RaycastAndDraw(Vector3 origin, Vector3 direction, float distance, string layer)
     {
@@ -24,6 +24,15 @@ public class RaycastDrawer : MonoBehaviour
             Debug.DrawLine(ray.origin, ray.origin + ray.direction, Color.green);
         else
             Debug.DrawLine(ray.origin, ray.origin + ray.direction, Color.red);
+
+        return new RaycastData(check, hit);
+    }
+
+    public static RaycastData SpherecastAndSpawn(Vector3 origin, float radius, Vector3 direction, float distance, string layer)
+    {
+        RaycastHit hit;
+
+        bool check = Physics.SphereCast(origin, radius, direction, out hit, distance, 1 << LayerMask.NameToLayer(layer));
 
         return new RaycastData(check, hit);
     }

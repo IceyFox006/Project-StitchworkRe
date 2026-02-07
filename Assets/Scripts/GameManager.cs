@@ -5,6 +5,7 @@ public class GameManager : MonoBehaviour
 {
     private InputAction exit;
     private InputAction debug_reset;
+
     private void Start()
     {
         exit = InputSystem.actions.FindAction("EXIT");
@@ -18,10 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Exit_performed(InputAction.CallbackContext obj)
     {
-        Application.Quit();
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+        SwitchCode.ExitApplication();
     }
     private void Debug_reset_performed(InputAction.CallbackContext obj)
     {

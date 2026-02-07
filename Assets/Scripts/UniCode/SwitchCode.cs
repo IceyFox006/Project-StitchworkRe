@@ -7,6 +7,13 @@ public static class SwitchCode
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public static void ExitApplication()
+    {
+        Application.Quit();
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+    }
 
     public static void EnableCursor()
     {

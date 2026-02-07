@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public static class SwitchCode
 {
-    public static bool debugMode;
-
     public static void ResetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

@@ -3,9 +3,18 @@ using UnityEngine.SceneManagement;
 
 public static class SwitchCode
 {
+    public static bool debugMode;
+
     public static void ResetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public static void ExitApplication()
+    {
+        Application.Quit();
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 
     public static void EnableCursor()

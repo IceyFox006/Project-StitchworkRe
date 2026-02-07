@@ -1,7 +1,16 @@
+using SimpleMan.VisualRaycast;
 using UnityEngine;
 
-public static class RaycastDrawer
+public class RaycastDrawer : MonoBehaviour
 {
+    private static RaycastDrawer instance;
+
+    public static RaycastDrawer Instance { get => instance; set => instance = value; }
+
+    private void Awake()
+    {
+        instance = this;
+    }
     public static RaycastData RaycastAndDraw(Vector3 origin, Vector3 direction, float distance, string layer)
     {
         RaycastHit hit;
@@ -28,11 +37,12 @@ public static class RaycastDrawer
         return new RaycastData(check, hit);
     }
 
-    public static RaycastData SpherecastAndSpawn(Vector3 origin, float radius, Vector3 direction, float distance, string layer)
+    public RaycastData SpherecastAndDraw(Vector3 origin, float radius, Vector3 direction, float distance, string layer)
     {
         RaycastHit hit;
 
         bool check = Physics.SphereCast(origin, radius, direction, out hit, distance, 1 << LayerMask.NameToLayer(layer));
+        this.SphereCast(origin, direction, radius, distance, 1 << LayerMask.NameToLayer(layer));
 
         return new RaycastData(check, hit);
     }

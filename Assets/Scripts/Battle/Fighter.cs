@@ -18,6 +18,8 @@ public class Fighter
     [SerializeField] private Stats _trainedStats;
     [SerializeField] private Stats _personalityStats = new Stats(1, 1, 1, 1, 1);
 
+    //Item
+
     public virtual void Initialize()
     {
         CalculateBaseStats();
@@ -54,6 +56,7 @@ public class Fighter
     #endregion
 }
 
+[System.Serializable]
 public class PlayerFighter : Fighter
 {
     private GrowthRate growthRate;
@@ -146,6 +149,7 @@ public class PlayerFighter : Fighter
     #endregion
 }
 
+[System.Serializable]
 public class EnemyFighter : Fighter
 {
 

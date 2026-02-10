@@ -1,16 +1,17 @@
+using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class BattleTrigger : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<EnemyFighter> _enemyParty;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider collision)
     {
-        
+        if (!collision.CompareTag("Player")) return;
+
+        //Play battle enter animation
+        collision.transform.position = BattleManager.Inst.transform.position; //Teleport Player
+        BattleManager.Inst.StartBattle(_enemyParty);
     }
 }

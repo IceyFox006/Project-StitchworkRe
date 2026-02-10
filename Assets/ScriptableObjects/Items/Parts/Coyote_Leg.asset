@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: CoyoteHead
+  m_Script: {fileID: 11500000, guid: 3821972312a12ec4c966515a78b79376, type: 3}
+  m_Name: Coyote_Leg
   m_EditorClassIdentifier: Assembly-CSharp::PartSO
-  _name: 
+  _name: Coyote Leg
   _description: 
-  _sortTag: 0
-  _stackSize: 0
+  _sortTag: 1
+  _stackSize: 1
   _model: {fileID: 0}
+  _type: 3
   _stats:
     _health: 0
     _endurance: 0
@@ -25,7 +26,7 @@ MonoBehaviour:
     _agility: 0
     _luck: 1
     _regen: 1
-  _growthRate: 0
-  _baseExp: 0
+  _growthRate: 2
+  _baseExp: 120
   _learnMoves:
     _serializedList: []

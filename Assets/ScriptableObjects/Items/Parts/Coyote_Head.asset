@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3821972312a12ec4c966515a78b79376, type: 3}
+  m_Name: Coyote_Head
+  m_EditorClassIdentifier: Assembly-CSharp::PartSO
+  _name: Coyote Head
+  _description: 
+  _sortTag: 1
+  _stackSize: 1
+  _model: {fileID: 0}
+  _type: 0
+  _stats:
+    _health: 0
+    _endurance: 0
+    _strength: 0
+    _magic: 0
+    _agility: 0
+    _luck: 1
+    _regen: 1
+  _growthRate: 2
+  _baseExp: 120
+  _learnMoves:
+    _serializedList:
+    - Key: 0
+      Value:
+      - {fileID: 11400000, guid: c88553be3fd66e148b5151324b8605e9, type: 2}
+    - Key: 5
+      Value:
+      - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
+    - Key: 8
+      Value:
+      - {fileID: 11400000, guid: ba1fac93a2ea8a34889b050e4de91608, type: 2}

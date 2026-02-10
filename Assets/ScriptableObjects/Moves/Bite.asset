@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f15a3dac1b418554cb4e1f2fbc66c16a, type: 3}
+  m_Name: Bite
+  m_EditorClassIdentifier: Assembly-CSharp::MoveSO
+  _name: Bite
+  _description: 
+  _element: {fileID: 0}
+  _energyCost: 0
+  _accuracy: 0
+  _damageType: 0
+  _power: 0
+  _effects: []

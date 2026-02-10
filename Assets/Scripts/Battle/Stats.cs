@@ -41,4 +41,9 @@ public class Stats
     {
         return _health + _endurance + _strength + _magic + _agility;
     }
+
+    public Stats Multiply(Stats stats)
+    {
+        return new Stats(_health * stats.Health, _endurance * stats.Endurance, _strength * stats.Strength, _magic * stats.Magic, _agility * stats.Agility);
+    }
 }

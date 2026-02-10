@@ -29,10 +29,7 @@ public class EntityParts
         List<PartSO> parts = new List<PartSO>();
 
         foreach (PartSO part in ToArray())
-        {
-            if (part != null)
-                parts.Add(part);
-        }
+            if (part != null) parts.Add(part);
 
         return parts;
     }

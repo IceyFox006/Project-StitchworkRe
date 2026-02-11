@@ -249,11 +249,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityAssemble
   _parts:
-    _head: {fileID: 11400000, guid: f8b7864290221ad459f0623440e7a45b, type: 2}
+    _head: {fileID: 11400000, guid: 599d7bcafc51dc943b51fb4ab78d242a, type: 2}
     _arm: {fileID: 11400000, guid: ca5cc648ebcee5e45bd55cfd62623b3a, type: 2}
     _body: {fileID: 11400000, guid: aedc83bb9abcf86448ba9921bb3a46ee, type: 2}
     _leg: {fileID: 11400000, guid: 759732fddc6fa154e9a6fbec5c025ead, type: 2}
-    _tail: {fileID: 11400000, guid: 311693f2cc1108d4ca277942a826d6d2, type: 2}
+    _tail: {fileID: 11400000, guid: c3b4b6761065f414d921325ca05145af, type: 2}
 --- !u!4 &215979897
 Transform:
   m_ObjectHideFlags: 0

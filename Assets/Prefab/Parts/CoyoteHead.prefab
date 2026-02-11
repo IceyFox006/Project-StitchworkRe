@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5135366660705776112}
+  - component: {fileID: 1380186116412834853}
   m_Layer: 0
   m_Name: CoyoteHead
   m_TagString: Untagged
@@ -32,6 +33,14 @@ Transform:
   - {fileID: 7160260441028377186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1380186116412834853
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3961955067191594876}
+  m_Mesh: {fileID: 0}
 --- !u!1001 &7265682316276161929
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,8 +96,30 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4026974743067547112, guid: 6e8eeef101d709b4595a16fef2d493bb, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 9008864512447799406}
   m_SourcePrefab: {fileID: 100100000, guid: 6e8eeef101d709b4595a16fef2d493bb, type: 3}
+--- !u!1 &5996071913979938913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4026974743067547112, guid: 6e8eeef101d709b4595a16fef2d493bb, type: 3}
+  m_PrefabInstance: {fileID: 7265682316276161929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9008864512447799406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5996071913979938913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e58c036d5bbcea4196507a1af345d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartScalingPoint
+  _scaleMultiplier: 0.9
+  _unscaledAxis: 2
 --- !u!4 &7160260441028377186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6e8eeef101d709b4595a16fef2d493bb, type: 3}

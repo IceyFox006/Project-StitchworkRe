@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3821972312a12ec4c966515a78b79376, type: 3}
-  m_Name: Coyote_Arm
+  m_Name: Snake_Tail
   m_EditorClassIdentifier: Assembly-CSharp::PartSO
-  _name: Coyote Arm
+  _name: Snake Tail
   _description: 
   _sortTag: 1
   _stackSize: 1
-  _model: {fileID: 1948698485575291010, guid: ad4bc988b1c846948a1743290ecd9a56, type: 3}
+  _model: {fileID: 6959658535920684272, guid: 266a3400cca22cf48ac78349e84c10c7, type: 3}
   _stats:
     _health: 0
     _endurance: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
     _agility: 0
     _luck: 1
     _regen: 1
-  _growthRate: 2
+  _growthRate: 1
   _baseExp: 0
   _learnMoves:
     _serializedList: []

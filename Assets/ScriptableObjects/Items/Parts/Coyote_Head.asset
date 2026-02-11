@@ -16,7 +16,7 @@ MonoBehaviour:
   _description: 
   _sortTag: 1
   _stackSize: 1
-  _model: {fileID: 1379989692901824961, guid: e7c6c2d63c745ee42979cd1314271f20, type: 3}
+  _model: {fileID: 3961955067191594876, guid: e7c6c2d63c745ee42979cd1314271f20, type: 3}
   _stats:
     _health: 0
     _endurance: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
     _luck: 1
     _regen: 1
   _growthRate: 2
-  _baseExp: 120
+  _baseExp: 0
   _learnMoves:
     _serializedList:
     - Key: 0

@@ -26,6 +26,6 @@ MonoBehaviour:
     _luck: 1
     _regen: 1
   _growthRate: 2
-  _baseExp: 120
+  _baseExp: 0
   _learnMoves:
     _serializedList: []

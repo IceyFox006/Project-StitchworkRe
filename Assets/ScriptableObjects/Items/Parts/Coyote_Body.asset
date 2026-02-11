@@ -16,8 +16,7 @@ MonoBehaviour:
   _description: 
   _sortTag: 1
   _stackSize: 1
-  _model: {fileID: 0}
-  _type: 2
+  _model: {fileID: 4020046561317289154, guid: f38dc8cffbb033c4db96a82927e0c1f5, type: 3}
   _stats:
     _health: 0
     _endurance: 0

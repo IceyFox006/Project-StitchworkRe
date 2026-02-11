@@ -16,7 +16,7 @@ public class PartSO : ItemSO
 
     [SerializeField] private GameObject _model;
 
-    [SerializeField] private PartType _type;
+    //[SerializeField] private PartType _type;
     [SerializeField] private Stats _stats;
     [SerializeField] private GrowthRate _growthRate;
     [SerializeField] private int _baseExp;
@@ -25,5 +25,6 @@ public class PartSO : ItemSO
     #region GS
     public Stats Stats { get => _stats; set => _stats = value; }
     public GrowthRate GrowthRate { get => _growthRate; set => _growthRate = value; }
+    public GameObject Model { get => _model; set => _model = value; }
     #endregion
 }

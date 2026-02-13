@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartScalingPoint
   _scaleMultiplier: 0.7
-  _unscaledAxis: 0
+  _unscaledAxis: 3
 --- !u!4 &7482230689225268828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 178614657625d8647ad35de91168e423, type: 3}

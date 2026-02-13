@@ -49,12 +49,11 @@ public class PartAssemble : MonoBehaviour
         Vector3 baseSize = baseMesh.mesh.bounds.size;
         Vector3 scaleSize = scaleMesh.mesh.bounds.size;
         Vector3 newScale = new Vector3();
-        switch (scalePoint.UnscaledAxis)
-        {
-            case Axis.x: newScale = new Vector3(1, (baseSize.y / scaleSize.y) * scaleMultiplier, (baseSize.z / scaleSize.z) * scaleMultiplier); break;
-            case Axis.y: newScale = new Vector3((baseSize.x / scaleSize.x) * scaleMultiplier, 1, (baseSize.z / scaleSize.z) * scaleMultiplier); break;
-            case Axis.z: default: newScale = new Vector3((baseSize.x / scaleSize.x) * scaleMultiplier, (baseSize.y / scaleSize.y) * scaleMultiplier, 1); break;
-        }
+
+        if (baseSize.x < baseSize.y)
+            newScale = new Vector3((baseSize.x / scaleSize.x) * scaleMultiplier, (baseSize.x / scaleSize.x) * scaleMultiplier, (baseSize.x / scaleSize.x) * scaleMultiplier);
+        else
+            newScale = new Vector3((baseSize.y / scaleSize.y) * scaleMultiplier, (baseSize.y / scaleSize.y) * scaleMultiplier, (baseSize.y / scaleSize.y) * scaleMultiplier);
 
         scalePart.localScale = newScale;
     }

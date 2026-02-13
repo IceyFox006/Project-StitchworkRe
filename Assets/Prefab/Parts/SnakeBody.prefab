@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e986173c709dc4249addfbd449e654ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartBaseScalingPoints
-  _headMesh: {fileID: 4178192278822515544}
+  _headMesh: {fileID: 772346203871824763}
   _tailMesh: {fileID: 4104862093198640778}
 --- !u!1001 &4698812885342418925
 PrefabInstance:
@@ -128,6 +128,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartConnectionPoint
   _partType: 4
+--- !u!33 &772346203871824763 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -3782348950754149226, guid: 7be2ea197f4c32341a39369eae1d5b5f, type: 3}
+  m_PrefabInstance: {fileID: 4698812885342418925}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2124164422351404138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2571831204959761529, guid: 7be2ea197f4c32341a39369eae1d5b5f, type: 3}
@@ -149,11 +154,6 @@ MonoBehaviour:
 --- !u!33 &4104862093198640778 stripped
 MeshFilter:
   m_CorrespondingSourceObject: {fileID: 8773838081251783015, guid: 7be2ea197f4c32341a39369eae1d5b5f, type: 3}
-  m_PrefabInstance: {fileID: 4698812885342418925}
-  m_PrefabAsset: {fileID: 0}
---- !u!33 &4178192278822515544 stripped
-MeshFilter:
-  m_CorrespondingSourceObject: {fileID: 8705003779921151157, guid: 7be2ea197f4c32341a39369eae1d5b5f, type: 3}
   m_PrefabInstance: {fileID: 4698812885342418925}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5097846157047074822 stripped

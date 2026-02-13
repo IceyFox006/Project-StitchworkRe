@@ -109,6 +109,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e58c036d5bbcea4196507a1af345d56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartScalingPoint
+  _scaleMultiplier: 1
+  _unscaledAxis: 0
 --- !u!4 &7845623281105166708 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ff6c97f8f0104c249b4744375ef52dcb, type: 3}

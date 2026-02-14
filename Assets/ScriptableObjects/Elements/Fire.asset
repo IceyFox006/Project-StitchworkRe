@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb70e5a9ff96e3a42a39eaf389401d06, type: 3}
-  m_Name: Basic
+  m_Name: Fire
   m_EditorClassIdentifier: Assembly-CSharp::ElementSO
-  _name: Basic
+  _name: Fire
   _weaknesses: []
   _resistances: []
   _immunities: []
   _palette:
-  - {r: 0.74509805, g: 0.69411767, b: 0.60784316, a: 0}
-  - {r: 0.627451, g: 0.54901963, b: 0.47843137, a: 0}
-  - {r: 0.44313726, g: 0.3529412, b: 0.3019608, a: 0}
-  - {r: 0.2627451, g: 0.17254902, b: 0.14901961, a: 0}
+  - {r: 1, g: 0.67058825, b: 0, a: 0}
+  - {r: 1, g: 0.49019608, b: 0, a: 0}
+  - {r: 0.8, g: 0.14901961, b: 0, a: 0}
+  - {r: 0.5803922, g: 0, b: 0, a: 0}

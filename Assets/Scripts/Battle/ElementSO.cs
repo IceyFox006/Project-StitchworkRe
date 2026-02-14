@@ -10,5 +10,5 @@ public class ElementSO : ScriptableObject
     [SerializeField] private ElementSO[] _immunities;
 
     [Header("Visuals")]
-    [SerializeField] private Color[] _palette = new Color[4];
+    [SerializeField] private ColorPaletteSO[] _palettes = new ColorPaletteSO[1];
 }

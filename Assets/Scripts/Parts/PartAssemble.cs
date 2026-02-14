@@ -3,6 +3,7 @@ using UnityEngine;
 public class PartAssemble : MonoBehaviour
 {
     [SerializeField] private EntityParts _parts;
+    [SerializeField] private ColorPaletteSO[] _palettes = new ColorPaletteSO[2];
 
     private GameObject body;
     private GameObject head;
@@ -37,14 +38,12 @@ public class PartAssemble : MonoBehaviour
         }
     }
 
+    //Scales connecting parts to match the largest value (x or y) of the base part.
     private void Scale(MeshFilter baseMesh, Transform scalePart)
     {
         PartScalingPoint scalePoint = scalePart.GetComponentInChildren<PartScalingPoint>();
         MeshFilter scaleMesh = scalePoint.GetComponent<MeshFilter>();
         float scaleMultiplier = scalePoint.ScaleMultiplier;
-
-        Debug.Log("Base: " + baseMesh.mesh.bounds.size);
-        Debug.Log("Scale: " + scaleMesh.mesh.bounds.size);
 
         Vector3 baseSize = baseMesh.mesh.bounds.size;
         Vector3 scaleSize = scaleMesh.mesh.bounds.size;

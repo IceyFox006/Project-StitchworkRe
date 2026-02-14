@@ -16,8 +16,5 @@ MonoBehaviour:
   _weaknesses: []
   _resistances: []
   _immunities: []
-  _palette:
-  - {r: 1, g: 0.67058825, b: 0, a: 0}
-  - {r: 1, g: 0.49019608, b: 0, a: 0}
-  - {r: 0.8, g: 0.14901961, b: 0, a: 0}
-  - {r: 0.5803922, g: 0, b: 0, a: 0}
+  _palettes:
+  - {fileID: 11400000, guid: 37b1526c267d1c2489072d5d497cefdd, type: 2}

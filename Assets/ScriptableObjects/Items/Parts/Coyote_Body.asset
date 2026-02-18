@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3821972312a12ec4c966515a78b79376, type: 3}
+  m_Name: Coyote_Body
+  m_EditorClassIdentifier: Assembly-CSharp::PartSO
+  _name: Coyote Body
+  _description: 
+  _sortTag: 1
+  _stackSize: 1
+  _model: {fileID: 914030631491434902, guid: f38dc8cffbb033c4db96a82927e0c1f5, type: 3}
+  _stats:
+    _health: 0
+    _endurance: 0
+    _strength: 0
+    _magic: 0
+    _agility: 0
+    _luck: 1
+    _regen: 1
+  _growthRate: 2
+  _baseExp: 0
+  _learnMoves:
+    _serializedList: []

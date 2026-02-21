@@ -3,7 +3,7 @@ using UnityEngine;
 public class PartAssemble : MonoBehaviour
 {
     [SerializeField] private EntityParts _parts;
-    [SerializeField] private ColorPaletteSO[] _palettes = new ColorPaletteSO[2];
+    [SerializeField] private ApplyPartColorRegions _regions;
 
     private GameObject body;
     private GameObject head;
@@ -13,6 +13,8 @@ public class PartAssemble : MonoBehaviour
     private void Start()
     {
         Assemble();
+
+        _regions.ApplyColorRegions();
 
         baseScalingPoints = body.GetComponentInChildren<PartBaseScalingPoints>();
         Scale(baseScalingPoints.HeadMesh, head.transform);

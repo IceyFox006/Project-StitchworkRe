@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: Inferno
   m_EditorClassIdentifier: Assembly-CSharp::ColorPaletteSO
   _name: Inferno
+  _colors:
+  - {r: 1, g: 0.67058825, b: 0, a: 0}
+  - {r: 1, g: 0.4901961, b: 0, a: 0}
+  - {r: 0.8000001, g: 0.14901961, b: 0, a: 0}
+  - {r: 0.5803922, g: 0, b: 0, a: 0}
   _highlight: {r: 1, g: 0.67058825, b: 0, a: 0}
   _base: {r: 1, g: 0.49019608, b: 0, a: 0}
   _shade1: {r: 0.8, g: 0.14901961, b: 0, a: 0}

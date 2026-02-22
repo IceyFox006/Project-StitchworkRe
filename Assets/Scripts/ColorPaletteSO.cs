@@ -4,13 +4,12 @@ using UnityEngine;
 public class ColorPaletteSO : ScriptableObject
 {
     [SerializeField] private string _name;
-    [SerializeField] private Color _highlight;
-    [SerializeField] private Color _base;
-    [SerializeField] private Color _shade1;
-    [SerializeField] private Color _shade2;
 
-    public Color[] ToArray()
-    {
-        return new Color[] {_highlight, _base, _shade1, _shade2};
-    }
+    [Tooltip("Contains 4 colors: highlight, base, shade1 and shade2.")]
+    [SerializeField] private Color[] _colors = new Color[4];
+
+    #region GS
+    public Color[] Colors { get => _colors; set => _colors = value; }
+    public string Name { get => _name; set => _name = value; }
+    #endregion
 }

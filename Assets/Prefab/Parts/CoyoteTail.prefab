@@ -40,6 +40,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3486300960931233426}
     m_Modifications:
+    - target: {fileID: -9118978390138747364, guid: 178614657625d8647ad35de91168e423, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b76eed23540f26a44af34526af8ac130, type: 2}
     - target: {fileID: -8679921383154817045, guid: 178614657625d8647ad35de91168e423, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -80,10 +84,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3212444654326192058, guid: 178614657625d8647ad35de91168e423, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b76eed23540f26a44af34526af8ac130, type: 2}
+    - target: {fileID: -1534546068040097756, guid: 178614657625d8647ad35de91168e423, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b76eed23540f26a44af34526af8ac130, type: 2}
     - target: {fileID: 919132149155446097, guid: 178614657625d8647ad35de91168e423, type: 3}
       propertyPath: m_Name
       value: CoyoteTail
       objectReference: {fileID: 0}
+    - target: {fileID: 7042695066683325318, guid: 178614657625d8647ad35de91168e423, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b76eed23540f26a44af34526af8ac130, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -110,7 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PartScalingPoint
   _scaleMultiplier: 0.7
-  _unscaledAxis: 3
 --- !u!4 &7482230689225268828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 178614657625d8647ad35de91168e423, type: 3}

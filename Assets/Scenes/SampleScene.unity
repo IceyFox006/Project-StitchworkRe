@@ -1879,7 +1879,7 @@ GameObject:
   - component: {fileID: 1116820771}
   - component: {fileID: 1116820770}
   m_Layer: 5
-  m_Name: EntityBattleIcon
+  m_Name: FighterUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

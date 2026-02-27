@@ -16,7 +16,7 @@ public class PartSO : ItemSO
 
     [SerializeField] private GameObject _model;
 
-    //[SerializeField] private PartType _type;
+    [SerializeField] private PartType _part;
     [SerializeField] private Stats _stats;
     [SerializeField] private GrowthRate _growthRate;
     [SerializeField] private int _baseExp;

@@ -544,6 +544,9 @@
     "m_Guid": {
         "m_GuidSerialized": "4e613e36-e8c2-4fbd-8784-6815443f3e3b"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "Noise",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "Noise",
@@ -582,7 +585,8 @@
     "m_StageCapability": 3,
     "m_Value": 1.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -597,7 +601,8 @@
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -822,7 +827,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -837,7 +843,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -928,7 +935,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ApplyPalette",
+    "m_Name": "Apply Palette",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -993,6 +1000,9 @@
     "m_Guid": {
         "m_GuidSerialized": "08b65f80-585d-4742-82cb-1ef7854aa0ea"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "Regions",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "Regions",
@@ -1056,7 +1066,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.5,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1084,7 +1095,8 @@
     "m_StageCapability": 3,
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1094,6 +1106,9 @@
     "m_Guid": {
         "m_GuidSerialized": "a66fa641-e62d-48dc-8c07-00011dd1e7bf"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR0_0",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR0_0",
@@ -1165,7 +1180,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1268,7 +1284,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -1353,7 +1370,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -1488,7 +1506,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -1523,6 +1542,9 @@
     "m_Guid": {
         "m_GuidSerialized": "f18b2d3d-a0c9-408a-90a9-68605e169de6"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR0_3",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR0_3",
@@ -1596,7 +1618,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -1645,6 +1668,9 @@
     "m_Guid": {
         "m_GuidSerialized": "414c6ce0-83aa-42b9-aad0-b0ae4de37af1"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR1_1",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR1_1",
@@ -1677,6 +1703,9 @@
     "m_Guid": {
         "m_GuidSerialized": "e33351d5-2a83-4cd9-a184-fcdd14b0ab36"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR0_2",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR0_2",
@@ -1798,7 +1827,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -1912,6 +1942,9 @@
     "m_Guid": {
         "m_GuidSerialized": "969dcd99-5905-48bb-a03d-5f0c50d4186c"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR1_0",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR1_0",
@@ -2154,6 +2187,9 @@
     "m_Guid": {
         "m_GuidSerialized": "6daa6093-968e-4c19-a6da-4dc867f75b67"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "TileMultiplier",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "TileMultiplier",
@@ -2171,6 +2207,7 @@
     "m_customAttributes": [],
     "m_Value": 2.0,
     "m_FloatType": 0,
+    "m_LiteralFloatMode": false,
     "m_RangeValues": {
         "x": 0.0,
         "y": 1.0
@@ -2292,7 +2329,8 @@
     "m_StageCapability": 2,
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -2371,7 +2409,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -2496,7 +2535,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -2560,7 +2600,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -2575,7 +2616,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -2644,7 +2686,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -2750,7 +2793,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "ApplyPalette",
+    "m_Name": "Apply Palette",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -2916,7 +2959,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -2926,6 +2970,9 @@
     "m_Guid": {
         "m_GuidSerialized": "d5cebaf6-b916-409f-8880-cd3b922f1895"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR0_1",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR0_1",
@@ -2971,6 +3018,9 @@
     "m_Guid": {
         "m_GuidSerialized": "19e0c93b-4c93-495a-9894-b7c51fda4f3e"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR1_3",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR1_3",
@@ -3039,6 +3089,7 @@
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
     "m_DisableTint": false,
+    "m_Sort3DAs2DCompatible": false,
     "m_AdditionalMotionVectorMode": 0,
     "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": true,
@@ -3124,7 +3175,8 @@
     "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -3170,6 +3222,9 @@
     "m_Guid": {
         "m_GuidSerialized": "346a3f7f-8d11-492f-bd74-97cd62d33d55"
     },
+    "promotedFromAssetID": "",
+    "promotedFromCategoryName": "",
+    "promotedOrdering": -1,
     "m_Name": "COLOR1_2",
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "COLOR1_2",
@@ -3216,7 +3271,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {
@@ -3337,7 +3393,8 @@
     "m_StageCapability": 3,
     "m_Value": 1.0,
     "m_DefaultValue": 1.0,
-    "m_Labels": []
+    "m_Labels": [],
+    "m_LiteralMode": false
 }
 
 {
@@ -3361,7 +3418,8 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
-    }
+    },
+    "m_LiteralMode": false
 }
 
 {

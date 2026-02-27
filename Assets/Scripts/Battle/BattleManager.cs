@@ -19,6 +19,5 @@ public class BattleManager : MonoBehaviour
     public void StartBattle(List<EnemyFighter> enemyParty)
     {
         
-
     }
 }

@@ -7,6 +7,8 @@ public class Fighter
 {
     [SerializeField] private string _name;
     [SerializeField] protected EntityParts _parts;
+    [SerializeField] private ElementSO[] _elements;
+
     [SerializeField] protected int _level;
     [SerializeField] protected List<MoveSO> _moves;
 
@@ -19,6 +21,16 @@ public class Fighter
     [SerializeField] private Stats _personalityStats = new Stats(1, 1, 1, 1, 1);
 
     //Item
+
+    private float currentHP;
+    private float currentEnergy;
+
+    #region GS
+    public int MaxHP { get => maxHP; set => maxHP = value; }
+    public float CurrentHP { get => currentHP; set => currentHP = value; }
+    public EntityParts Parts { get => _parts; set => _parts = value; }
+    public ElementSO[] Elements { get => _elements; set => _elements = value; }
+    #endregion
 
     public virtual void Initialize()
     {
@@ -56,6 +68,7 @@ public class Fighter
     #endregion
 }
 
+//=====================================================================================================================
 [System.Serializable]
 public class PlayerFighter : Fighter
 {
@@ -149,9 +162,15 @@ public class PlayerFighter : Fighter
     #endregion
 }
 
+//=====================================================================================================================
 [System.Serializable]
 public class EnemyFighter : Fighter
 {
 
+    private void GenerateWildMoves()
+    {
+
+    }
 }
+
 

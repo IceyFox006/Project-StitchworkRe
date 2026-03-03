@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using UnityEngine;
 
 public enum DamageType
@@ -15,9 +16,9 @@ public class MoveSO : ScriptableObject
 
     [SerializeField] private ElementSO _element; //!!!
     [SerializeField] private int _energyCost; //!!!
-    [SerializeField][Range(0, 1)] private float _accuracy; //!!!
+    [SerializeField][Range(1, 100)] private int _accuracy; //!!!
     [SerializeField] private DamageType _damageType; //!!!
-    [SerializeField] private int _power; //!!!
+    [SerializeField][MinValue(0)] private int _power; //!!!
     [SerializeField] private EffectData[] _effects; //!!!
 }
 
@@ -30,6 +31,14 @@ public enum EffectTag
 public class EffectData
 {
     [SerializeField] private EffectTag _effect;
-    [SerializeField] private float _intensity;
+
+    [Tooltip("The chance of the effect occuring.")]
+    [SerializeField][Range(1, 100)] private int _chance = 100;
+
+    [Tooltip("How many turns the effect lasts.\nPERMANENT = -1")]
+    [SerializeField][MinValue(-1)] private int _duration;
+
+    [Tooltip("STAT = The percentage boost of the stat.")]
+    [SerializeField][Range(1, 100)] private float _intensity;
 }
 

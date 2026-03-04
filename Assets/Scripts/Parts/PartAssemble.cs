@@ -11,6 +11,11 @@ public class PartAssemble : MonoBehaviour
     private GameObject tail;
 
     private PartBaseScalingPoints baseScalingPoints;
+
+    #region
+    public ApplyPartColorRegions Regions { get => regions; set => regions = value; }
+    #endregion
+
     private void Start()
     {
         //regions = GetComponent<ApplyPartColorRegions>();
@@ -42,7 +47,7 @@ public class PartAssemble : MonoBehaviour
         regions = GetComponent<ApplyPartColorRegions>();
 
         Assemble();
-        regions.ApplyColorRegions();
+        regions.ApplyColorRegions(palettes);
         ScaleAll();
     }
 

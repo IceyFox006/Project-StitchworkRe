@@ -68,6 +68,7 @@ public class BattleManager : MonoBehaviour
 
     private void InstantiateFighter(GameObject go, Fighter fighter)
     {
-        go.GetComponentInChildren<PartAssemble>().Initialize(fighter.Parts);
+        PartAssemble partAssemble = go.GetComponentInChildren<PartAssemble>();
+        //partAssemble.Initialize(fighter.Parts, f);
     }
 }

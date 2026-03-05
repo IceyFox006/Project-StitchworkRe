@@ -24,7 +24,6 @@ public class ApplyPartColorRegions : MonoBehaviour
         {
             for (int c = 0; c < _palettes.Length; c++)
             {
-                Debug.Log(_palettes[c].Name);
                 if (!DoesColorExist(renderer.material, "_COLOR" + c + "_" + 0)) break;
 
                 for (int s = 0; s < _palettes[c].Colors.Length; s++)

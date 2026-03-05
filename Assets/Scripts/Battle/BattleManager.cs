@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 public class BattleManager : MonoBehaviour
 {
@@ -9,9 +9,9 @@ public class BattleManager : MonoBehaviour
     [Tooltip("Where the player gets teleported to when a battle begins.")]
     [SerializeField] private Transform _battleArea;
     [Tooltip("Where player fighter UI spawn in.")]
-    [SerializeField] private Transform _playerFighterUISPs;
+    [SerializeField] private Transform _playerFighterUiSP;
     [Tooltip("Where enemy fighter UI spawn in.")]
-    [SerializeField] private Transform _enemyFighterUISPs;
+    [SerializeField] private Transform _enemyFighterUiSP;
     [Tooltip("Where player fighters spawn in.")]
     [SerializeField] private Transform[] _playerFighterSPs;
     [Tooltip("Where enemy fighters spawn in.")]
@@ -21,6 +21,9 @@ public class BattleManager : MonoBehaviour
     [SerializeField] private GameObject _playerFighterPfb;
     [SerializeField] private GameObject _enemyFighterPfb;
     [SerializeField] private GameObject _fighterUIPfb;
+
+    private List<ActiveFighter> pParty = new List<ActiveFighter>();
+    private List<ActiveFighter> eParty = new List<ActiveFighter>();
 
     #region GS
     public static BattleManager Inst { get => inst; set => inst = value; }
@@ -40,35 +43,50 @@ public class BattleManager : MonoBehaviour
         {
             if (pfID >= playerParty.Length) break;
 
-            InstantiatePlayerFighter(playerParty[pfID], _playerFighterSPs[pfID]);
+            pParty.Add(InstantiateFighter(playerParty[pfID], _playerFighterPfb, _playerFighterSPs[pfID], _playerFighterUiSP));
         }
 
         //Enemy Party
         for (int efID = 0; efID < _enemyFighterSPs.Length; efID++)
         {
-            if (efID >= playerParty.Length) break;
+            if (efID >= enemyParty.Length) break;
 
-            InstantiateEnemyFighter(enemyParty[efID], _enemyFighterSPs[efID]);
+            eParty.Add(InstantiateFighter(enemyParty[efID], _enemyFighterPfb, _enemyFighterSPs[efID], _enemyFighterUiSP));
         }
     }
 
-    private void InstantiatePlayerFighter(PlayerFighter fighter, Transform spawnPoint)
+    private ActiveFighter InstantiateFighter(Fighter fighter, GameObject prefab, Transform goSP, Transform uiSP)
     {
-        GameObject go = Instantiate(_playerFighterPfb, spawnPoint);
-        Instantiate(_fighterUIPfb, _playerFighterUISPs);
-        InstantiateFighter(go, fighter);
-    }
+        fighter.Initialize();
 
-    private void InstantiateEnemyFighter(EnemyFighter fighter, Transform spawnPoint)
-    {
-        GameObject go = Instantiate(_enemyFighterPfb, spawnPoint);
-        Instantiate(_fighterUIPfb, _enemyFighterUISPs);
-        InstantiateFighter(go, fighter);
-    }
-
-    private void InstantiateFighter(GameObject go, Fighter fighter)
-    {
+        GameObject go = Instantiate(prefab, goSP);
         PartAssemble partAssemble = go.GetComponentInChildren<PartAssemble>();
-        //partAssemble.Initialize(fighter.Parts, f);
+        partAssemble.Initialize(fighter.Parts, fighter.Palettes);
+
+        FighterUI ui = InstantiateFighterUI(uiSP, fighter);
+
+        return new ActiveFighter(fighter, ui);
+    }
+
+    private FighterUI InstantiateFighterUI(Transform parent, Fighter fighter)
+    {
+        FighterUI ui = Instantiate(_fighterUIPfb, parent).GetComponent<FighterUI>();
+        ui.Initialize(fighter);
+
+        return ui;
     }
 }
+
+//=====================================================================================================================
+public class ActiveFighter
+{
+    private Fighter data;
+    private FighterUI ui;
+
+    public ActiveFighter(Fighter data, FighterUI ui)
+    {
+        this.data = data;
+        this.ui = ui;
+    }
+}
+

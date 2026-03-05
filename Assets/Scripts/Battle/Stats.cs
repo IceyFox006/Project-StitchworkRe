@@ -14,11 +14,11 @@ public class Stats
 
     public Stats()
     {
-        _health = 0;
-        _endurance = 0;
-        _strength = 0;
-        _magic = 0;
-        _agility = 0;
+        new Stats(1);
+    }
+    public Stats(float all)
+    {
+        new Stats(all, all, all, all, all);
     }
     public Stats(float health, float endurance, float strength, float magic, float agility)
     {

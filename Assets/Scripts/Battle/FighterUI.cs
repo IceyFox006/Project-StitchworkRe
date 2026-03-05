@@ -12,16 +12,17 @@ public class FighterUI : MonoBehaviour
     public Fighter Fighter { get => fighter; set => fighter = value; }
     #endregion
 
-    [HideInInspector]
-    public void Initialize()
+    public void Initialize(Fighter fighter)
     {
+        this.fighter = fighter;
 
+        _hpFill.Initialize();
+        UpdateHPVisuals();
     }
 
-    [HideInInspector]
-    public void UpdateHPVisuals(float amount)
+    public void UpdateHPVisuals()
     {
-        _hpFill.Fill(amount);
+        _hpFill.Fill(fighter.GetNormalizedHP());
         _hpText.text = fighter.CurrentHP + " / " + fighter.MaxHP;
     }
 }

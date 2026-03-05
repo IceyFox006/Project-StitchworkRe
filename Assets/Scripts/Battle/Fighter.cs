@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Fighter
 {
+    //Data
     [SerializeField] private string _name;
     [SerializeField] protected EntityParts _parts;
     [SerializeField] private ElementSO[] _elements;
@@ -16,26 +17,44 @@ public class Fighter
     private int maxEnergy;
     private Stats totalStats; 
     private Stats baseStats;
-    [SerializeField] private Stats _madeStats;
-    [SerializeField] private Stats _trainedStats;
-    [SerializeField] private Stats _personalityStats = new Stats(1, 1, 1, 1, 1);
+    [SerializeField] private Stats _madeStats = new Stats(15);
+    [SerializeField] private Stats _trainedStats = new Stats(0);
+    [SerializeField] private Stats _personalityStats = new Stats();
 
     //Item
 
     private float currentHP;
     private float currentEnergy;
 
+    //Visuals
+    [Tooltip("Max of 2.")]
+    [SerializeField] private ColorPaletteSO[] _palettes;
+
     #region GS
     public int MaxHP { get => maxHP; set => maxHP = value; }
     public float CurrentHP { get => currentHP; set => currentHP = value; }
     public EntityParts Parts { get => _parts; set => _parts = value; }
     public ElementSO[] Elements { get => _elements; set => _elements = value; }
+    public ColorPaletteSO[] Palettes { get => _palettes; set => _palettes = value; }
     #endregion
 
     public virtual void Initialize()
     {
         CalculateBaseStats();
         CalculateTotalStats();
+
+        currentHP = maxHP; //TempRemove
+        currentEnergy = maxEnergy; //TempRemove
+    }
+
+    public float GetNormalizedHP()
+    {
+        return currentHP / maxHP;
+    }
+
+    public float GetNormalizedEnergy()
+    {
+        return currentEnergy / maxEnergy;
     }
 
     #region Stats
@@ -122,6 +141,7 @@ public class PlayerFighter : Fighter
     #endregion
 
     #region Move
+    //Generates level moves with no duplicates.
     private void GenerateLevelMoves()
     {
         levelMoves.Clear();
@@ -140,6 +160,7 @@ public class PlayerFighter : Fighter
         }
     }
 
+    //Returns true if move is already in level moves.
     private bool IsDuplicateInLevelMoves(MoveSO move)
     {
         int count = 0;

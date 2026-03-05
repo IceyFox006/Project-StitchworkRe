@@ -9,6 +9,11 @@ public class GradientFill : MonoBehaviour
     [SerializeField] private Gradient _gradient;
     private void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         image = GetComponent<Image>();
     }
 

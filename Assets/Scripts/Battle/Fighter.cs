@@ -8,7 +8,9 @@ public class Fighter
     //Data
     [SerializeField] private string _name;
     [SerializeField] protected EntityParts _parts;
+
     [SerializeField] private ElementSO[] _elements;
+    private List<ElementEffectiveness> effectiveness;
 
     [SerializeField] protected int _level;
     [SerializeField] protected List<MoveSO> _moves;
@@ -17,8 +19,8 @@ public class Fighter
     private int maxEnergy;
     private Stats totalStats; 
     private Stats baseStats;
-    [SerializeField] private Stats _madeStats = new Stats(15);
-    [SerializeField] private Stats _trainedStats = new Stats(0);
+    [SerializeField] private Stats _madeStats = new Stats(15); //Determined on creation. (IVs)
+    [SerializeField] private Stats _trainedStats = new Stats(0); //Determined by experience. (EVs)
     [SerializeField] private Stats _personalityStats = new Stats();
 
     //Item
@@ -36,17 +38,23 @@ public class Fighter
     public EntityParts Parts { get => _parts; set => _parts = value; }
     public ElementSO[] Elements { get => _elements; set => _elements = value; }
     public ColorPaletteSO[] Palettes { get => _palettes; set => _palettes = value; }
+    public List<MoveSO> Moves { get => _moves; set => _moves = value; }
+    public int Level { get => _level; set => _level = value; }
+    public Stats TotalStats { get => totalStats; set => totalStats = value; }
+    public string Name { get => _name; set => _name = value; }
     #endregion
 
     public virtual void Initialize()
     {
         CalculateBaseStats();
         CalculateTotalStats();
+        CalculateElementEffectiveness();
 
         currentHP = maxHP; //TempRemove
         currentEnergy = maxEnergy; //TempRemove
     }
 
+    #region Get
     public float GetNormalizedHP()
     {
         return currentHP / maxHP;
@@ -57,7 +65,23 @@ public class Fighter
         return currentEnergy / maxEnergy;
     }
 
-    #region Stats
+    //Returns the effectivenessMultiplier of the attacking element vs the fighterElements.
+    public float GetEffectivenessMultiplier(ElementSO attackingElement)
+    {
+        int index = ElementEffectiveness.FindElement(attackingElement, effectiveness);
+        if (index < 0) return 1;
+        return effectiveness[index].Multiplier;
+    }
+
+    public float GetSTABMultiplier(ElementSO usingElement)
+    {
+        foreach (ElementSO element in _elements)
+            if (element == usingElement) return BattleManager.STABMultiplier;
+        return 1;
+    }
+    #endregion
+
+    #region Calculate
     protected void CalculateTotalStats()
     {
         totalStats = new Stats();
@@ -69,7 +93,7 @@ public class Fighter
 
         maxHP = (int)totalStats.Health;
         maxEnergy = Mathf.FloorToInt((_level * 3) + (totalStats.GetTotal() / 10));
-        totalStats = totalStats.Multiply(_personalityStats);
+        totalStats = Stats.Multiply(totalStats, _personalityStats);
     }
 
     private void CalculateBaseStats()
@@ -82,6 +106,38 @@ public class Fighter
             baseStats.Strength += part.Stats.Strength;
             baseStats.Magic += part.Stats.Magic;
             baseStats.Agility += part.Stats.Agility;
+        }
+    }
+
+    //Sets the effectiveness that each attacking element has when hitting the fighter.
+    private void CalculateElementEffectiveness()
+    {
+        int index;
+        foreach (ElementSO fElement in _elements)
+        {
+            //Weaknesses
+            foreach (ElementSO wElement in fElement.Weaknesses)
+                effectiveness.Add(new ElementEffectiveness(wElement, 1 + BattleManager.effectivenessMultiplier));
+
+            //Resistances
+            foreach (ElementSO rElement in fElement.Resistances)
+            {
+                index = ElementEffectiveness.FindElement(rElement, effectiveness);
+                if (index < 0)
+                    effectiveness.Add(new ElementEffectiveness(rElement, 1 - BattleManager.effectivenessMultiplier));
+                else
+                    effectiveness[index].Multiplier -= BattleManager.effectivenessMultiplier;
+            }
+
+            //Immunities
+            foreach (ElementSO iElement in fElement.Immunities)
+            {
+                index = ElementEffectiveness.FindElement(iElement, effectiveness);
+                if (index < 0)
+                    effectiveness.Add(new ElementEffectiveness(iElement, 1 - BattleManager.effectivenessMultiplier));
+                else
+                    effectiveness[index].Multiplier = 0;
+            }
         }
     }
     #endregion

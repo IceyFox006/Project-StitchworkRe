@@ -1,8 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class SwitchCode
+public class GenericMethods : MonoBehaviour
 {
+    public static void DestroyChildren(Transform parent)
+    {
+        while (parent.childCount > 0)
+            Destroy(parent.GetChild(0));
+    }
+    #region Scene
+    public static void LoadScene(string name)
+    {
+        SceneManager.LoadScene(name);
+    }
     public static void ResetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -14,15 +24,17 @@ public static class SwitchCode
             UnityEditor.EditorApplication.isPlaying = false;
         #endif
     }
-
-    public static void EnableCursor()
+    #endregion
+    #region Cursor
+    public static void ShowCursor()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-    public static void DisableCursor()
+    public static void HideCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    #endregion
 }

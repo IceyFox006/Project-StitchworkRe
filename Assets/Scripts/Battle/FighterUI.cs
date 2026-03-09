@@ -1,20 +1,27 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FighterUI : MonoBehaviour
 {
-    private Fighter fighter;
+    [SerializeField] private Image _icon;
 
     [SerializeField] private GradientFill _hpFill;
     [SerializeField] private TMP_Text _hpText;
 
+    private BattleManager bm;
+    private ActiveFighter actFighter;
+
     #region GS
-    public Fighter Fighter { get => fighter; set => fighter = value; }
+    public ActiveFighter ActFighter { get => actFighter; set => actFighter = value; }
     #endregion
 
-    public void Initialize(Fighter fighter)
+    public void Initialize(BattleManager bm, ActiveFighter actFighter)
     {
-        this.fighter = fighter;
+        this.bm = bm;
+        this.actFighter = actFighter;
+
+        //_icon.sprite = actFighter.Data.Parts.Head.//Set icon to fighter head icon.
 
         _hpFill.Initialize();
         UpdateHPVisuals();
@@ -22,7 +29,13 @@ public class FighterUI : MonoBehaviour
 
     public void UpdateHPVisuals()
     {
-        _hpFill.Fill(fighter.GetNormalizedHP());
-        _hpText.text = fighter.CurrentHP + " / " + fighter.MaxHP;
+        _hpFill.Fill(actFighter.Data.GetNormalizedHP());
+        _hpText.text = actFighter.Data.CurrentHP + " / " + actFighter.Data.MaxHP;
+    }
+    
+    //Selects as target for the BattleManager's curAction
+    public void SelectAsTarget()
+    {
+        Debug.Log("SELECTED " + actFighter.Data.Name + "AS TARGET.");
     }
 }

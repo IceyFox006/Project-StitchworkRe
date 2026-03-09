@@ -16,7 +16,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Interact_performed(InputAction.CallbackContext obj)
     {
-        RaycastData interactData = RaycastDrawer.Instance.SpherecastAndDraw(transform.position, _interactRadius, transform.forward, _interactDistance, "Interact");
+        RaycastData interactData = RaycastDrawer.Inst.SpherecastAndDraw(transform.position, _interactRadius, transform.forward, _interactDistance, "Interact");
         if (interactData.Bool)
             Debug.Log("Interacted With: " + interactData.Hit.collider.gameObject.name);
     }

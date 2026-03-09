@@ -12,6 +12,7 @@ public class BattleTrigger : MonoBehaviour
 
         //Play battle enter animation
         collision.transform.position = BattleManager.Inst.BattleArea.position; //Teleport Player
+        GenericMethods.ShowCursor();
         BattleManager.Inst.StartBattle(collision.GetComponent<PlayerManager>().Data.Party, _enemyParty);
     }
 }

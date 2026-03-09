@@ -12,8 +12,6 @@ public enum GrowthRate
 [CreateAssetMenu(fileName = "PartSO", menuName = "Scriptable Objects/Item/Part")]
 public class PartSO : ItemSO
 {
-    [Header("Part")]
-
     [SerializeField] private GameObject _model;
 
     [SerializeField] private PartType _part;

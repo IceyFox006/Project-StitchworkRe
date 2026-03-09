@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [System.Serializable]
@@ -42,8 +43,8 @@ public class Stats
         return _health + _endurance + _strength + _magic + _agility;
     }
 
-    public Stats Multiply(Stats stats)
+    public static Stats Multiply(Stats s1, Stats s2)
     {
-        return new Stats(_health * stats.Health, _endurance * stats.Endurance, _strength * stats.Strength, _magic * stats.Magic, _agility * stats.Agility);
+        return new Stats(s1.Health * s2.Health, s1.Endurance * s2.Endurance, s1.Strength * s2.Strength, s1.Magic * s2.Magic, s1.Agility * s2.Agility);
     }
 }

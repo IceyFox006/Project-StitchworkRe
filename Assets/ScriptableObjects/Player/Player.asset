@@ -25,13 +25,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d11739265a43cb94aa93a26b3fb4e5a2, type: 2}
     - {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
     _level: 5
-    _moves: []
+    _moves:
+    - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
     _madeStats:
-      _health: 0
-      _endurance: 0
-      _strength: 0
-      _magic: 0
-      _agility: 0
+      _health: 15
+      _endurance: 15
+      _strength: 15
+      _magic: 15
+      _agility: 15
       _luck: 1
       _regen: 1
     _trainedStats:

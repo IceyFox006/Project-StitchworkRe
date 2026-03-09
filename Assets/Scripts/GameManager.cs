@@ -1,28 +1,30 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Manager
 {
     private InputAction exit;
     private InputAction debug_reset;
 
-    private void Start()
+    public override void Load()
     {
+        base.Load();
+
         exit = InputSystem.actions.FindAction("EXIT");
         debug_reset = InputSystem.actions.FindAction("DEBUG_RESET");
 
         exit.performed += Exit_performed;
         debug_reset.performed += Debug_reset_performed;
 
-        SwitchCode.DisableCursor();
+        GenericMethods.HideCursor();
     }
 
     private void Exit_performed(InputAction.CallbackContext obj)
     {
-        SwitchCode.ExitApplication();
+        GenericMethods.ExitApplication();
     }
     private void Debug_reset_performed(InputAction.CallbackContext obj)
     {
-        SwitchCode.ResetScene();
+        GenericMethods.ResetScene();
     }
 }

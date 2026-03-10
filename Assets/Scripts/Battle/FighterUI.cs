@@ -32,10 +32,4 @@ public class FighterUI : MonoBehaviour
         _hpFill.Fill(actFighter.Data.GetNormalizedHP());
         _hpText.text = actFighter.Data.CurrentHP + " / " + actFighter.Data.MaxHP;
     }
-    
-    //Selects as target for the BattleManager's curAction
-    public void SelectAsTarget()
-    {
-        Debug.Log("SELECTED " + actFighter.Data.Name + "AS TARGET.");
-    }
 }

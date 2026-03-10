@@ -4,12 +4,16 @@ public class SceneLoader : MonoBehaviour
 {
     [SerializeField] private Manager[] _managers;
 
-    [Header("Don't destroy on load.")]
+    [Header("Don't Destroy On Load")]
+    [SerializeField] private GameObject _objectSelectSystem;
     [SerializeField] private GameObject _audioHandler;
     [SerializeField] private GameObject _raycastDrawer;
 
     private void Awake()
     {
+        if (ObjectSelectSystem.Current == null)
+            Instantiate(_objectSelectSystem, transform);
+
         //if (AudioHandler.Inst == null)
         //    Instantiate(_audioHandler, transform);
 

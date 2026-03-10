@@ -86,15 +86,16 @@ public class BattleManager : Manager
     //Hides distracting UI, disables ineligible targets, sets ES selected to eligible target.
     public void EnterTargetSelection()
     {
-        _playerMovesUiSP.parent.gameObject.SetActive(false); //Disable Moves Menu
-        //Disable ineligible targets
-        //Set the selected button to first eligible target
         Debug.Log("STARTED TARGET SELECTION.");
+        _playerMovesUiSP.parent.gameObject.SetActive(false); //Disable Moves Menu
+        EnableEligableTargets();//Disable ineligible targets
+        //Set the selected button to first eligible target
+
     }
 
     private void EnableEligableTargets()
     {
-        
+        ObjectSelectSystem.Current.SwitchHover(eParty[0].Go.Button, true);
     }
 
     //Switches current fighter and reloads player move menu.
@@ -112,9 +113,8 @@ public class BattleManager : Manager
     {
         fighter.Initialize();
 
-        GameObject go = Instantiate(prefab, goSP);
-        PartAssemble partAssemble = go.GetComponentInChildren<PartAssemble>();
-        partAssemble.Initialize(fighter.Parts, fighter.Palettes);
+        FighterGO go = Instantiate(prefab, goSP).GetComponent<FighterGO>();
+        go.Initialize(fighter.Parts, fighter.Palettes);
 
         FighterUI ui = Instantiate(_fighterUiPfb, uiSP).GetComponent<FighterUI>();
 
@@ -142,7 +142,7 @@ public class ActiveFighter
 {
     private Fighter data;
     private FighterUI ui;
-    private GameObject go;
+    private FighterGO go;
 
     private Stats fluxStats;
     private Stats boostStats;
@@ -151,9 +151,10 @@ public class ActiveFighter
     public Fighter Data { get => data; set => data = value; }
     public FighterUI Ui { get => ui; set => ui = value; }
     public Stats FluxStats { get => fluxStats; set => fluxStats = value; }
+    public FighterGO Go { get => go; set => go = value; }
     #endregion
 
-    public ActiveFighter(Fighter data, FighterUI ui, GameObject go)
+    public ActiveFighter(Fighter data, FighterUI ui, FighterGO go)
     {
         this.data = data;
         this.ui = ui;

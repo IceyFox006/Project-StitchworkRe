@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7577447360014093296}
+  - component: {fileID: 3689766259469542011}
   - component: {fileID: 6184518970592674037}
   - component: {fileID: 5799719176866978176}
   m_Layer: 0
@@ -33,6 +34,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2124413493220011229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3689766259469542011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5823313766470246541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6988a524682704da8af8b601654618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonObject
+  _interactable: 0
+  _visual:
+    _visual: 1
+    _hoverMaterial: {fileID: 2100000, guid: 96a834a36a38a27409ef085e2534fa42, type: 2}
+    _selectMaterial: {fileID: 2100000, guid: 002508b2f4626fd428fef2ef32bd1743, type: 2}
+  _navigation:
+    _type: 0
+    _up: {fileID: 0}
+    _down: {fileID: 0}
+    _right: {fileID: 0}
+    _left: {fileID: 0}
+  _onSelect:
+    m_PersistentCalls:
+      m_Calls: []
+  _onEnterHover:
+    m_PersistentCalls:
+      m_Calls: []
+  _onExitHover:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6184518970592674037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2124413493220011229}
+  - component: {fileID: 8647872379642851335}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Untagged
@@ -96,3 +130,15 @@ Transform:
   - {fileID: 7577447360014093296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8647872379642851335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8019645391393672463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ff6b99cf32cbf643a2fafd190b2eee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FigtherGO

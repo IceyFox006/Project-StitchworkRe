@@ -95,7 +95,7 @@ public class BattleManager : Manager
 
     private void EnableEligableTargets()
     {
-        ObjectSelectSystem.Current.SwitchHover(eParty[0].Go.Button, true);
+        ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button, true);
     }
 
     //Switches current fighter and reloads player move menu.

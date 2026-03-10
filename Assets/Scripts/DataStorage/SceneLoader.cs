@@ -11,7 +11,7 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
-        if (ObjectSelectSystem.Current == null)
+        if (ObjectEventSystem.Current == null)
             Instantiate(_objectSelectSystem, transform);
 
         //if (AudioHandler.Inst == null)

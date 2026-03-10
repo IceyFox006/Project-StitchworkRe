@@ -47,16 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonObject
   _interactable: 0
-  _visual:
-    _visual: 1
-    _hoverMaterial: {fileID: 2100000, guid: 96a834a36a38a27409ef085e2534fa42, type: 2}
+  _visual: 1
+  _addMaterialVisual:
     _selectMaterial: {fileID: 2100000, guid: 002508b2f4626fd428fef2ef32bd1743, type: 2}
+    _hoverMaterial: {fileID: 2100000, guid: 96a834a36a38a27409ef085e2534fa42, type: 2}
   _navigation:
     _type: 0
     _up: {fileID: 0}
     _down: {fileID: 0}
     _right: {fileID: 0}
     _left: {fileID: 0}
+  _onPress:
+    m_PersistentCalls:
+      m_Calls: []
   _onSelect:
     m_PersistentCalls:
       m_Calls: []

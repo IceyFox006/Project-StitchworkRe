@@ -39,6 +39,7 @@ public class MoveSO : ScriptableObject
     #region GS
     public string Name { get => _name; set => _name = value; }
     public Sprite Icon { get => _icon; set => _icon = value; }
+    public TargetType TargetType { get => _targetType; set => _targetType = value; }
     #endregion
 
     public void Use(ActiveFighter user, List<ActiveFighter> targets)

@@ -1214,12 +1214,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0da07badf887242a6f167ec39ce52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  _objectEventSystem: {fileID: 6850629260790650465, guid: 02be73e8e287bfc40b9fcc1ce747a8fb, type: 3}
+  _audioHandler: {fileID: 0}
+  _raycastDrawer: {fileID: 7204399488363200720, guid: 54bbb584cacaa67498527fca279c7c1d, type: 3}
   _managers:
   - {fileID: 814136705}
   - {fileID: 1568436134}
-  _objectSelectSystem: {fileID: 6850629260790650465, guid: 02be73e8e287bfc40b9fcc1ce747a8fb, type: 3}
-  _audioHandler: {fileID: 0}
-  _raycastDrawer: {fileID: 7204399488363200720, guid: 54bbb584cacaa67498527fca279c7c1d, type: 3}
 --- !u!1 &639069245
 GameObject:
   m_ObjectHideFlags: 0

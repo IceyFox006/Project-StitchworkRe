@@ -83,20 +83,46 @@ public class BattleManager : Manager
 
     }
 
+    #region TargetSelection
     //Hides distracting UI, disables ineligible targets, sets ES selected to eligible target.
     public void EnterTargetSelection()
     {
         Debug.Log("STARTED TARGET SELECTION.");
-        _playerMovesUiSP.parent.gameObject.SetActive(false); //Disable Moves Menu
-        EnableEligableTargets();//Disable ineligible targets
-        //Set the selected button to first eligible target
-
+        _playerMovesUiSP.parent.gameObject.SetActive(false);    //Disable Moves Menu
+        ObjectEventSystem.Current.Enable();                     //Enables input for object selecting.
+        EnableEligableTargets();                                //Enables eligable target buttons and selects the first one.
     }
 
+    //Enables the buttons of eligable targets.
     private void EnableEligableTargets()
     {
-        ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button, true);
+        switch (CurAction.Action.TargetType)
+        {
+            case TargetType.SELF: break;
+            case TargetType.ALL: break;
+            case TargetType.SINGLE_ENEMY:
+                EnablePartyButtons(eParty);
+                ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button, true);
+                break;
+            case TargetType.ALL_ENEMIES: break;
+            case TargetType.SINGLE_ALLY: break;
+            case TargetType.ALL_ALLIES: break;
+        }
     }
+
+    private void EnablePartyButtons(List<ActiveFighter> party)
+    {
+        ButtonObject bo;
+        for (int i = 0; i < party.Count; i++)
+        {
+            bo = party[i].Go.Button;
+            bo.Interactable = true;
+
+            bo.Navigation.Right = (i + 1 < party.Count)? party[i + 1].Go.Button : party[0].Go.Button; //Set right nav.
+            bo.Navigation.Left = (i - 1 > -1)? party[i - 1].Go.Button : party[party.Count - 1].Go.Button; //Set left nav.
+        }
+    }
+    #endregion
 
     //Switches current fighter and reloads player move menu.
     private void SwitchCurrentFighter(ActiveFighter actFighter)
@@ -114,11 +140,10 @@ public class BattleManager : Manager
         fighter.Initialize();
 
         FighterGO go = Instantiate(prefab, goSP).GetComponent<FighterGO>();
-        go.Initialize(fighter.Parts, fighter.Palettes);
-
         FighterUI ui = Instantiate(_fighterUiPfb, uiSP).GetComponent<FighterUI>();
 
         ActiveFighter actFighter = new ActiveFighter(fighter, ui, go);
+        go.Initialize(this, actFighter);
         ui.Initialize(this, actFighter);
 
         return actFighter;
@@ -172,14 +197,25 @@ public class ActiveFighter
 //=====================================================================================================================
 public class ActiveAction
 {
-    private MoveSO move; //Replace type with action (used for items and moves)
+    private MoveSO action; //Replace type with action (used for items and moves)
     private ActiveFighter user;
     private List<ActiveFighter> targets;
 
-    public ActiveAction(MoveSO move, ActiveFighter user)
+    #region GS
+    public List<ActiveFighter> Targets { get => targets; set => targets = value; }
+    public MoveSO Action { get => action; set => action = value; }
+    #endregion
+
+    public ActiveAction(MoveSO action, ActiveFighter user, List<ActiveFighter> targets = null)
     {
-        this.move = move;
+        this.action = action;
         this.user = user;
+        this.targets = targets;
+    }
+
+    public void AddTarget(ActiveFighter actFighter)
+    {
+        Debug.Log("Added " + actFighter.Data.Name + " as a target for " + user.Data.Name + "'s " + action.Name);
     }
 }
 //=====================================================================================================================

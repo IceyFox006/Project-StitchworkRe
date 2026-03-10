@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private Manager[] _managers;
-
     [Header("Don't Destroy On Load")]
-    [SerializeField] private GameObject _objectSelectSystem;
+    [SerializeField] private GameObject _objectEventSystem;
     [SerializeField] private GameObject _audioHandler;
     [SerializeField] private GameObject _raycastDrawer;
+
+    [SerializeField] private Manager[] _managers;
 
     private void Awake()
     {
         if (ObjectEventSystem.Current == null)
-            Instantiate(_objectSelectSystem, transform);
+            Instantiate(_objectEventSystem, transform);
 
         //if (AudioHandler.Inst == null)
         //    Instantiate(_audioHandler, transform);

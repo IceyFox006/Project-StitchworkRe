@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1489325140225895316}
   - component: {fileID: 5764276178666972388}
   m_Layer: 0
-  m_Name: ObjectSelectSystem
+  m_Name: ObjectEventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,3 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7aabb7285d95ff479c1186317b1e37b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSelectSystem
+  _actions: {fileID: -944628639613478452, guid: 9da4e543dabf1e54da1c05c35e6dfbd7, type: 3}
+  _action:
+    m_Name: Action
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 46421b82-b2e2-4a4d-8f6c-9f7931e91210
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0

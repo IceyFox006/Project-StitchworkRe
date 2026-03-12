@@ -33,7 +33,7 @@ public class FighterGO : MonoBehaviour
     {
         if (bm.CurAction == null) return;
 
-        bm.CurAction.UseMove();
+        bm.CurAction.UseAction();
         bm.CurAction = null;
     }
 }

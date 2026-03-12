@@ -80,6 +80,7 @@ public class ButtonObject : MonoBehaviour
     public void Select()
     {
         if (!_interactable) return;
+        if (isSelected) return;
 
         curVisual.Reset();
         curVisual.Set(EventType.SELECT);

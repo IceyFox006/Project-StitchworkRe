@@ -7,15 +7,19 @@ public class BattleUI : MonoBehaviour
 
     [SerializeField] private GameObject _ui;
 
+    [Header("Menu")]
+    [SerializeField] private MenuUI _battleMenu;
+    [SerializeField] private MenuUI _confirmActionMenu;
+
     [Header("Moves")]
     [Tooltip("What player moves UI spawn under.")]
     [SerializeField] private GameObject _playerMoveUiPfb;
     [SerializeField] private Transform _playerMovesUiSP;
-    [SerializeField] private MenuUI _confirmActionMenu;
 
     #region GS
     public MenuUI ConfirmActionMenu { get => _confirmActionMenu; set => _confirmActionMenu = value; }
     public GameObject Ui { get => _ui; set => _ui = value; }
+    public MenuUI BattleMenu { get => _battleMenu; set => _battleMenu = value; }
     #endregion
 
     public void Initialize(BattleManager bm)
@@ -23,14 +27,7 @@ public class BattleUI : MonoBehaviour
         this.bm = bm;
     }
 
-
-
     #region Move
-    public void DisableMovesMenu()
-    {
-        _playerMovesUiSP.parent.gameObject.SetActive(false);
-    }
-
     //Spawns move buttons for player fighter.
     public void InstantiatePlayerFighterMovesUI(ActiveFighter actFighter)
     {
@@ -48,6 +45,21 @@ public class BattleUI : MonoBehaviour
     {
         GenericMethods.DestroyChildren(_playerMovesUiSP);
         InstantiatePlayerFighterMovesUI(actFighter);
+    }
+    #endregion
+
+    #region Target
+    public void ConfirmAction() //@UsedGlobal
+    {
+        ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
+        //bm.CurAction.UseAction();                   //Use action.
+    }
+    public void CancelAction() //@UsedGlobal
+    {
+        ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
+        bm.CurAction = null;                        //Reset curAction.
+        _confirmActionMenu.Disable();               //Closes confirm action menu.
+        _battleMenu.Enable();                       //Open battle menu.
     }
     #endregion
 }

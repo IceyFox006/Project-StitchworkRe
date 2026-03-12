@@ -33,6 +33,7 @@ public class MenuUI
     public void Disable(Button button = null)
     {
         _menu.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(button.gameObject);
+        if (button != null)
+            EventSystem.current.SetSelectedGameObject(button.gameObject);
     }
 }

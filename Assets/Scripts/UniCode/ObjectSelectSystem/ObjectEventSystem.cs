@@ -101,7 +101,7 @@ public class ObjectEventSystem : MonoBehaviour
     }
 
     //Disables visuals and clears curHover and selectedObjects.
-    private void ClearSelected()
+    public void ClearSelected()
     {
         curHover = null;
         foreach (ButtonObject bo in selectedObjects)

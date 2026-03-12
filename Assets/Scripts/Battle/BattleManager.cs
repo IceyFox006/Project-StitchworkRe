@@ -59,6 +59,7 @@ public class BattleManager : Manager
     {
         //SET-UP
         ui.Ui.SetActive(true);
+        ui.BattleMenu.Enable();
 
         //Player Party
         for (int pfID = 0; pfID < _playerFighterSPs.Length; pfID++)
@@ -81,7 +82,7 @@ public class BattleManager : Manager
 
     private void EndBattle()
     {
-        GenericMethods.HideCursor();
+
     }
 
     private void StartTurn()
@@ -94,7 +95,7 @@ public class BattleManager : Manager
     public void EnterTargetSelection()
     {
         Debug.Log("STARTED TARGET SELECTION.");
-        ui.DisableMovesMenu();                                 //Disable Moves Menu
+        ui.BattleMenu.Disable();                                //Disable Moves Menu
         ObjectEventSystem.Current.Enable();                     //Enables input for object selecting.
         EnableEligableTargets();                                //Enables eligable target buttons and selects the first one.
     }
@@ -210,7 +211,7 @@ public class ActiveAction
         this.user = user;
     }
 
-    public void UseMove()
+    public void UseAction()
     {
         action.Use(user, targets);
     }

@@ -27,7 +27,7 @@ public class PlayerMoveButton : MonoBehaviour
     //Sets the battleManager's curAction and enters target selection.
     public void EnterMoveTargetSelection() //@UsedLocal
     {
-        bm.CurAction = new ActiveAction(move, actFighter);
+        bm.CurAction = new ActiveAction(bm, move, actFighter);
         bm.EnterTargetSelection();
     }
 }

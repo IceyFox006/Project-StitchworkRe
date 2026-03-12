@@ -39,18 +39,22 @@ public class ButtonObject : MonoBehaviour
     public bool IsSelected { get => isSelected; set => isSelected = value; }
     public bool DeselectOnPress { get => _deselectOnPress; set => _deselectOnPress = value; }
     public string Id { get => id; set => id = value; }
+    public EventVisual CurVisual { get => curVisual; set => curVisual = value; }
     #endregion
 
     public void Initialize()
     {
-        InitializeVisual();
+        id = DataMethods.GenerateID(this);
 
-        id = GenerateID();
+        InitializeVisual();
     }
 
     private void OnMouseDown()
     {
-        Select();
+        if (!isSelected)
+            Select();
+        else
+            Deselect();
     }
     private void OnMouseEnter()
     {
@@ -102,7 +106,8 @@ public class ButtonObject : MonoBehaviour
     {
         if (!_interactable) return;
 
-        curVisual.Set(EventType.ENTER_HOVER);
+        if (!isSelected)
+            curVisual.Set(EventType.ENTER_HOVER);
 
         _onEnterHover.Invoke();
     }
@@ -118,14 +123,6 @@ public class ButtonObject : MonoBehaviour
     }
     #endregion
     #region SetUp
-    private string GenerateID()
-    {
-        string ID = GetType().ToString() + "_";
-
-        ID += transform.position.x.ToString() + transform.position.y.ToString() + transform.position.z.ToString();
-
-        return ID;
-    }
     private void InitializeVisual()
     {
         switch (_visual)
@@ -178,7 +175,8 @@ public class ButtonObject : MonoBehaviour
         }
         public override void Reset()
         {
-            RemoveMaterial();
+            if (renderers[0].materials.Length > 1)
+                RemoveMaterial();
         }
         public override void Set(EventType eventType)
         {

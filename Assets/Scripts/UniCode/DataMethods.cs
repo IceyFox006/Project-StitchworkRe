@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class DataMethods : MonoBehaviour
 {
+    public static string GenerateID(MonoBehaviour mb)
+    {
+        string ID = mb.GetType().ToString() + "_";
+
+        ID += mb.transform.position.x.ToString() + mb.transform.position.y.ToString() + mb.transform.position.z.ToString();
+
+        return ID;
+    }
     #region Extension
     public static T[] AddToArray<T>(T[] array, T value)
     {

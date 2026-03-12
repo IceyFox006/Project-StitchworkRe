@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class PMovementStateGround : PMovementBaseState
+public class PMoveGroundState : PMoveBaseState
 {
-    private PMovementStateManager m;
+    private PMoveStateManager m;
 
-    public override void ConstructState(PMovementStateManager manager)
+    public override void ConstructState(PMoveStateManager manager)
     {
         m = manager;
     }
@@ -27,16 +27,28 @@ public class PMovementStateGround : PMovementBaseState
     {
         Rotate();
     }
+    public override void EnableInput()
+    {
+
+    }
+    public override void DisableInput()
+    {
+
+    }
     #endregion
 
     private void Move()
     {
+        if (!m.InputEnabled) return;
+
         m.MoveDirection = m.Move.ReadValue<Vector2>();
         m.Rb.linearVelocity = m.transform.TransformDirection(new Vector3(m.MoveDirection.x * m.MoveSpeed, m.Rb.linearVelocity.y, m.MoveDirection.y * m.MoveSpeed));
     }
 
     private void Rotate()
     {
+        if (!m.InputEnabled) return;
+
         Quaternion targetRotation = Quaternion.Euler(0, m.MainCamera.transform.eulerAngles.y, 0);
         m.transform.rotation = targetRotation;
     }

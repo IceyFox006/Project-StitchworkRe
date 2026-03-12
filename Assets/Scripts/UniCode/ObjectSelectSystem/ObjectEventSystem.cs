@@ -33,9 +33,10 @@ public class ObjectEventSystem : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Disable();
+        DisableInput();
     }
 
+    #region Enable
     public void Enable()
     {
         move.performed += Move_performed;
@@ -46,11 +47,18 @@ public class ObjectEventSystem : MonoBehaviour
 
     public void Disable()
     {
+        DisableInput();
+
+        ClearSelected();
+    }
+    public void DisableInput()
+    {
         move.performed -= Move_performed;
         press.performed -= Press_performed;
         select.performed -= Select_performed;
         back.performed -= Back_performed;
     }
+    #endregion
 
     #region Input
     //Switches the curHover with the direction moved.
@@ -92,6 +100,18 @@ public class ObjectEventSystem : MonoBehaviour
             selectedObjects[i].Press();
     }
 
+    //Disables visuals and clears curHover and selectedObjects.
+    private void ClearSelected()
+    {
+        curHover = null;
+        foreach (ButtonObject bo in selectedObjects)
+        {
+            bo.IsSelected = false;
+            bo.CurVisual.Reset();
+        }
+        selectedObjects.Clear();
+    }
+
     //Switches the current hover button.
     public void SwitchHover(ButtonObject bo, bool forceInteractable = false)
     {
@@ -112,7 +132,7 @@ public class ObjectEventSystem : MonoBehaviour
         return (bo != null && bo.Interactable);
     }
 
-    //Returns the index of target in selectedObjects. //DOESNTWORK
+    //Returns the index of target in selectedObjects.
     public int FindSelected(ButtonObject target)
     {
         for (int i = 0; i < selectedObjects.Count; i++)

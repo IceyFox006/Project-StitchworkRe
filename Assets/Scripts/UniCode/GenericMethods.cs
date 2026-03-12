@@ -3,12 +3,13 @@ using UnityEngine.SceneManagement;
 
 public class GenericMethods : MonoBehaviour
 {
-    public static void DestroyChildren(Transform parent)
+    #region Camera
+    public static void SwitchCamera(Camera from, Camera to)
     {
-        while (parent.childCount > 0)
-            Destroy(parent.GetChild(0));
+        from.gameObject.SetActive(false);
+        to.gameObject.SetActive(true);
     }
-
+    #endregion
     #region Cursor
     public static void ShowCursor()
     {
@@ -19,6 +20,13 @@ public class GenericMethods : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+    #endregion
+    #region Object
+    public static void DestroyChildren(Transform parent)
+    {
+        while (parent.childCount > 0)
+            Destroy(parent.GetChild(0));
     }
     #endregion
     #region Scene

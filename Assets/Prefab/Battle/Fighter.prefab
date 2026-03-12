@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonObject
   _interactable: 0
+  _deselectOnPress: 1
   _visual: 1
   _addMaterialVisual:
     _selectMaterial: {fileID: 2100000, guid: 002508b2f4626fd428fef2ef32bd1743, type: 2}
@@ -58,6 +59,9 @@ MonoBehaviour:
     _right: {fileID: 0}
     _left: {fileID: 0}
   _onPress:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSelect:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8647872379642851335}
@@ -72,9 +76,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _onSelect:
-    m_PersistentCalls:
-      m_Calls: []
   _onDeselect:
     m_PersistentCalls:
       m_Calls: []

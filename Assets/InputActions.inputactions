@@ -3,7 +3,7 @@
     "name": "InputActions",
     "maps": [
         {
-            "name": "Overworld",
+            "name": "DEFAULT",
             "id": "77ecaaf7-820c-4ef6-80ac-cf92ca05c173",
             "actions": [
                 {

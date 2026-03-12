@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BattleUI))]
 public class BattleManager : Manager
 {
     private static BattleManager inst;
@@ -8,9 +9,11 @@ public class BattleManager : Manager
     public static float effectivenessMultiplier = 0.2f;
     public static float STABMultiplier = 1.2f;
 
+    private BattleUI ui;
+
     [Tooltip("Where the player gets teleported to when a battle begins.")]
     [SerializeField] private Transform _battleArea;
-    [SerializeField] private GameObject _battleUI;
+    [SerializeField] private Camera _battleCamera;
 
     [Header("Spawn Points")]
     [Tooltip("What player fighter UI spawn under.")]
@@ -21,13 +24,11 @@ public class BattleManager : Manager
     [SerializeField] private Transform[] _playerFighterSPs;
     [Tooltip("Where enemy fighters spawn in.")]
     [SerializeField] private Transform[] _enemyFighterSPs;
-    [Tooltip("What player moves UI spawn under.")]
-    [SerializeField] private Transform _playerMovesUiSP;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _fighterPfb;
     [SerializeField] private GameObject _fighterUiPfb;
-    [SerializeField] private GameObject _playerMoveUiPfb;
+
 
     private List<ActiveFighter> pParty = new List<ActiveFighter>();
     private List<ActiveFighter> eParty = new List<ActiveFighter>();
@@ -37,13 +38,18 @@ public class BattleManager : Manager
     private ActiveAction curAction;
 
     #region GS
-    public static BattleManager Inst { get => inst; set => inst = value; }
     public Transform BattleArea { get => _battleArea; set => _battleArea = value; }
     public ActiveAction CurAction { get => curAction; set => curAction = value; }
+    public BattleUI Ui { get => ui; set => ui = value; }
+    public static BattleManager Inst { get => inst; set => inst = value; }
+    public Camera BattleCamera { get => _battleCamera; set => _battleCamera = value; }
     #endregion
     public override void Load()
     {
         base.Load();
+
+        ui = GetComponent<BattleUI>();
+        ui.Initialize(this);
 
         inst = this;
     }
@@ -52,7 +58,7 @@ public class BattleManager : Manager
     public void StartBattle(PlayerFighter[] playerParty, EnemyFighter[] enemyParty)
     {
         //SET-UP
-        _battleUI.SetActive(true);
+        ui.Ui.SetActive(true);
 
         //Player Party
         for (int pfID = 0; pfID < _playerFighterSPs.Length; pfID++)
@@ -88,7 +94,7 @@ public class BattleManager : Manager
     public void EnterTargetSelection()
     {
         Debug.Log("STARTED TARGET SELECTION.");
-        _playerMovesUiSP.parent.gameObject.SetActive(false);    //Disable Moves Menu
+        ui.DisableMovesMenu();                                 //Disable Moves Menu
         ObjectEventSystem.Current.Enable();                     //Enables input for object selecting.
         EnableEligableTargets();                                //Enables eligable target buttons and selects the first one.
     }
@@ -110,6 +116,7 @@ public class BattleManager : Manager
         }
     }
 
+    //Enables interaction on the party's buttons and sets their navigation.
     private void EnablePartyButtons(List<ActiveFighter> party)
     {
         ButtonObject bo;
@@ -127,10 +134,8 @@ public class BattleManager : Manager
     //Switches current fighter and reloads player move menu.
     private void SwitchCurrentFighter(ActiveFighter actFighter)
     {
-        GenericMethods.DestroyChildren(_playerMovesUiSP);
-
         curFighter = actFighter;
-        InstantiatePlayerFighterMovesUI(actFighter);
+        ui.ReloadPlayerFighterMovesUI(curFighter);
     }
 
     #region Instantiate
@@ -148,18 +153,8 @@ public class BattleManager : Manager
 
         return actFighter;
     }
-
-    //Spawns move buttons for player fighter.
-    private void InstantiatePlayerFighterMovesUI(ActiveFighter actFighter)
-    {
-        GameObject clone;
-        foreach (MoveSO move in actFighter.Data.Moves)
-        {
-            clone = Instantiate(_playerMoveUiPfb, _playerMovesUiSP);
-            clone.GetComponent<PlayerMoveButton>().Initialize(this, actFighter, move);
-        }
-    }
     #endregion
+
 }
 
 //=====================================================================================================================
@@ -197,25 +192,50 @@ public class ActiveFighter
 //=====================================================================================================================
 public class ActiveAction
 {
+    private BattleManager bm;
+
     private MoveSO action; //Replace type with action (used for items and moves)
     private ActiveFighter user;
-    private List<ActiveFighter> targets;
+    private List<ActiveFighter> targets = new List<ActiveFighter>();
 
     #region GS
     public List<ActiveFighter> Targets { get => targets; set => targets = value; }
     public MoveSO Action { get => action; set => action = value; }
     #endregion
 
-    public ActiveAction(MoveSO action, ActiveFighter user, List<ActiveFighter> targets = null)
+    public ActiveAction(BattleManager bm, MoveSO action, ActiveFighter user)
     {
+        this.bm = bm;
         this.action = action;
         this.user = user;
-        this.targets = targets;
+    }
+
+    public void UseMove()
+    {
+        action.Use(user, targets);
     }
 
     public void AddTarget(ActiveFighter actFighter)
     {
-        Debug.Log("Added " + actFighter.Data.Name + " as a target for " + user.Data.Name + "'s " + action.Name);
+        Debug.Log("ADDED " + actFighter.Data.Name + " AS A TARGET FOR " + user.Data.Name + "'S " + action.Name);
+        targets.Add(actFighter);
+        if (ValidTargets())
+        {
+            ObjectEventSystem.Current.DisableInput();
+            bm.Ui.ConfirmActionMenu.Enable();
+        }
+    }
+
+    private bool ValidTargets()
+    {
+        switch (action.TargetType)
+        {
+            case TargetType.SELF:
+            case TargetType.SINGLE_ENEMY:
+            case TargetType.SINGLE_ALLY:
+                return (targets.Count == 1);
+            default: return false;
+        }
     }
 }
 //=====================================================================================================================

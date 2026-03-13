@@ -28,12 +28,4 @@ public class FighterGO : MonoBehaviour
     {
         bm.CurAction.AddTarget(actFighter);
     }
-
-    public void UseAction() //@UsedLocal
-    {
-        if (bm.CurAction == null) return;
-
-        bm.CurAction.UseAction();
-        bm.CurAction = null;
-    }
 }

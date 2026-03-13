@@ -52,7 +52,8 @@ public class BattleUI : MonoBehaviour
     public void ConfirmAction() //@UsedGlobal
     {
         ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
-        //bm.CurAction.UseAction();                   //Use action.
+        bm.CurAction.UseAction();                   //Use action.
+        _confirmActionMenu.Disable();               //Closes confirm action menu.
     }
     public void CancelAction() //@UsedGlobal
     {

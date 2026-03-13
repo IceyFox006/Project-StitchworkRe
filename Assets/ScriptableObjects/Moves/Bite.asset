@@ -21,8 +21,4 @@ MonoBehaviour:
   _targetType: 2
   _damageType: 0
   _power: 0
-  _effects:
-  - _effect: 0
-    _chance: 0
-    _duration: 0
-    _intensity: 0
+  _effects: []

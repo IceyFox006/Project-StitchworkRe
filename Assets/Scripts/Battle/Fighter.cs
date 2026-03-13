@@ -112,6 +112,8 @@ public class Fighter
     //Sets the effectiveness that each attacking element has when hitting the fighter.
     private void CalculateElementEffectiveness()
     {
+        effectiveness = new List<ElementEffectiveness>();
+
         int index;
         foreach (ElementSO fElement in _elements)
         {

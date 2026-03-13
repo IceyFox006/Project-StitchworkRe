@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class MenuUI
     {
         _menu.SetActive(true);
         EventSystem.current.SetSelectedGameObject(_firstSelected.gameObject);
+        SceneLoader.inst.StartCoroutine(DelayInput());
     }
 
     public void Disable(Button button = null)
@@ -35,5 +37,12 @@ public class MenuUI
         _menu.SetActive(false);
         if (button != null)
             EventSystem.current.SetSelectedGameObject(button.gameObject);
+    }
+
+    private IEnumerator DelayInput()
+    {
+        EventSystem.current.sendNavigationEvents = false;
+        yield return new WaitForSeconds(0.1f);
+        EventSystem.current.sendNavigationEvents |= true;
     }
 }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
+    public static SceneLoader inst;
+
     [Header("Don't Destroy On Load")]
     [SerializeField] private GameObject _objectEventSystem;
     [SerializeField] private GameObject _audioHandler;
@@ -11,6 +13,8 @@ public class SceneLoader : MonoBehaviour
 
     private void Awake()
     {
+        inst = this;
+
         if (ObjectEventSystem.Current == null)
             Instantiate(_objectEventSystem, transform);
 

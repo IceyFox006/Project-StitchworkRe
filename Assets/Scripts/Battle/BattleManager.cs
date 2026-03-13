@@ -223,8 +223,8 @@ public class ActiveAction
         targets.Add(actFighter);
         if (ValidTargets())
         {
-            ObjectEventSystem.Current.DisableInput();
             bm.Ui.ConfirmActionMenu.Enable();
+            ObjectEventSystem.Current.DisableInput();
         }
     }
 

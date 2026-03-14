@@ -103,7 +103,7 @@ public class BattleManager : Manager
     //Enables the buttons of eligable targets.
     private void EnableEligableTargets()
     {
-        switch (CurAction.Action.TargetType)
+        switch (CurAction.Action.Target)
         {
             case TargetType.SELF: break;
             case TargetType.ALL: break;
@@ -189,31 +189,43 @@ public class ActiveFighter
     {
         fluxStats = Stats.Multiply(data.TotalStats, boostStats);
     }
+
+    #region Move
+    public void AddHP(float amount)
+    {
+        data.SetHP(data.CurrentHP + amount);
+        ui.UpdateHPVisuals();
+    }
+    #endregion
 }
 //=====================================================================================================================
 public class ActiveAction
 {
     private BattleManager bm;
 
-    private MoveSO action; //Replace type with action (used for items and moves)
+    private ActionSO action; //Replace type with action (used for items and moves)
     private ActiveFighter user;
     private List<ActiveFighter> targets = new List<ActiveFighter>();
 
     #region GS
     public List<ActiveFighter> Targets { get => targets; set => targets = value; }
-    public MoveSO Action { get => action; set => action = value; }
+    public ActionSO Action { get => action; set => action = value; }
     #endregion
 
-    public ActiveAction(BattleManager bm, MoveSO action, ActiveFighter user)
+    public ActiveAction(BattleManager bm, ActionSO action, ActiveFighter user)
     {
         this.bm = bm;
         this.action = action;
         this.user = user;
     }
 
+    public void PlayAnimation()
+    {
+        user.Go.Animator.Play("ATTACK");//Play animation.
+        //action.Use(user, targets);
+    }
     public void UseAction()
     {
-        //Play animation.
         action.Use(user, targets);
     }
 
@@ -230,7 +242,7 @@ public class ActiveAction
 
     private bool ValidTargets()
     {
-        switch (action.TargetType)
+        switch (action.Target)
         {
             case TargetType.SELF:
             case TargetType.SINGLE_ENEMY:

@@ -25,8 +25,8 @@ public class Fighter
 
     //Item
 
-    private float currentHP;
-    private float currentEnergy;
+    private float curHP;
+    private float curEnergy;
 
     //Visuals
     [Tooltip("Max of 2.")]
@@ -34,7 +34,7 @@ public class Fighter
 
     #region GS
     public int MaxHP { get => maxHP; set => maxHP = value; }
-    public float CurrentHP { get => currentHP; set => currentHP = value; }
+    public float CurrentHP { get => curHP; set => curHP = value; }
     public EntityParts Parts { get => _parts; set => _parts = value; }
     public ElementSO[] Elements { get => _elements; set => _elements = value; }
     public ColorPaletteSO[] Palettes { get => _palettes; set => _palettes = value; }
@@ -50,19 +50,19 @@ public class Fighter
         CalculateTotalStats();
         CalculateElementEffectiveness();
 
-        currentHP = maxHP; //TempRemove
-        currentEnergy = maxEnergy; //TempRemove
+        curHP = maxHP; //TempRemove
+        curEnergy = maxEnergy; //TempRemove
     }
 
     #region Get
     public float GetNormalizedHP()
     {
-        return currentHP / maxHP;
+        return curHP / maxHP;
     }
 
     public float GetNormalizedEnergy()
     {
-        return currentEnergy / maxEnergy;
+        return curEnergy / maxEnergy;
     }
 
     //Returns the effectivenessMultiplier of the attacking element vs the fighterElements.
@@ -78,6 +78,14 @@ public class Fighter
         foreach (ElementSO element in _elements)
             if (element == usingElement) return BattleManager.STABMultiplier;
         return 1;
+    }
+    #endregion
+    #region Set
+    //Sets currentHP at amount and clamps between 0 and maxHP.
+    public void SetHP(float amount)
+    {
+        curHP = amount;
+        ClampHP();
     }
     #endregion
 
@@ -141,6 +149,13 @@ public class Fighter
                     effectiveness[index].Multiplier = 0;
             }
         }
+    }
+    #endregion
+    #region Validate
+    //Clamps currentHP between 0 and maxHP.
+    private void ClampHP()
+    {
+        curHP = Mathf.Clamp(curHP, 0, maxHP);
     }
     #endregion
 }

@@ -20,6 +20,8 @@ public class VFXGO : MonoBehaviour
 
     public void UseAction() //@UsedLocal_Animation
     {
+        if (bm.CurAction == null) return;
+
         bm.CurAction.UseAction();
         bm.CurAction = null;
     }

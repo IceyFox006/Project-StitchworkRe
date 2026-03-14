@@ -27,6 +27,7 @@ MonoBehaviour:
     _level: 5
     _moves:
     - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
+    - {fileID: 11400000, guid: f9f9215564ffab542aab54427aaec5c5, type: 2}
     _madeStats:
       _health: 15
       _endurance: 15

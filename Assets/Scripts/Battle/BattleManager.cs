@@ -43,6 +43,8 @@ public class BattleManager : Manager
     public BattleUI Ui { get => ui; set => ui = value; }
     public static BattleManager Inst { get => inst; set => inst = value; }
     public Camera BattleCamera { get => _battleCamera; set => _battleCamera = value; }
+    public List<ActiveFighter> PParty { get => pParty; set => pParty = value; }
+    public List<ActiveFighter> EParty { get => eParty; set => eParty = value; }
     #endregion
     public override void Load()
     {
@@ -108,12 +110,15 @@ public class BattleManager : Manager
             case TargetType.SELF: break;
             case TargetType.ALL: break;
             case TargetType.SINGLE_ENEMY:
+            case TargetType.ALL_ENEMIES:
                 EnablePartyButtons(eParty);
                 ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button, true);
                 break;
-            case TargetType.ALL_ENEMIES: break;
-            case TargetType.SINGLE_ALLY: break;
-            case TargetType.ALL_ALLIES: break;
+            case TargetType.SINGLE_ALLY:
+            case TargetType.ALL_ALLIES:
+                EnablePartyButtons(pParty);
+                ObjectEventSystem.Current.SwitchHover(pParty[0].Go.Button, true);
+                break;
         }
     }
 
@@ -242,6 +247,7 @@ public class ActiveAction
         }
     }
 
+    //Returns true if the number of targets is equal to the required amount.
     private bool ValidTargets()
     {
         switch (action.Target)
@@ -250,6 +256,12 @@ public class ActiveAction
             case TargetType.SINGLE_ENEMY:
             case TargetType.SINGLE_ALLY:
                 return (targets.Count == 1);
+            case TargetType.ALL_ENEMIES:
+                return (targets.Count == bm.EParty.Count);
+            case TargetType.ALL_ALLIES:
+                return (targets.Count == bm.PParty.Count);
+            case TargetType.ALL:
+                return (targets.Count == (bm.EParty.Count + bm.PParty.Count));
             default: return false;
         }
     }

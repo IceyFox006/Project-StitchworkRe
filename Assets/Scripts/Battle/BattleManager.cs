@@ -107,17 +107,19 @@ public class BattleManager : Manager
     {
         switch (CurAction.Action.Target)
         {
-            case TargetType.SELF: break;
+            case TargetType.SELF:
+                ObjectEventSystem.Current.SwitchHover(curAction.User.Go.Button, true);
+                break;
             case TargetType.ALL: break;
             case TargetType.SINGLE_ENEMY:
             case TargetType.ALL_ENEMIES:
                 EnablePartyButtons(eParty);
-                ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button, true);
+                ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button);
                 break;
             case TargetType.SINGLE_ALLY:
             case TargetType.ALL_ALLIES:
                 EnablePartyButtons(pParty);
-                ObjectEventSystem.Current.SwitchHover(pParty[0].Go.Button, true);
+                ObjectEventSystem.Current.SwitchHover(pParty[0].Go.Button);
                 break;
         }
     }
@@ -134,6 +136,15 @@ public class BattleManager : Manager
             bo.Navigation.Right = (i + 1 < party.Count)? party[i + 1].Go.Button : party[0].Go.Button; //Set right nav.
             bo.Navigation.Left = (i - 1 > -1)? party[i - 1].Go.Button : party[party.Count - 1].Go.Button; //Set left nav.
         }
+    }
+
+    //Disables interaction on all fighters; buttons.
+    public void DisableAllButtons()
+    {
+        foreach (ActiveFighter actFighter in pParty)
+            actFighter.Go.Button.Interactable = false;
+        foreach (ActiveFighter actFighter in eParty)
+            actFighter.Go.Button.Interactable = false;
     }
     #endregion
 
@@ -208,13 +219,14 @@ public class ActiveAction
 {
     private BattleManager bm;
 
-    private ActionSO action; //Replace type with action (used for items and moves)
+    private ActionSO action;
     private ActiveFighter user;
     private List<ActiveFighter> targets = new List<ActiveFighter>();
 
     #region GS
     public List<ActiveFighter> Targets { get => targets; set => targets = value; }
     public ActionSO Action { get => action; set => action = value; }
+    public ActiveFighter User { get => user; set => user = value; }
     #endregion
 
     public ActiveAction(BattleManager bm, ActionSO action, ActiveFighter user)

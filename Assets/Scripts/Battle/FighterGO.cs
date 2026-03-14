@@ -6,6 +6,7 @@ public class FighterGO : MonoBehaviour
     private Animator animator;
     private ButtonObject button;
     private PartAssemble partAssemble;
+    private VFXGO vfx;
 
     private BattleManager bm;
     private ActiveFighter actFighter;
@@ -21,20 +22,23 @@ public class FighterGO : MonoBehaviour
         this.actFighter = actFighter;
 
         animator = GetComponent<Animator>();
+
         partAssemble = GetComponentInChildren<PartAssemble>();
         partAssemble.Initialize(actFighter.Data.Parts, actFighter.Data.Palettes);
 
         button = GetComponentInChildren<ButtonObject>();
         button.Initialize();
+
+        vfx = GetComponentInChildren<VFXGO>();
+        vfx.Initialize(bm);
     }
 
     public void SelectAsTarget() //@UsedLocal_ObjectButton
     {
         bm.CurAction.AddTarget(actFighter);
     }
-
-    public void UseAction() //@UsedLocal_Animation
+    public void PlayVFXAnimation() //@UsedLocal_Animation
     {
-        bm.CurAction.UseAction();
+        vfx.Animator.Play("PLAY");
     }
 }

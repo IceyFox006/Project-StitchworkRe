@@ -10,10 +10,9 @@ public enum DamageType
 }
 
 
-[CreateAssetMenu(fileName = "MoveSO", menuName = "Scriptable Objects/Battle/Move")]
+[CreateAssetMenu(fileName = "MoveSO", menuName = "Scriptable Objects/Battle/Actions/Move")]
 public class MoveSO : ActionSO
 {
-    //[SerializeField] private string _name;
     [SerializeField] private Sprite _icon;
     [SerializeField][TextArea(1,5)] private string _description;
 
@@ -21,17 +20,11 @@ public class MoveSO : ActionSO
     [SerializeField] private int _energyCost; //!!!
 
     [SerializeField][Range(1, 101)] private int _accuracy;
-    //[SerializeField] private TargetType _targetType;
 
     [SerializeField] private DamageType _damageType; 
-    //[SerializeField][MinValue(0)] private int _power;
-
-    //[SerializeField] private EffectData[] _effects; //!!!
 
     #region GS
-    public string Name { get => _name; set => _name = value; }
     public Sprite Icon { get => _icon; set => _icon = value; }
-    //public TargetType TargetType { get => _targetType; set => _targetType = value; }
     #endregion
 
     public override void Use(ActiveFighter user, List<ActiveFighter> targets)

@@ -13,12 +13,13 @@ MonoBehaviour:
   m_Name: Growl
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Growl
+  _VFXAnimations: {fileID: 0}
+  target: 2
+  _power: 0
+  _effects: []
   _icon: {fileID: 0}
   _description: 
   _element: {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
   _energyCost: 0
   _accuracy: 0
-  _targetType: 2
   _damageType: 0
-  _power: 0
-  _effects: []

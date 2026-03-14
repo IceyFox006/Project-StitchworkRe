@@ -219,16 +219,18 @@ public class ActiveAction
         this.user = user;
     }
 
-    public void PlayAnimation()
-    {
-        user.Go.Animator.Play("ATTACK");//Play animation.
-        //action.Use(user, targets);
-    }
+
     public void UseAction()
     {
         action.Use(user, targets);
     }
-
+    #region Animation
+    public void PlayFighterAnimation()
+    {
+        user.Go.Animator.Play("ATTACK");//Play animation.
+    }
+    #endregion
+    #region Target
     public void AddTarget(ActiveFighter actFighter)
     {
         Debug.Log("ADDED " + actFighter.Data.Name + " AS A TARGET FOR " + user.Data.Name + "'S " + action.Name);
@@ -251,6 +253,7 @@ public class ActiveAction
             default: return false;
         }
     }
+    #endregion
 }
 //=====================================================================================================================
 public class ActionList

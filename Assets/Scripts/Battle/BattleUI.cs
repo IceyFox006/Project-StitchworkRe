@@ -48,11 +48,11 @@ public class BattleUI : MonoBehaviour
     }
     #endregion
 
-    #region Target
+    #region Action
     public void ConfirmAction() //@UsedGlobal
     {
         ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
-        bm.CurAction.PlayAnimation();                   //Use action.
+        bm.CurAction.PlayFighterAnimation();        //Play fighter animation (starts action sequence).
         _confirmActionMenu.Disable();               //Closes confirm action menu.
     }
     public void CancelAction() //@UsedGlobal

@@ -14,6 +14,7 @@ public class FighterGO : MonoBehaviour
     #region GS
     public ButtonObject Button { get => button; set => button = value; }
     public Animator Animator { get => animator; set => animator = value; }
+    public VFXGO Vfx { get => vfx; set => vfx = value; }
     #endregion
 
     public void Initialize(BattleManager bm, ActiveFighter actFighter)
@@ -39,6 +40,14 @@ public class FighterGO : MonoBehaviour
     }
     public void PlayVFXAnimation() //@UsedLocal_Animation
     {
-        vfx.Animator.Play("PLAY");
+        Animator tempAnimator;
+        foreach (ActiveFighter target in bm.CurAction.Targets)
+        {
+            tempAnimator = target.Go.Vfx.Animator;
+            tempAnimator.runtimeAnimatorController = bm.CurAction.Action.VfxAc;
+            tempAnimator.Play("PLAY");
+        }
+        Debug.Log("H");
+        //vfx.Animator.Play("PLAY");
     }
 }

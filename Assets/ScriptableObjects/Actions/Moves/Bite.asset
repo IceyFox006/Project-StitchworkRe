@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bite
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Bite
-  _VFXAnimations: {fileID: 0}
+  _vfxAc: {fileID: 22100000, guid: a755949e70a9fd740a6bc43b489fa616, type: 2}
   target: 2
   _power: 0
   _effects: []

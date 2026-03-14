@@ -17,7 +17,7 @@ public class ActionSO : ScriptableObject
     [SerializeField] 
         protected string _name;
     [SerializeField]
-        private AnimatorOverrideController _VFXAnimations;
+        private AnimatorOverrideController _vfxAc;
     [SerializeField]
         protected TargetType target;
     [SerializeField][MinValue(0)] 
@@ -28,6 +28,7 @@ public class ActionSO : ScriptableObject
     #region GS
     public string Name { get => _name; set => _name = value; }
     public TargetType Target { get => target; set => target = value; }
+    public AnimatorOverrideController VfxAc { get => _vfxAc; set => _vfxAc = value; }
     #endregion
     public virtual void Use(ActiveFighter user, List<ActiveFighter> targets)
     {

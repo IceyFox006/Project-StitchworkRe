@@ -7,6 +7,7 @@ public class Fighter
 {
     //Data
     [SerializeField] private string _name;
+    private string id;
     [SerializeField] protected EntityParts _parts;
 
     [SerializeField] private ElementSO[] _elements;
@@ -42,10 +43,12 @@ public class Fighter
     public int Level { get => _level; set => _level = value; }
     public Stats TotalStats { get => totalStats; set => totalStats = value; }
     public string Name { get => _name; set => _name = value; }
+    public string Id { get => id; set => id = value; }
     #endregion
 
     public virtual void Initialize()
     {
+        id = DataMethods.GenerateSeed();
         CalculateBaseStats();
         CalculateTotalStats();
         CalculateElementEffectiveness();
@@ -151,7 +154,16 @@ public class Fighter
         }
     }
     #endregion
-    #region Validate
+    #region Utility
+    public string AsString()
+    {
+        return GetType() + ": " + _name + "\n" + totalStats.AsString();
+    }
+    public bool EqualTo(Fighter fighter)
+    {
+        return (id.Equals(fighter.Id));
+    }
+
     //Clamps currentHP between 0 and maxHP.
     private void ClampHP()
     {

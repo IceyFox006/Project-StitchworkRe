@@ -31,7 +31,7 @@ public class FighterGO : MonoBehaviour
         button.Initialize();
 
         vfx = GetComponentInChildren<VFXGO>();
-        vfx.Initialize(bm);
+        vfx.Initialize(bm, actFighter);
     }
 
     public void SelectAsTarget() //@UsedLocal_ObjectButton
@@ -44,10 +44,8 @@ public class FighterGO : MonoBehaviour
         foreach (ActiveFighter target in bm.CurAction.Targets)
         {
             tempAnimator = target.Go.Vfx.Animator;
-            tempAnimator.runtimeAnimatorController = bm.CurAction.Action.VfxAc;
+            tempAnimator.runtimeAnimatorController = bm.CurAction.Data.VfxAc;
             tempAnimator.Play("PLAY");
         }
-        Debug.Log("H");
-        //vfx.Animator.Play("PLAY");
     }
 }

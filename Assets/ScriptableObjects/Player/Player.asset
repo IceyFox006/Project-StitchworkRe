@@ -30,6 +30,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: f9f9215564ffab542aab54427aaec5c5, type: 2}
     - {fileID: 11400000, guid: ba1fac93a2ea8a34889b050e4de91608, type: 2}
     - {fileID: 11400000, guid: 9b09be37cea76974babf0fa6eefaee0b, type: 2}
+    - {fileID: 11400000, guid: a6848f2051a5d9746b94f3630373f097, type: 2}
     _madeStats:
       _health: 15
       _endurance: 15
@@ -70,6 +71,47 @@ MonoBehaviour:
     _level: 5
     _moves:
     - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
+    - {fileID: 11400000, guid: f9f9215564ffab542aab54427aaec5c5, type: 2}
+    - {fileID: 11400000, guid: ba1fac93a2ea8a34889b050e4de91608, type: 2}
+    _madeStats:
+      _health: 15
+      _endurance: 15
+      _strength: 15
+      _magic: 15
+      _agility: 15
+      _luck: 1
+      _regen: 1
+    _trainedStats:
+      _health: 0
+      _endurance: 0
+      _strength: 0
+      _magic: 0
+      _agility: 0
+      _luck: 1
+      _regen: 1
+    _personalityStats:
+      _health: 1
+      _endurance: 1
+      _strength: 1
+      _magic: 1
+      _agility: 1
+      _luck: 1
+      _regen: 1
+    _palettes:
+    - {fileID: 11400000, guid: 37b1526c267d1c2489072d5d497cefdd, type: 2}
+    - {fileID: 11400000, guid: f9989aaa1d5276a499067e903d386203, type: 2}
+  - _name: Frank
+    _parts:
+      _head: {fileID: 11400000, guid: f8b7864290221ad459f0623440e7a45b, type: 2}
+      _arm: {fileID: 11400000, guid: ca5cc648ebcee5e45bd55cfd62623b3a, type: 2}
+      _body: {fileID: 11400000, guid: aedc83bb9abcf86448ba9921bb3a46ee, type: 2}
+      _leg: {fileID: 11400000, guid: 759732fddc6fa154e9a6fbec5c025ead, type: 2}
+      _tail: {fileID: 11400000, guid: 311693f2cc1108d4ca277942a826d6d2, type: 2}
+    _elements:
+    - {fileID: 11400000, guid: d11739265a43cb94aa93a26b3fb4e5a2, type: 2}
+    - {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
+    _level: 5
+    _moves:
     - {fileID: 11400000, guid: f9f9215564ffab542aab54427aaec5c5, type: 2}
     - {fileID: 11400000, guid: ba1fac93a2ea8a34889b050e4de91608, type: 2}
     _madeStats:

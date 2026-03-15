@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Flood
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Flood
-  _vfxAc: {fileID: 0}
+  _vfxAc: {fileID: 22100000, guid: a9d7022fe7e9d5e4cb191e36aee026b8, type: 2}
   target: 1
   _power: 60
   _priority: 0

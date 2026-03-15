@@ -44,7 +44,7 @@ public class ButtonObject : MonoBehaviour
 
     public void Initialize()
     {
-        id = DataMethods.GenerateID(this);
+        id = DataMethods.GenerateSeed();
 
         InitializeVisual();
     }

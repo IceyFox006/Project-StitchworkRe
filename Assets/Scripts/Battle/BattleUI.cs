@@ -27,6 +27,13 @@ public class BattleUI : MonoBehaviour
         this.bm = bm;
     }
 
+    public void SwitchCurrentFighter(int dir) //@UsedGlobal_Button
+    {
+        int index = bm.FindFighter(bm.CurFighter.Data, bm.PParty);
+        index = DataMethods.ShiftIndex(index, bm.PParty, dir);
+        Debug.Log(bm.PParty[index].Data.AsString());
+        bm.SwitchCurrentFighter(bm.PParty[index]);
+    }
     #region Move
     //Spawns move buttons for player fighter.
     public void InstantiatePlayerFighterMovesUI(ActiveFighter actFighter)
@@ -37,7 +44,6 @@ public class BattleUI : MonoBehaviour
             clone = Instantiate(_playerMoveUiPfb, _playerMovesUiSP);
             clone.GetComponent<PlayerMoveButton>().Initialize(bm, actFighter, move);
         }
-        EventSystem.current.SetSelectedGameObject(_playerMovesUiSP.GetChild(0).gameObject);
     }
 
     //Despawns previous moves and respawns new moves for actFighter.
@@ -49,14 +55,16 @@ public class BattleUI : MonoBehaviour
     #endregion
 
     #region Action
-    public void ConfirmAction() //@UsedGlobal
+    public void ConfirmAction() //@UsedGlobal_Button
     {
         ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
         bm.DisableAllButtons();                     //Disable all fighter buttons.
-        bm.CurAction.PlayFighterAnimation();        //Play fighter animation (starts action sequence).
+        bm.Actions.Add(bm.CurAction);
+        //bm.CurAction.UseAction();
+        //bm.CurAction.PlayFighterAnimation();        //Play fighter animation (starts action sequence).
         _confirmActionMenu.Disable();               //Closes confirm action menu.
     }
-    public void CancelAction() //@UsedGlobal
+    public void CancelAction() //@UsedGlobal_Button
     {
         ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
         bm.DisableAllButtons();                     //Disable all fighter buttons.

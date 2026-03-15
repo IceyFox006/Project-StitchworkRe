@@ -31,10 +31,13 @@ public class ActionSO : ScriptableObject
     public string Name { get => _name; set => _name = value; }
     public TargetType Target { get => target; set => target = value; }
     public AnimatorOverrideController VfxAc { get => _vfxAc; set => _vfxAc = value; }
+    public int Priority { get => _priority; set => _priority = value; }
     #endregion
-    public virtual void Use(ActiveFighter user, List<ActiveFighter> targets)
-    {
+    public virtual void Use(ActiveFighter user, List<ActiveFighter> targets){}
 
+    public virtual string AsString()
+    {
+        return GetType() + ": " + _name + "\nPriority " + _priority;
     }
 }
 //=====================================================================================================================

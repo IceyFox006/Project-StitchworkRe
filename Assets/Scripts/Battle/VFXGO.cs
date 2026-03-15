@@ -6,24 +6,23 @@ public class VFXGO : MonoBehaviour
     private Animator animator;
 
     private BattleManager bm;
+    private ActiveFighter actFighter;
 
     #region GS
     public Animator Animator { get => animator; set => animator = value; }
     #endregion
 
-    public void Initialize(BattleManager bm)
+    public void Initialize(BattleManager bm, ActiveFighter actFighter)
     {
         this.bm = bm;
+        this.actFighter = actFighter;
 
         animator = GetComponent<Animator>();
     }
 
-    public void UseAction() //@UsedLocal_Animation
+    public void UpdateUI() //@UsedLocal_Animation
     {
-        if (bm.CurAction == null) return;
-
-        bm.CurAction.UseAction();
-        bm.CurAction = null;
+        actFighter.Ui.UpdateHPVisuals();
     }
 
     public void ShowBattleMenu()//@UsedLocal_Animation

@@ -42,6 +42,10 @@ public class Stats
     {
         return _health + _endurance + _strength + _magic + _agility;
     }
+    public string AsString()
+    {
+        return "( HP_" + _health + ", End_" + _endurance + ", Str_" + _strength + ", Mag_" + _magic + ", Agi_" + _agility + ")";
+    }
 
     public static Stats Multiply(Stats s1, Stats s2)
     {

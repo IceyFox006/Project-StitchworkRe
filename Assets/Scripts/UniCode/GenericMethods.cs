@@ -25,8 +25,13 @@ public class GenericMethods : MonoBehaviour
     #region Object
     public static void DestroyChildren(Transform parent)
     {
-        while (parent.childCount > 0)
-            Destroy(parent.GetChild(0));
+        int childCount = parent.childCount;
+        for (int i = childCount - 1; i > -1; i--)
+        {
+            Destroy(parent.GetChild(i).gameObject);
+        }
+        //while (parent.childCount > 0)
+        //    Destroy(parent.GetChild(0).gameObject);
     }
     #endregion
     #region Scene

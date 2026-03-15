@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BattleUI))]
@@ -33,7 +34,7 @@ public class BattleManager : Manager
     private List<ActiveFighter> pParty = new List<ActiveFighter>();
     private List<ActiveFighter> eParty = new List<ActiveFighter>();
 
-    private ActionList actions = new ActionList();
+    private ActionList actions;
     private ActiveFighter curFighter;
     private ActiveAction curAction;
 
@@ -45,15 +46,18 @@ public class BattleManager : Manager
     public Camera BattleCamera { get => _battleCamera; set => _battleCamera = value; }
     public List<ActiveFighter> PParty { get => pParty; set => pParty = value; }
     public List<ActiveFighter> EParty { get => eParty; set => eParty = value; }
+    public ActionList Actions { get => actions; set => actions = value; }
+    public ActiveFighter CurFighter { get => curFighter; set => curFighter = value; }
     #endregion
     public override void Load()
     {
         base.Load();
+        inst = this;
 
         ui = GetComponent<BattleUI>();
         ui.Initialize(this);
 
-        inst = this;
+        actions = new ActionList(this);
     }
 
     //Starts a battle.
@@ -78,7 +82,6 @@ public class BattleManager : Manager
 
             eParty.Add(InstantiateFighter(enemyParty[efID], _fighterPfb, _enemyFighterSPs[efID], _enemyFighterUiSP));
         }
-
         SwitchCurrentFighter(pParty[0]);
     }
 
@@ -96,7 +99,6 @@ public class BattleManager : Manager
     //Hides distracting UI, disables ineligible targets, sets ES selected to eligible target.
     public void EnterTargetSelection()
     {
-        Debug.Log("STARTED TARGET SELECTION.");
         ui.BattleMenu.Disable();                                //Disable Moves Menu
         ObjectEventSystem.Current.Enable();                     //Enables input for object selecting.
         EnableEligableTargets();                                //Enables eligable target buttons and selects the first one.
@@ -105,7 +107,7 @@ public class BattleManager : Manager
     //Enables the buttons of eligable targets.
     private void EnableEligableTargets()
     {
-        switch (CurAction.Action.Target)
+        switch (CurAction.Data.Target)
         {
             case TargetType.SELF:
                 ObjectEventSystem.Current.SwitchHover(curAction.User.Go.Button, true);
@@ -136,8 +138,8 @@ public class BattleManager : Manager
             bo = party[i].Go.Button;
             bo.Interactable = true;
 
-            bo.Navigation.Right = (i + 1 < party.Count)? party[i + 1].Go.Button : party[0].Go.Button; //Set right nav.
-            bo.Navigation.Left = (i - 1 > -1)? party[i - 1].Go.Button : party[party.Count - 1].Go.Button; //Set left nav.
+            bo.Navigation.Right = party[DataMethods.NextIndex(i, party)].Go.Button;     //Set right nav.
+            bo.Navigation.Left = party[DataMethods.PreviousIndex(i, party)].Go.Button;  //Set left nav.
         }
     }
 
@@ -150,9 +152,9 @@ public class BattleManager : Manager
             bo = pParty[i].Go.Button;
             bo.Interactable = true;
 
-            bo.Navigation.Up = (eParty[i] != null)? eParty[i].Go.Button : null;
-            bo.Navigation.Right = (i + 1 < pParty.Count)? pParty[i + 1].Go.Button : pParty[0].Go.Button; //Set right nav.
-            bo.Navigation.Left = (i - 1 > -1)? pParty[i - 1].Go.Button : pParty[pParty.Count - 1].Go.Button; //Set left nav.
+            bo.Navigation.Up = (i < eParty.Count)? eParty[i].Go.Button : null;             //Set up nav.
+            bo.Navigation.Right = pParty[DataMethods.NextIndex(i, pParty)].Go.Button;       //Set right nav.
+            bo.Navigation.Left = pParty[DataMethods.PreviousIndex(i, pParty)].Go.Button;    //Set left nav.
         }
 
         for (int i = 0; i < eParty.Count; i++)
@@ -160,9 +162,9 @@ public class BattleManager : Manager
             bo = eParty[i].Go.Button;
             bo.Interactable = true;
 
-            bo.Navigation.Down = (pParty[i] != null)? pParty[i].Go.Button : null;
-            bo.Navigation.Right = (i + 1 < eParty.Count)? eParty[i + 1].Go.Button : eParty[0].Go.Button; //Set right nav.
-            bo.Navigation.Left = (i - 1 > -1)? eParty[i - 1].Go.Button : eParty[eParty.Count - 1].Go.Button; //Set left nav.
+            bo.Navigation.Down = (pParty[i] != null)? pParty[i].Go.Button : null;           //Set down nav.
+            bo.Navigation.Right = eParty[DataMethods.NextIndex(i, eParty)].Go.Button;       //Set right nav.
+            bo.Navigation.Left = eParty[DataMethods.PreviousIndex(i, eParty)].Go.Button;    //Set left nav.
         }
     }
 
@@ -176,9 +178,17 @@ public class BattleManager : Manager
     }
     #endregion
 
-    //Switches current fighter and reloads player move menu.
-    private void SwitchCurrentFighter(ActiveFighter actFighter)
+    public int FindFighter(Fighter fighter, List<ActiveFighter> party)
     {
+        for (int i = 0; i < party.Count; i++)
+            if (fighter.EqualTo(party[i].Data)) return i;
+        return -1;
+    }
+
+    //Switches current fighter and reloads player move menu.
+    public void SwitchCurrentFighter(ActiveFighter actFighter)
+    {
+
         curFighter = actFighter;
         ui.ReloadPlayerFighterMovesUI(curFighter);
     }
@@ -234,13 +244,15 @@ public class ActiveFighter
         fluxStats = Stats.Multiply(data.TotalStats, boostStats);
     }
 
-    #region Move
     public void AddHP(float amount)
     {
         data.SetHP(data.CurrentHP + amount);
-        ui.UpdateHPVisuals();
     }
-    #endregion
+
+    public string AsString()
+    {
+        return GetType() + ": " + data.Name + "\n" + fluxStats.AsString();
+    }
 }
 //=====================================================================================================================
 public class ActiveAction
@@ -253,7 +265,7 @@ public class ActiveAction
 
     #region GS
     public List<ActiveFighter> Targets { get => targets; set => targets = value; }
-    public ActionSO Action { get => action; set => action = value; }
+    public ActionSO Data { get => action; set => action = value; }
     public ActiveFighter User { get => user; set => user = value; }
     #endregion
 
@@ -268,17 +280,18 @@ public class ActiveAction
     public void UseAction()
     {
         action.Use(user, targets);
+        PlayFighterAnimation();
     }
     #region Animation
-    public void PlayFighterAnimation()
+    private void PlayFighterAnimation()
     {
         user.Go.Animator.Play("ATTACK");//Play animation.
     }
     #endregion
     #region Target
+    //Adds actFighter as a target and if there are enough targets brings up the confirm action menu.
     public void AddTarget(ActiveFighter actFighter)
     {
-        Debug.Log("ADDED " + actFighter.Data.Name + " AS A TARGET FOR " + user.Data.Name + "'S " + action.Name);
         targets.Add(actFighter);
         if (ValidTargets())
         {
@@ -306,10 +319,62 @@ public class ActiveAction
         }
     }
     #endregion
+    public string AsString()
+    {
+        return user.AsString() + "\n" + action.AsString();
+    }
 }
 //=====================================================================================================================
 public class ActionList
 {
-    
+    private BattleManager bm;
+
+    private List<ActiveAction> actions = new List<ActiveAction>();
+
+    public ActionList(BattleManager bm)
+    {
+        this.bm = bm;
+    }
+    public void Add(ActiveAction action)
+    {
+        for (int i = 0; i < actions.Count; i++)
+        {
+            if (action.Data.Priority > actions[i].Data.Priority) //New action has higher priority.
+            {
+                actions.Insert(i, action);
+                action = null;
+                break;
+            }
+            else if (action.Data.Priority == actions[i].Data.Priority) //New action has equal priority; insert based off highest flux agility.
+            {
+                if (action.User.FluxStats.Agility > actions[i].User.FluxStats.Agility)
+                {
+                    actions.Insert(i, action);
+                    action = null;
+                    break;
+                }
+            }
+        }
+        if (action != null)
+            actions.Add(action);
+        Debug.Log(action.AsString());
+    }
+    public void UseFirstAction()
+    {
+        actions[0].UseAction();
+        actions.RemoveAt(0);
+    }
+
+    #region Utility
+    public string AsString()
+    {
+        string str = "";
+        
+        foreach (ActiveAction action in actions)
+            str += action.AsString() + "\n";
+
+        return str;
+    }
+    #endregion
 }
 

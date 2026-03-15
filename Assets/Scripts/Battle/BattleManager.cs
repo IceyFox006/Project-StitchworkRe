@@ -110,7 +110,10 @@ public class BattleManager : Manager
             case TargetType.SELF:
                 ObjectEventSystem.Current.SwitchHover(curAction.User.Go.Button, true);
                 break;
-            case TargetType.ALL: break;
+            case TargetType.ALL: 
+                EnableAllButtons();
+                ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button);
+                break;
             case TargetType.SINGLE_ENEMY:
             case TargetType.ALL_ENEMIES:
                 EnablePartyButtons(eParty);
@@ -135,6 +138,31 @@ public class BattleManager : Manager
 
             bo.Navigation.Right = (i + 1 < party.Count)? party[i + 1].Go.Button : party[0].Go.Button; //Set right nav.
             bo.Navigation.Left = (i - 1 > -1)? party[i - 1].Go.Button : party[party.Count - 1].Go.Button; //Set left nav.
+        }
+    }
+
+    //Enables interaction on all fighters' buttons and sets their navigation.
+    private void EnableAllButtons()
+    {
+        ButtonObject bo;
+        for (int i = 0; i < pParty.Count; i++)
+        {
+            bo = pParty[i].Go.Button;
+            bo.Interactable = true;
+
+            bo.Navigation.Up = (eParty[i] != null)? eParty[i].Go.Button : null;
+            bo.Navigation.Right = (i + 1 < pParty.Count)? pParty[i + 1].Go.Button : pParty[0].Go.Button; //Set right nav.
+            bo.Navigation.Left = (i - 1 > -1)? pParty[i - 1].Go.Button : pParty[pParty.Count - 1].Go.Button; //Set left nav.
+        }
+
+        for (int i = 0; i < eParty.Count; i++)
+        {
+            bo = eParty[i].Go.Button;
+            bo.Interactable = true;
+
+            bo.Navigation.Down = (pParty[i] != null)? pParty[i].Go.Button : null;
+            bo.Navigation.Right = (i + 1 < eParty.Count)? eParty[i + 1].Go.Button : eParty[0].Go.Button; //Set right nav.
+            bo.Navigation.Left = (i - 1 > -1)? eParty[i - 1].Go.Button : eParty[eParty.Count - 1].Go.Button; //Set left nav.
         }
     }
 

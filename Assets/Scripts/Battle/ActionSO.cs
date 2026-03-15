@@ -22,6 +22,8 @@ public class ActionSO : ScriptableObject
         protected TargetType target;
     [SerializeField][MinValue(0)] 
         protected int _power;
+    [SerializeField][Range(-1, 3)][Tooltip("Items have priority of 3 (always go first).")]
+        protected int _priority;
     [SerializeField] 
         protected EffectData[] _effects;
 

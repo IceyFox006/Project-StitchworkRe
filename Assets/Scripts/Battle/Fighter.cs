@@ -18,7 +18,7 @@ public class Fighter
 
     private int maxHP;
     private int maxEnergy;
-    private Stats totalStats; 
+    [SerializeField]private Stats totalStats; 
     private Stats baseStats;
     [SerializeField] private Stats _madeStats = new Stats(15); //Determined on creation. (IVs)
     [SerializeField] private Stats _trainedStats = new Stats(0); //Determined by experience. (EVs)
@@ -35,7 +35,7 @@ public class Fighter
 
     #region GS
     public int MaxHP { get => maxHP; set => maxHP = value; }
-    public float CurrentHP { get => curHP; set => curHP = value; }
+    public float CurHP { get => curHP; set => curHP = value; }
     public EntityParts Parts { get => _parts; set => _parts = value; }
     public ElementSO[] Elements { get => _elements; set => _elements = value; }
     public ColorPaletteSO[] Palettes { get => _palettes; set => _palettes = value; }
@@ -44,6 +44,8 @@ public class Fighter
     public Stats TotalStats { get => totalStats; set => totalStats = value; }
     public string Name { get => _name; set => _name = value; }
     public string Id { get => id; set => id = value; }
+    public float CurEnergy { get => curEnergy; set => curEnergy = value; }
+    public int MaxEnergy { get => maxEnergy; set => maxEnergy = value; }
     #endregion
 
     public virtual void Initialize()
@@ -96,28 +98,26 @@ public class Fighter
     protected void CalculateTotalStats()
     {
         totalStats = new Stats();
-        totalStats.Health = Mathf.FloorToInt(((2 * baseStats.Health + _madeStats.Health + (_trainedStats.Health) * _level) / 100) + _level + 10);
-        totalStats.Endurance = Mathf.FloorToInt(((2 * baseStats.Endurance + _madeStats.Endurance + (_trainedStats.Endurance) * _level) / 100) + 5);
-        totalStats.Strength = Mathf.FloorToInt(((2 * baseStats.Strength + _madeStats.Strength + (_trainedStats.Strength) * _level) / 100) + 5);
-        totalStats.Magic = Mathf.FloorToInt(((2 * baseStats.Magic + _madeStats.Magic + (_trainedStats.Magic) * _level) / 100) + 5);
-        totalStats.Agility = Mathf.FloorToInt(((2 * baseStats.Agility + _madeStats.Agility + (_trainedStats.Agility) * _level) / 100) + 5);
+        totalStats.Health = (((2 * baseStats.Health + _madeStats.Health + (_trainedStats.Health / 4)) * _level) / 100) + _level + 10;
+        
+        totalStats.Endurance = (((2 * baseStats.Endurance + _madeStats.Endurance + (_trainedStats.Endurance / 4)) * _level) / 100) + 5;
+        totalStats.Strength =(((2 * baseStats.Strength + _madeStats.Strength + (_trainedStats.Strength / 4)) * _level) / 100) + 5;
+        totalStats.Magic = (((2 * baseStats.Magic + _madeStats.Magic + (_trainedStats.Magic / 4)) * _level) / 100) + 5;
+        totalStats.Agility = (((2 * baseStats.Agility + _madeStats.Agility + (_trainedStats.Agility / 4)) * _level) / 100) + 5;
 
         maxHP = (int)totalStats.Health;
-        maxEnergy = Mathf.FloorToInt((_level * 3) + (totalStats.GetTotal() / 10));
-        totalStats = Stats.Multiply(totalStats, _personalityStats);
+        maxEnergy = (int)((_level * 3) + (totalStats.GetTotal() / 10));
+        totalStats.Multiply(_personalityStats);
     }
 
     private void CalculateBaseStats()
     {
-        baseStats = new Stats();
-        foreach (PartSO part in _parts.ToList())
-        {
-            baseStats.Health += part.Stats.Health;
-            baseStats.Endurance += part.Stats.Endurance;
-            baseStats.Strength += part.Stats.Strength;
-            baseStats.Magic += part.Stats.Magic;
-            baseStats.Agility += part.Stats.Agility;
-        }
+        baseStats = new Stats(0);
+        PartSO[] parts = _parts.ToArray();
+
+        foreach (PartSO part in parts)
+            baseStats.Add(part.Stats);
+        baseStats.Divide(parts.Length);
     }
 
     //Sets the effectiveness that each attacking element has when hitting the fighter.

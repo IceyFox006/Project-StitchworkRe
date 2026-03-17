@@ -24,7 +24,7 @@ MonoBehaviour:
     _elements:
     - {fileID: 11400000, guid: d11739265a43cb94aa93a26b3fb4e5a2, type: 2}
     - {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
-    _level: 5
+    _level: 100
     _moves:
     - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
     - {fileID: 11400000, guid: f9f9215564ffab542aab54427aaec5c5, type: 2}
@@ -36,7 +36,7 @@ MonoBehaviour:
       _endurance: 15
       _strength: 15
       _magic: 15
-      _agility: 15
+      _agility: 30
       _luck: 1
       _regen: 1
     _trainedStats:
@@ -68,7 +68,7 @@ MonoBehaviour:
     _elements:
     - {fileID: 11400000, guid: d11739265a43cb94aa93a26b3fb4e5a2, type: 2}
     - {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
-    _level: 5
+    _level: 50
     _moves:
     - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
     - {fileID: 11400000, guid: f9f9215564ffab542aab54427aaec5c5, type: 2}
@@ -119,7 +119,7 @@ MonoBehaviour:
       _endurance: 15
       _strength: 15
       _magic: 15
-      _agility: 15
+      _agility: 1
       _luck: 1
       _regen: 1
     _trainedStats:

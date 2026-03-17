@@ -47,8 +47,47 @@ public class Stats
         return "( HP_" + _health + ", End_" + _endurance + ", Str_" + _strength + ", Mag_" + _magic + ", Agi_" + _agility + ")";
     }
 
+    #region Math
+    //Adds value to this stats.
+    public void Add(Stats value)
+    {
+        _health += value.Health;
+        _endurance += value.Endurance;
+        _strength += value.Strength;
+        _magic += value.Magic;
+        _agility += value.Agility;
+    }
+
+    //Multiplies value to this stats.
+    public void Multiply(Stats value)
+    {
+        _health *= value.Health;
+        _endurance *= value.Endurance;
+        _strength *= value.Strength;
+        _magic *= value.Magic;
+        _agility *= value.Agility;
+    }
     public static Stats Multiply(Stats s1, Stats s2)
     {
-        return new Stats(s1.Health * s2.Health, s1.Endurance * s2.Endurance, s1.Strength * s2.Strength, s1.Magic * s2.Magic, s1.Agility * s2.Agility);
+        Stats temp = Clone(s1);
+        temp.Multiply(s2);
+        return temp;
     }
+
+    //Divide value from this stats.
+    public void Divide(float value)
+    {
+        _health /= value;
+        _endurance /= value;
+        _strength /= value;
+        _magic /= value;
+        _agility /= value;
+    }
+    #endregion
+    #region Utility
+    public static Stats Clone(Stats stats)
+    {
+        return new Stats(stats.Health, stats.Endurance, stats.Strength, stats.Magic, stats.Agility);
+    }
+    #endregion
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class BattleUI : MonoBehaviour
 {
@@ -15,11 +14,13 @@ public class BattleUI : MonoBehaviour
     [Tooltip("What player moves UI spawn under.")]
     [SerializeField] private GameObject _playerMoveUiPfb;
     [SerializeField] private Transform _playerMovesUiSP;
+    [SerializeField] private GameObject _hasActedVisual;
 
     #region GS
     public MenuUI ConfirmActionMenu { get => _confirmActionMenu; set => _confirmActionMenu = value; }
     public GameObject Ui { get => _ui; set => _ui = value; }
     public MenuUI BattleMenu { get => _battleMenu; set => _battleMenu = value; }
+    public GameObject HasActedVisual { get => _hasActedVisual; set => _hasActedVisual = value; }
     #endregion
 
     public void Initialize(BattleManager bm)
@@ -38,11 +39,12 @@ public class BattleUI : MonoBehaviour
     //Spawns move buttons for player fighter.
     public void InstantiatePlayerFighterMovesUI(ActiveFighter actFighter)
     {
-        GameObject clone;
+        PlayerMoveButton clone;
         foreach (MoveSO move in actFighter.Data.Moves)
         {
-            clone = Instantiate(_playerMoveUiPfb, _playerMovesUiSP);
-            clone.GetComponent<PlayerMoveButton>().Initialize(bm, actFighter, move);
+            clone = Instantiate(_playerMoveUiPfb, _playerMovesUiSP).GetComponent<PlayerMoveButton>();
+            clone.Initialize(bm, actFighter, move);
+            clone.Button.interactable = !actFighter.HasActed;
         }
     }
 
@@ -57,20 +59,34 @@ public class BattleUI : MonoBehaviour
     #region Action
     public void ConfirmAction() //@UsedGlobal_Button
     {
-        ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
-        bm.DisableAllButtons();                     //Disable all fighter buttons.
         bm.Actions.Add(bm.CurAction);
-        //bm.CurAction.UseAction();
-        //bm.CurAction.PlayFighterAnimation();        //Play fighter animation (starts action sequence).
-        _confirmActionMenu.Disable();               //Closes confirm action menu.
+        bm.CurAction.User.HasActed = true;
+
+        int nextIndex = bm.FindFirstUnactedFighter(bm.FindFighter(bm.CurFighter.Data, bm.PParty), bm.PParty);
+        if (nextIndex > -1)
+        {
+            bm.SwitchCurrentFighter(bm.PParty[nextIndex]);
+            CancelAction();
+        }
+        else
+        {
+            FinishChooseAction();
+            //Start action sequence
+        }
+
     }
     public void CancelAction() //@UsedGlobal_Button
     {
+        FinishChooseAction();
+        _battleMenu.Enable();                       //Open battle menu.
+    }
+
+    private void FinishChooseAction()
+    {
         ObjectEventSystem.Current.ClearSelected();  //Clear selectedObjects.
-        bm.DisableAllButtons();                     //Disable all fighter buttons.
+        bm.DisableAllFighterButtons();              //Disable all fighter buttons.
         bm.CurAction = null;                        //Reset curAction.
         _confirmActionMenu.Disable();               //Closes confirm action menu.
-        _battleMenu.Enable();                       //Open battle menu.
     }
     #endregion
 }

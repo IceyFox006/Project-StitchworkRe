@@ -4,10 +4,16 @@ using UnityEngine.UI;
 
 public class FighterUI : MonoBehaviour
 {
-    [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _levelText;
+    [SerializeField] private Image _iconImage;
 
+    [Header("Health")]
     [SerializeField] private GradientFill _hpFill;
     [SerializeField] private TMP_Text _hpText;
+
+    [Header("Energy")]
+    [SerializeField] private GradientFill _energyFill;
+    [SerializeField] private TMP_Text _energyText;
 
     private BattleManager bm;
     private ActiveFighter actFighter;
@@ -21,6 +27,7 @@ public class FighterUI : MonoBehaviour
         this.bm = bm;
         this.actFighter = actFighter;
 
+        _levelText.text = "Lv. " + actFighter.Data.Level;
         //_icon.sprite = actFighter.Data.Parts.Head.//Set icon to fighter head icon.
 
         _hpFill.Initialize();
@@ -30,6 +37,11 @@ public class FighterUI : MonoBehaviour
     public void UpdateHPVisuals()
     {
         _hpFill.Fill(actFighter.Data.GetNormalizedHP());
-        _hpText.text = actFighter.Data.CurrentHP + " / " + actFighter.Data.MaxHP;
+        _hpText.text = actFighter.Data.CurHP + " / " + actFighter.Data.MaxHP;
+    }
+    public void UpdateEnergyVisuals()
+    {
+        _energyFill.Fill(actFighter.Data.GetNormalizedEnergy());
+        _energyText.text = actFighter.Data.CurEnergy + " / " + actFighter.Data.MaxEnergy;
     }
 }

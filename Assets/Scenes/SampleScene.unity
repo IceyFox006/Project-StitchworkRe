@@ -2032,7 +2032,7 @@ GameObject:
   - component: {fileID: 785080195}
   - component: {fileID: 785080194}
   m_Layer: 5
-  m_Name: ActionUsed_Image
+  m_Name: UsedAction_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4336,6 +4336,7 @@ MonoBehaviour:
     _firstSelected: {fileID: 1519918576}
   _playerMoveUiPfb: {fileID: 1325644015732448345, guid: 52895ed860a8e494481f87d9313e5012, type: 3}
   _playerMovesUiSP: {fileID: 1648450637}
+  _hasActedVisual: {fileID: 785080192}
 --- !u!1 &1597313062
 GameObject:
   m_ObjectHideFlags: 0

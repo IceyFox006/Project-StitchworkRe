@@ -169,7 +169,7 @@ public class BattleManager : Manager
     }
 
     //Disables interaction on all fighters; buttons.
-    public void DisableAllButtons()
+    public void DisableAllFighterButtons()
     {
         foreach (ActiveFighter actFighter in pParty)
             actFighter.Go.Button.Interactable = false;
@@ -178,18 +178,31 @@ public class BattleManager : Manager
     }
     #endregion
 
-    public int FindFighter(Fighter fighter, List<ActiveFighter> party)
+    //Returns the index of the fighter with the same ID as the target in the list.
+    public int FindFighter(Fighter target, List<ActiveFighter> list)
     {
-        for (int i = 0; i < party.Count; i++)
-            if (fighter.EqualTo(party[i].Data)) return i;
+        for (int i = 0; i < list.Count; i++)
+            if (target.EqualTo(list[i].Data)) return i;
+        return -1;
+    }
+
+    //Returns the index of the next fighter in list that has not acted yet.
+    public int FindFirstUnactedFighter(int curFighterIndex, List<ActiveFighter> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            curFighterIndex = DataMethods.NextIndex(curFighterIndex, list);
+            if (!list[curFighterIndex].HasActed) return curFighterIndex;
+        }
         return -1;
     }
 
     //Switches current fighter and reloads player move menu.
     public void SwitchCurrentFighter(ActiveFighter actFighter)
     {
-
         curFighter = actFighter;
+
+        ui.HasActedVisual.SetActive(curFighter.HasActed);
         ui.ReloadPlayerFighterMovesUI(curFighter);
     }
 
@@ -222,11 +235,14 @@ public class ActiveFighter
     private Stats fluxStats;
     private Stats boostStats;
 
+    private bool hasActed;
+
     #region GS
     public Fighter Data { get => data; set => data = value; }
     public FighterUI Ui { get => ui; set => ui = value; }
     public Stats FluxStats { get => fluxStats; set => fluxStats = value; }
     public FighterGO Go { get => go; set => go = value; }
+    public bool HasActed { get => hasActed; set => hasActed = value; }
     #endregion
 
     public ActiveFighter(Fighter data, FighterUI ui, FighterGO go)
@@ -235,8 +251,8 @@ public class ActiveFighter
         this.ui = ui;
         this.go = go;
 
-        fluxStats = data.TotalStats; //TotalStats multiplied by boostStats.
-        boostStats = new Stats(1); //Stat change multipliers during battles.
+        fluxStats = data.TotalStats;    //TotalStats multiplied by boostStats.
+        boostStats = new Stats(1);      //Stat change multipliers during battles.
     }
 
     public void ReloadFluxStats()
@@ -246,7 +262,7 @@ public class ActiveFighter
 
     public void AddHP(float amount)
     {
-        data.SetHP(data.CurrentHP + amount);
+        data.SetHP(data.CurHP + amount);
     }
 
     public string AsString()
@@ -357,7 +373,7 @@ public class ActionList
         }
         if (action != null)
             actions.Add(action);
-        Debug.Log(action.AsString());
+        Debug.Log(AsString());
     }
     public void UseFirstAction()
     {
@@ -368,12 +384,12 @@ public class ActionList
     #region Utility
     public string AsString()
     {
-        string str = "";
+        string str = "-----\n";
         
         foreach (ActiveAction action in actions)
             str += action.AsString() + "\n";
 
-        return str;
+        return str + "\n-----";
     }
     #endregion
 }

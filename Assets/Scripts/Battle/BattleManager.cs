@@ -295,6 +295,7 @@ public class ActiveAction
 
     public void UseAction()
     {
+        bm.CurAction = this;
         action.Use(user, targets);
         PlayFighterAnimation();
     }
@@ -345,7 +346,11 @@ public class ActionList
 {
     private BattleManager bm;
 
-    private List<ActiveAction> actions = new List<ActiveAction>();
+    private List<ActiveAction> list = new List<ActiveAction>();
+
+    #region GS
+    public List<ActiveAction> List { get => list; set => list = value; }
+    #endregion
 
     public ActionList(BattleManager bm)
     {
@@ -353,32 +358,32 @@ public class ActionList
     }
     public void Add(ActiveAction action)
     {
-        for (int i = 0; i < actions.Count; i++)
+        for (int i = 0; i < list.Count; i++)
         {
-            if (action.Data.Priority > actions[i].Data.Priority) //New action has higher priority.
+            if (action.Data.Priority > list[i].Data.Priority) //New action has higher priority.
             {
-                actions.Insert(i, action);
+                list.Insert(i, action);
                 action = null;
                 break;
             }
-            else if (action.Data.Priority == actions[i].Data.Priority) //New action has equal priority; insert based off highest flux agility.
+            else if (action.Data.Priority == list[i].Data.Priority) //New action has equal priority; insert based off highest flux agility.
             {
-                if (action.User.FluxStats.Agility > actions[i].User.FluxStats.Agility)
+                if (action.User.FluxStats.Agility > list[i].User.FluxStats.Agility)
                 {
-                    actions.Insert(i, action);
+                    list.Insert(i, action);
                     action = null;
                     break;
                 }
             }
         }
         if (action != null)
-            actions.Add(action);
+            list.Add(action);
         Debug.Log(AsString());
     }
     public void UseFirstAction()
     {
-        actions[0].UseAction();
-        actions.RemoveAt(0);
+        list[0].UseAction();
+        list.RemoveAt(0);
     }
 
     #region Utility
@@ -386,7 +391,7 @@ public class ActionList
     {
         string str = "-----\n";
         
-        foreach (ActiveAction action in actions)
+        foreach (ActiveAction action in list)
             str += action.AsString() + "\n";
 
         return str + "\n-----";

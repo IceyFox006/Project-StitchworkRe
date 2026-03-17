@@ -71,6 +71,7 @@ public class BattleUI : MonoBehaviour
         else
         {
             FinishChooseAction();
+            bm.Actions.UseFirstAction();
             //Start action sequence
         }
 

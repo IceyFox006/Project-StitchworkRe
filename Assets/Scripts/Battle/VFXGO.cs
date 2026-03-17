@@ -25,8 +25,11 @@ public class VFXGO : MonoBehaviour
         actFighter.Ui.UpdateHPVisuals();
     }
 
-    public void ShowBattleMenu()//@UsedLocal_Animation
+    public void NextAction()//@UsedLocal_Animation
     {
-        bm.Ui.BattleMenu.Enable();
+        if (bm.Actions.List.Count > 0)
+            bm.Actions.UseFirstAction();
+        else
+            bm.Ui.BattleMenu.Enable();
     }
 }

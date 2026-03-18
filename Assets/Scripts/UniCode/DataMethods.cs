@@ -55,7 +55,7 @@ public class DataMethods : MonoBehaviour
     }
 
     //Removes the value at index from list and returns the removed value.
-    public static T RemoveAt<T>(ref List<T> list, int index)
+    public static T RemoveAt<T>(List<T> list, int index)
     {
         T value = list[index];
         list.RemoveAt(index);

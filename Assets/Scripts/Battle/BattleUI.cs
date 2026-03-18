@@ -72,9 +72,7 @@ public class BattleUI : MonoBehaviour
         {
             FinishChooseAction();
             bm.Actions.UseFirstAction();
-            //Start action sequence
         }
-
     }
     public void CancelAction() //@UsedGlobal_Button
     {

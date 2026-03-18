@@ -68,11 +68,14 @@ public class BattleManager : Manager
         ui.BattleMenu.Enable();
 
         //Player Party
+        ActiveFighter clone;
         for (int pfID = 0; pfID < _playerFighterSPs.Length; pfID++)
         {
             if (pfID >= playerParty.Length) break;
 
-            pParty.Add(InstantiateFighter(playerParty[pfID], _fighterPfb, _playerFighterSPs[pfID], _playerFighterUiSP));
+            clone = InstantiateFighter(playerParty[pfID], _fighterPfb, _playerFighterSPs[pfID], _playerFighterUiSP);
+            clone.Party = pParty;
+            pParty.Add(clone);
         }
 
         //Enemy Party
@@ -80,7 +83,9 @@ public class BattleManager : Manager
         {
             if (efID >= enemyParty.Length) break;
 
-            eParty.Add(InstantiateFighter(enemyParty[efID], _fighterPfb, _enemyFighterSPs[efID], _enemyFighterUiSP));
+            clone = InstantiateFighter(enemyParty[efID], _fighterPfb, _enemyFighterSPs[efID], _enemyFighterUiSP);
+            clone.Party = EParty;
+            eParty.Add(clone);
         }
         SwitchCurrentFighter(pParty[0]);
     }
@@ -94,8 +99,36 @@ public class BattleManager : Manager
     {
 
     }
+    #region Fighter
+    //Returns the index of the fighter with the same ID as the target in the list.
+    public int FindFighter(Fighter target, List<ActiveFighter> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+            if (target.EqualTo(list[i].Data)) return i;
+        return -1;
+    }
 
-    #region TargetSelection
+    //Returns the index of the next fighter in list that has not acted yet.
+    public int FindFirstUnactedFighter(int curFighterIndex, List<ActiveFighter> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            curFighterIndex = DataMethods.NextIndex(curFighterIndex, list);
+            if (!list[curFighterIndex].HasActed) return curFighterIndex;
+        }
+        return -1;
+    }
+
+    //Switches current fighter and reloads player move menu.
+    public void SwitchCurrentFighter(ActiveFighter actFighter)
+    {
+        curFighter = actFighter;
+
+        ui.HasActedVisual.SetActive(curFighter.HasActed);
+        ui.ReloadPlayerFighterMovesUI(curFighter);
+    }
+    #endregion
+    #region Target Selection
     //Hides distracting UI, disables ineligible targets, sets ES selected to eligible target.
     public void EnterTargetSelection()
     {
@@ -178,34 +211,6 @@ public class BattleManager : Manager
     }
     #endregion
 
-    //Returns the index of the fighter with the same ID as the target in the list.
-    public int FindFighter(Fighter target, List<ActiveFighter> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-            if (target.EqualTo(list[i].Data)) return i;
-        return -1;
-    }
-
-    //Returns the index of the next fighter in list that has not acted yet.
-    public int FindFirstUnactedFighter(int curFighterIndex, List<ActiveFighter> list)
-    {
-        for (int i = 0; i < list.Count; i++)
-        {
-            curFighterIndex = DataMethods.NextIndex(curFighterIndex, list);
-            if (!list[curFighterIndex].HasActed) return curFighterIndex;
-        }
-        return -1;
-    }
-
-    //Switches current fighter and reloads player move menu.
-    public void SwitchCurrentFighter(ActiveFighter actFighter)
-    {
-        curFighter = actFighter;
-
-        ui.HasActedVisual.SetActive(curFighter.HasActed);
-        ui.ReloadPlayerFighterMovesUI(curFighter);
-    }
-
     #region Instantiate
     //Spawns fighter gameObject and fighterUI;
     private ActiveFighter InstantiateFighter(Fighter fighter, GameObject prefab, Transform goSP, Transform uiSP)
@@ -215,7 +220,7 @@ public class BattleManager : Manager
         FighterGO go = Instantiate(prefab, goSP).GetComponent<FighterGO>();
         FighterUI ui = Instantiate(_fighterUiPfb, uiSP).GetComponent<FighterUI>();
 
-        ActiveFighter actFighter = new ActiveFighter(fighter, ui, go);
+        ActiveFighter actFighter = new ActiveFighter(this, fighter, ui, go);
         go.Initialize(this, actFighter);
         ui.Initialize(this, actFighter);
 
@@ -228,6 +233,9 @@ public class BattleManager : Manager
 //=====================================================================================================================
 public class ActiveFighter
 {
+    private BattleManager bm;
+    private List<ActiveFighter> party;
+
     private Fighter data;
     private FighterUI ui;
     private FighterGO go;
@@ -236,6 +244,7 @@ public class ActiveFighter
     private Stats boostStats;
 
     private bool hasActed;
+    private bool wasHurt;
 
     #region GS
     public Fighter Data { get => data; set => data = value; }
@@ -243,10 +252,14 @@ public class ActiveFighter
     public Stats FluxStats { get => fluxStats; set => fluxStats = value; }
     public FighterGO Go { get => go; set => go = value; }
     public bool HasActed { get => hasActed; set => hasActed = value; }
+    public bool WasHurt { get => wasHurt; set => wasHurt = value; }
+    public List<ActiveFighter> Party { get => party; set => party = value; }
     #endregion
 
-    public ActiveFighter(Fighter data, FighterUI ui, FighterGO go)
+    public ActiveFighter(BattleManager bm, Fighter data, FighterUI ui, FighterGO go)
     {
+        this.bm = bm;
+
         this.data = data;
         this.ui = ui;
         this.go = go;
@@ -255,62 +268,83 @@ public class ActiveFighter
         boostStats = new Stats(1);      //Stat change multipliers during battles.
     }
 
+    public void AddHP(float amount)
+    {
+        data.SetHP(data.CurHP + amount);
+
+        wasHurt = amount < 0;
+        if (data.CurHP == 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        go.Animator.SetBool("IS_DEAD", data.CurHP == 0);
+        party.RemoveAt(bm.FindFighter(data, party));
+    }
+
+    #region Refresh
     public void ReloadFluxStats()
     {
         fluxStats = Stats.Multiply(data.TotalStats, boostStats);
     }
-
-    public void AddHP(float amount)
+    public void ResetTurnVariables()
     {
-        data.SetHP(data.CurHP + amount);
+        hasActed = wasHurt = false;
     }
-
+    #endregion
+    #region Utility
     public string AsString()
     {
         return GetType() + ": " + data.Name + "\n" + fluxStats.AsString();
     }
+    #endregion
 }
 //=====================================================================================================================
 public class ActiveAction
 {
-    private BattleManager bm;
+    protected BattleManager bm;
 
-    private ActionSO action;
-    private ActiveFighter user;
+    protected ActionSO data;
+    protected ActiveFighter user;
     private List<ActiveFighter> targets = new List<ActiveFighter>();
 
     #region GS
     public List<ActiveFighter> Targets { get => targets; set => targets = value; }
-    public ActionSO Data { get => action; set => action = value; }
+    public ActionSO Data { get => data; set => data = value; }
     public ActiveFighter User { get => user; set => user = value; }
     #endregion
 
-    public ActiveAction(BattleManager bm, ActionSO action, ActiveFighter user)
+    public ActiveAction(BattleManager bm, ActionSO data, ActiveFighter user)
     {
         this.bm = bm;
-        this.action = action;
+        this.data = data;
         this.user = user;
     }
 
 
-    public void UseAction()
+    public virtual void UseAction()
     {
+        ValidateTargets();
+        if (targets.Count == 0)
+        {
+            bm.Actions.NextAction();
+            Debug.Log("Target dead.");
+            return;
+        }
+
         bm.CurAction = this;
-        action.Use(user, targets);
-        PlayFighterAnimation();
+        data.Use(user, targets);
     }
     #region Animation
-    private void PlayFighterAnimation()
-    {
-        user.Go.Animator.Play("ATTACK");//Play animation.
-    }
+
     #endregion
     #region Target
     //Adds actFighter as a target and if there are enough targets brings up the confirm action menu.
     public void AddTarget(ActiveFighter actFighter)
     {
         targets.Add(actFighter);
-        if (ValidTargets())
+        if (HasCorrectTargetCount())
         {
             bm.Ui.ConfirmActionMenu.Enable();
             ObjectEventSystem.Current.DisableInput();
@@ -318,9 +352,9 @@ public class ActiveAction
     }
 
     //Returns true if the number of targets is equal to the required amount.
-    private bool ValidTargets()
+    private bool HasCorrectTargetCount()
     {
-        switch (action.Target)
+        switch (data.Target)
         {
             case TargetType.SELF:
             case TargetType.SINGLE_ENEMY:
@@ -335,10 +369,41 @@ public class ActiveAction
             default: return false;
         }
     }
+
+    private void ValidateTargets()
+    {
+        for (int i = 0; i < targets.Count; i++)
+        {
+            if (bm.FindFighter(targets[i].Data, targets[i].Party) == -1)
+                targets.RemoveAt(i);
+        }
+    }
     #endregion
+    #region Utility
     public string AsString()
     {
-        return user.AsString() + "\n" + action.AsString();
+        return user.AsString() + "\n" + data.AsString();
+    }
+    #endregion
+}
+//---------------------------------------------------------------------------------------------------------------------
+public class ActiveMove : ActiveAction
+{
+    private MoveSO moveData;
+    public ActiveMove(BattleManager bm, MoveSO data, ActiveFighter user) : base(bm, data, user)
+    {
+        moveData = data;
+    }
+
+    public override void UseAction()
+    {
+        base.UseAction();
+        PlayMoveAnimation();
+    }
+
+    private void PlayMoveAnimation()
+    {
+        user.Go.Animator.SetTrigger((moveData.DamageType != DamageType.Status)? "ATTACK" : "DEFEND");
     }
 }
 //=====================================================================================================================
@@ -356,6 +421,8 @@ public class ActionList
     {
         this.bm = bm;
     }
+
+    //Adds action to list in order of priority and speed (fasted first).
     public void Add(ActiveAction action)
     {
         for (int i = 0; i < list.Count; i++)
@@ -378,12 +445,23 @@ public class ActionList
         }
         if (action != null)
             list.Add(action);
-        Debug.Log(AsString());
+    }
+
+    public void NextAction()
+    {
+        Debug.Log(list.Count);
+        if (list.Count > 0)
+            UseFirstAction();
+        else
+            bm.Ui.BattleMenu.Enable();
     }
     public void UseFirstAction()
     {
-        list[0].UseAction();
-        list.RemoveAt(0);
+        Debug.Log(list[0].Data.Name);
+        DataMethods.RemoveAt(list, 0).UseAction();
+        //if (list.Count == 0) return;
+        //list[0].UseAction();
+        //list.RemoveAt(0);
     }
 
     #region Utility

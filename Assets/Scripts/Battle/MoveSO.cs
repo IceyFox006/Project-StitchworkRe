@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,6 +24,7 @@ public class MoveSO : ActionSO
 
     #region GS
     public Sprite Icon { get => _icon; set => _icon = value; }
+    public DamageType DamageType { get => _damageType; set => _damageType = value; }
     #endregion
 
     public override void Use(ActiveFighter user, List<ActiveFighter> targets)
@@ -35,7 +35,6 @@ public class MoveSO : ActionSO
         {
             case DamageType.Physical: attack = user.FluxStats.Strength; break;
             case DamageType.Special: attack = user.FluxStats.Magic; break;
-            case DamageType.Status: attack = 1; break;
         }
 
         float power;
@@ -48,14 +47,16 @@ public class MoveSO : ActionSO
                 continue;
             }
 
-            power = ((((2 * user.Data.Level) / 5) + 2) * _power * (attack / target.FluxStats.Endurance)/ 50) + 2; //status effect * weather * terrain
-            power *= target.Data.GetEffectivenessMultiplier(_element); //Weak, resistant, immune.
-            power *= user.Data.GetSTABMultiplier(_element); //User element = move element.
-            power = (int)power;
+            if (_damageType != DamageType.Status)
+            {
+                power = ((((2 * user.Data.Level) / 5) + 2) * _power * (attack / target.FluxStats.Endurance) / 50) + 2; //status effect * weather * terrain
+                power *= target.Data.GetEffectivenessMultiplier(_element); //Weak, resistant, immune.
+                power *= user.Data.GetSTABMultiplier(_element); //User element = move element.
+                power = (int)power;
 
-            target.AddHP(-power);
+                target.AddHP(-power);
+            }
         }
-
     }
 }
 

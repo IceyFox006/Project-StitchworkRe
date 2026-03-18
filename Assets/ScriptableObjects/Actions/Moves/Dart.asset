@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dart
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Dart
-  _vfxAc: {fileID: 0}
+  _vfxAc: {fileID: 22100000, guid: b475bc8f4cf6b4349aec2524c436c79f, type: 2}
   target: 2
   _power: 40
   _priority: 1

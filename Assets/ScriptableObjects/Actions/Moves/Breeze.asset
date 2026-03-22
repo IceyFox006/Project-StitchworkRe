@@ -16,10 +16,12 @@ MonoBehaviour:
   _vfxAc: {fileID: 22100000, guid: 31e93e408065f8747bb8dc6c6446e407, type: 2}
   target: 3
   _power: 40
+  _priority: 0
   _effects: []
   _icon: {fileID: 0}
   _description: 
   _element: {fileID: 11400000, guid: bd5b6cc24d9842344b4820f9a592bf55, type: 2}
-  _energyCost: 0
+  _energyCost: 8
   _accuracy: 100
   _damageType: 1
+  _numHitRange: {x: 1, y: 1}

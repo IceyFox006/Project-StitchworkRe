@@ -21,6 +21,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _description: 
   _element: {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
-  _energyCost: 0
+  _energyCost: 4
   _accuracy: 100
   _damageType: 0
+  _numHitRange: {x: 1, y: 1}

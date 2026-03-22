@@ -348,6 +348,10 @@ public class ActiveFighter
 
         wasHurt = amount < 0;
     }
+    public void AddEnergy(float amount)
+    {
+        data.SetEnergy(data.CurEnergy + amount);
+    }
 
     public void Die()
     {
@@ -406,6 +410,7 @@ public class ActiveAction
 
         bm.CurAction = this;
         data.Use(user, targets);
+        user.Ui.UpdateEnergyVisuals();
     }
     #region Animation
 

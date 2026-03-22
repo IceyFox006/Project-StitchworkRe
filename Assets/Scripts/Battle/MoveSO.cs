@@ -20,7 +20,7 @@ public class MoveSO : ActionSO
 
     [SerializeField] 
         private ElementSO _element; 
-    [SerializeField] 
+    [SerializeField][MinValue(0)]
         private int _energyCost; //!!!
 
     [SerializeField][Range(1, 101)] 
@@ -40,6 +40,9 @@ public class MoveSO : ActionSO
 
     public override void Use(ActiveFighter user, List<ActiveFighter> targets)
     {
+        //Remove Energy
+        user.AddEnergy(-_energyCost);
+
         //Damage Calculate
         float attack = 1;
         switch (_damageType)

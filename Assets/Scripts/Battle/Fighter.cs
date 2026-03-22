@@ -88,6 +88,12 @@ public class Fighter
         curHP = amount;
         ClampHP();
     }
+
+    public void SetEnergy(float amount)
+    {
+        curEnergy = amount;
+        ClampEnergy();
+    }
     #endregion
 
     #region Calculate
@@ -160,11 +166,13 @@ public class Fighter
         return (id.Equals(fighter.Id));
     }
 
-    //Clamps currentHP between 0 and maxHP.
-    private void ClampHP()
-    {
+    //Clamps curHP between 0 and maxHP.
+    private void ClampHP() =>
         curHP = Mathf.Clamp(curHP, 0, maxHP);
-    }
+    
+    //Clamps curEnergy between 0 and maxEnergy.
+    private void ClampEnergy() =>
+        curEnergy = Mathf.Clamp(curEnergy, 0, maxEnergy);
     #endregion
 }
 

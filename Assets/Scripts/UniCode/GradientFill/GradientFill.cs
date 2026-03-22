@@ -10,17 +10,19 @@ public class GradientFill : MonoBehaviour
         protected Gradient _gradient;
 
     [Header("Slow Fill")]
-    [SerializeField][MinValue(0.001f)]
-        protected float _slowFillSpeed;
+    [SerializeField][MinValue(0)]
+        private float _duration;
     private UnityEvent onSlowFillFinish;
     private bool isFilling;
     private float targetAmount;
+    private float time;
 
     protected float fillAmount = 1;
 
     #region GS
     public float FillAmount { get => fillAmount; set => fillAmount = value; }
     public UnityEvent OnSlowFillFinish { get => onSlowFillFinish; set => onSlowFillFinish = value; }
+    public float Duration { get => _duration; set => _duration = value; }
     #endregion
 
     private void Awake()
@@ -39,6 +41,7 @@ public class GradientFill : MonoBehaviour
     }
     public void StartSlowFill(float amount)
     {
+        time = 0;
         targetAmount = amount;
 
         if (isFilling) return;
@@ -48,13 +51,13 @@ public class GradientFill : MonoBehaviour
     private IEnumerator SlowFill()
     {
         isFilling = true;
-        while (fillAmount != targetAmount)
-        {
-            yield return null;
-            Fill(Mathf.SmoothStep(fillAmount, targetAmount, _slowFillSpeed * Time.deltaTime));   
-            //Fill(Mathf.Lerp(fillAmount, targetAmount, _slowFillSpeed * Time.deltaTime));
-        }
 
+        while (time <= _duration)//(fillAmount != targetAmount)
+        {
+            Fill(Mathf.Lerp(fillAmount, targetAmount, Lerp.EaseOut(time / _duration)));
+            yield return null;
+            time += Time.deltaTime;
+        }
         onSlowFillFinish.Invoke();
         onSlowFillFinish.RemoveAllListeners();
 

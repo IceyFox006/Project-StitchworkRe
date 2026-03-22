@@ -174,7 +174,7 @@ MonoBehaviour:
       _tail: {fileID: 11400000, guid: 311693f2cc1108d4ca277942a826d6d2, type: 2}
     _elements:
     - {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
-    _level: 5
+    _level: 50
     _moves:
     - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
     totalStats:
@@ -220,7 +220,7 @@ MonoBehaviour:
       _tail: {fileID: 11400000, guid: 311693f2cc1108d4ca277942a826d6d2, type: 2}
     _elements:
     - {fileID: 11400000, guid: e2af27a1c8ce71044a021e1521a7b0ef, type: 2}
-    _level: 5
+    _level: 50
     _moves:
     - {fileID: 11400000, guid: 083d38496b47ecd4c8e8e477527e5801, type: 2}
     totalStats:

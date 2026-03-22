@@ -56,15 +56,14 @@ public class FighterUI : MonoBehaviour
     public void UpdateHPVisuals(bool doNextAction = false)
     {
         if (doNextAction)
-            _hpFill.OnSlowFillFinish.AddListener(() => {bm.Actions.NextAction();});
+            bm.StartNextActionCD(_hpFill.Duration);
 
         _hpFill.StartSlowFill(actFighter.Data.GetNormalizedHP());
-        //_hpFill.Fill(actFighter.Data.GetNormalizedHP());
         _hpText.text = actFighter.Data.CurHP + " / " + actFighter.Data.MaxHP;
     }
     public void UpdateEnergyVisuals()
     {
-        _energyFill.Fill(actFighter.Data.GetNormalizedEnergy());
+        _energyFill.StartSlowFill(actFighter.Data.GetNormalizedEnergy());
         _energyText.text = actFighter.Data.CurEnergy + " / " + actFighter.Data.MaxEnergy;
     }
 }

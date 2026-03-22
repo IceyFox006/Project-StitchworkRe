@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,19 +13,29 @@ public enum DamageType
 [CreateAssetMenu(fileName = "MoveSO", menuName = "Scriptable Objects/Battle/Actions/Move")]
 public class MoveSO : ActionSO
 {
-    [SerializeField] private Sprite _icon;
-    [SerializeField][TextArea(1,5)] private string _description;
+    [SerializeField] 
+        private Sprite _icon;
+    [SerializeField][TextArea(1,5)] 
+        private string _description;
 
-    [SerializeField] private ElementSO _element; 
-    [SerializeField] private int _energyCost; //!!!
+    [SerializeField] 
+        private ElementSO _element; 
+    [SerializeField] 
+        private int _energyCost; //!!!
 
-    [SerializeField][Range(1, 101)] private int _accuracy;
+    [SerializeField][Range(1, 101)] 
+        private int _accuracy;
 
-    [SerializeField] private DamageType _damageType; 
+    [SerializeField] 
+        private DamageType _damageType;
+
+    [SerializeField][MinMaxSlider(1, 5)][Tooltip("How many times it can hit.")]
+        private Vector2Int _numHitRange = Vector2Int.one;
 
     #region GS
     public Sprite Icon { get => _icon; set => _icon = value; }
     public DamageType DamageType { get => _damageType; set => _damageType = value; }
+    public Vector2Int NumHitRange { get => _numHitRange; set => _numHitRange = value; }
     #endregion
 
     public override void Use(ActiveFighter user, List<ActiveFighter> targets)

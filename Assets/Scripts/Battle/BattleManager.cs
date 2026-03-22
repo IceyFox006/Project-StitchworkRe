@@ -43,6 +43,8 @@ public class BattleManager : Manager
     private List<ActiveFighter> eParty = new List<ActiveFighter>();
 
     private ActionList actions;
+    private bool isWaitingForNextAction;
+
     private ActiveFighter curFighter;
     private ActiveAction curAction;
 
@@ -137,6 +139,25 @@ public class BattleManager : Manager
             actFighter.ResetTurnVariables();
 
         SwitchCurrentFighter(pParty[0]);
+    }
+
+    //Starts the countdown for the next action if it is not already being performed.
+    public void StartNextActionCD(float time)
+    {
+        if (isWaitingForNextAction)
+            return;
+
+        StartCoroutine(NextActionCD(time));
+    }
+
+    //Performs the next action after the hp ui has run its duration.
+    private IEnumerator NextActionCD(float time)
+    {
+        isWaitingForNextAction = true;
+
+        yield return new WaitForSeconds(time);
+        actions.NextAction();
+        isWaitingForNextAction = false;
     }
 
     public bool CheckPartyDead(List<ActiveFighter> party)
@@ -422,6 +443,7 @@ public class ActiveAction
         }
     }
 
+    //Goes through all targets and if they cannot be found in their own party (dead), removes them from the target list.
     private void ValidateTargets()
     {
         for (int i = 0; i < targets.Count; i++)

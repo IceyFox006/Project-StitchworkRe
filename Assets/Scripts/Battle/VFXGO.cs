@@ -29,9 +29,4 @@ public class VFXGO : MonoBehaviour
         if (actFighter.WasHurt)
             actFighter.Go.Animator.SetTrigger("HURT");
     }
-
-    public void NextAction()//@UsedLocal_Animation
-    {
-        bm.Actions.NextAction();
-    }
 }

@@ -1,3 +1,5 @@
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -46,3 +48,4 @@ public class MenuUI
         EventSystem.current.sendNavigationEvents |= true;
     }
 }
+

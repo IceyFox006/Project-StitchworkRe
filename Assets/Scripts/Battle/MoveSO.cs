@@ -21,7 +21,7 @@ public class MoveSO : ActionSO
     [SerializeField] 
         private ElementSO _element; 
     [SerializeField][MinValue(0)]
-        private int _energyCost; //!!!
+        private int _energyCost;
 
     [SerializeField][Range(1, 101)] 
         private int _accuracy;
@@ -36,6 +36,7 @@ public class MoveSO : ActionSO
     public Sprite Icon { get => _icon; set => _icon = value; }
     public DamageType DamageType { get => _damageType; set => _damageType = value; }
     public Vector2Int NumHitRange { get => _numHitRange; set => _numHitRange = value; }
+    public int EnergyCost { get => _energyCost; set => _energyCost = value; }
     #endregion
 
     public override void Use(ActiveFighter user, List<ActiveFighter> targets)

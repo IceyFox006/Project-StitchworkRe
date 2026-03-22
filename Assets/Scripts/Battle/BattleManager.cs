@@ -412,9 +412,6 @@ public class ActiveAction
         data.Use(user, targets);
         user.Ui.UpdateEnergyVisuals();
     }
-    #region Animation
-
-    #endregion
     #region Target
     //Adds actFighter as a target and if there are enough targets brings up the confirm action menu.
     public void AddTarget(ActiveFighter actFighter)

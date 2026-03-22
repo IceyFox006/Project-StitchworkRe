@@ -1,8 +1,8 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Button))]
 public class PlayerMoveButton : MonoBehaviour
 {
     [SerializeField] private TMP_Text _name;
@@ -13,9 +13,9 @@ public class PlayerMoveButton : MonoBehaviour
     private ActiveFighter actFighter;
     private MoveSO move;
 
-    private List<ActiveFighter> targets;
-
+    #region GS
     public Button Button { get => button; set => button = value; }
+    #endregion
 
     public void Initialize(BattleManager bm, ActiveFighter actFighter, MoveSO move)
     {

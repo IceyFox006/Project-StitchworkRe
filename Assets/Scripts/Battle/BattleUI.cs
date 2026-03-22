@@ -44,7 +44,10 @@ public class BattleUI : MonoBehaviour
         {
             clone = Instantiate(_playerMoveUiPfb, _playerMovesUiSP).GetComponent<PlayerMoveButton>();
             clone.Initialize(bm, actFighter, move);
-            clone.Button.interactable = !actFighter.HasActed;
+
+            //Interactable
+            if (actFighter.HasActed || actFighter.Data.CurEnergy < move.EnergyCost) //If already acted or not enough energy.
+                clone.Button.interactable = false;
         }
     }
 

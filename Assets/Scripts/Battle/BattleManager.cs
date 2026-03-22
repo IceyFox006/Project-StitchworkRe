@@ -347,11 +347,9 @@ public class ActiveFighter
         data.SetHP(data.CurHP + amount);
 
         wasHurt = amount < 0;
-        if (data.CurHP == 0)
-            Die();
     }
 
-    private void Die()
+    public void Die()
     {
         go.OnKill();
         ui.OnKill();

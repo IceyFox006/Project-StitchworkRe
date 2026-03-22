@@ -58,6 +58,9 @@ public class FighterUI : MonoBehaviour
         if (doNextAction)
             bm.StartNextActionCD(_hpFill.Duration);
 
+        if (actFighter.Data.CurHP == 0)
+            _hpFill.OnSlowFillFinish.AddListener(() => {actFighter.Die();});
+
         _hpFill.StartSlowFill(actFighter.Data.GetNormalizedHP());
         _hpText.text = actFighter.Data.CurHP + " / " + actFighter.Data.MaxHP;
     }

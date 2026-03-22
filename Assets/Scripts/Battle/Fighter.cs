@@ -60,15 +60,11 @@ public class Fighter
     }
 
     #region Get
-    public float GetNormalizedHP()
-    {
-        return curHP / maxHP;
-    }
+    public float GetNormalizedHP() => 
+        curHP / maxHP;
 
-    public float GetNormalizedEnergy()
-    {
-        return curEnergy / maxEnergy;
-    }
+    public float GetNormalizedEnergy() => 
+        curEnergy / maxEnergy;
 
     //Returns the effectivenessMultiplier of the attacking element vs the fighterElements.
     public float GetEffectivenessMultiplier(ElementSO attackingElement)

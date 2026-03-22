@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 2124413493220011229}
   - component: {fileID: 8647872379642851335}
   - component: {fileID: 5375951270575244815}
+  - component: {fileID: 3062233942728914822}
   m_Layer: 0
   m_Name: Fighter
   m_TagString: Untagged
@@ -365,3 +366,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3062233942728914822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8019645391393672463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7c1ab6f1a202ec448d4f01f73d4b9bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GenericMethods

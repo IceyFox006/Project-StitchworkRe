@@ -3,12 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class GenericMethods : MonoBehaviour
 {
+    public static void SetDefault<T>(T variable)
+    {
+        variable = default(T);
+    }
     #region Camera
     public static void SwitchCamera(Camera from, Camera to)
     {
         from.gameObject.SetActive(false);
         to.gameObject.SetActive(true);
     }
+
     #endregion
     #region Cursor
     public static void ShowCursor()
@@ -23,6 +28,14 @@ public class GenericMethods : MonoBehaviour
     }
     #endregion
     #region Object
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
+    public static void DestroyObject(Transform go)
+    {
+        Destroy(go);
+    }
     public static void DestroyChildren(Transform parent)
     {
         int childCount = parent.childCount;

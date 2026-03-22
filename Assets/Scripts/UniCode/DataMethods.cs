@@ -9,6 +9,7 @@ public class DataMethods : MonoBehaviour
         int tempSeed = (int)System.DateTime.Now.Ticks;
         return tempSeed.ToString();
     }
+
     #region Extension
     //Adds amount to index. If it is out of range, cycles around.
     public static int NextIndex<T>(int index, List<T> list)

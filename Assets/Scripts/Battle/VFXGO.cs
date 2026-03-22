@@ -22,9 +22,9 @@ public class VFXGO : MonoBehaviour
 
     public void UpdateUI() //@UsedLocal_Animation
     {
-        actFighter.Ui.UpdateHPVisuals();
+        actFighter.Ui.UpdateHPVisuals(true);
     }
-    public void PlayHurtAnimation()
+    public void PlayHurtAnimation() //@UsedLocal_Animation
     {
         if (actFighter.WasHurt)
             actFighter.Go.Animator.SetTrigger("HURT");

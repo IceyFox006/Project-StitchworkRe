@@ -12,10 +12,15 @@ public class BattleTrigger : MonoBehaviour
         if (!collision.CompareTag("Player")) return;
 
         pm = collision.transform.parent.GetComponent<PlayerManager>();
-        pm.Move.DisableInput();                                                             //Disable player movement.
-        //Play battle enter animation (Switch camera -> Start Battle)
-        GenericMethods.SwitchCamera(pm.Move.MainCamera, BattleManager.Inst.BattleCamera);   //Switch Camera
-        BattleManager.Inst.StartBattle(pm.Data.Party, _enemyParty);                         //Start Battle 
-        pm = null;
+        if (pm.InBattle) return;
+
+        pm.InBattle = true;
+        pm.Move.DisableInput();
+
+        //Add Transition Actions
+        pm.Ui.OnEndTransition.AddListener(() => {GenericMethods.SwitchCamera(pm.Move.MainCamera, BattleManager.Inst.BattleCamera);});
+        pm.Ui.OnEndTransition.AddListener(() => {BattleManager.Inst.StartBattle(pm, _enemyParty);});
+        pm.Ui.OnEndTransition.AddListener(() => {GenericMethods.SetDefault(pm);});
+        pm.Ui.PlayOverlay("START_BATTLE", NextAnim.Next);
     }
 }

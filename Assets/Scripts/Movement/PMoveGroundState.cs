@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PMoveGroundState : PMoveBaseState
 {
-    private PMoveStateManager m;
+    private PlayerMovement m;
 
-    public override void ConstructState(PMoveStateManager manager)
+    public override void ConstructState(PlayerMovement manager)
     {
         m = manager;
     }

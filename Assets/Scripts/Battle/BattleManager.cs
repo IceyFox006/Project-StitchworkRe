@@ -1,5 +1,6 @@
+using NaughtyAttributes;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BattleUI))]
@@ -12,25 +13,32 @@ public class BattleManager : Manager
 
     private BattleUI ui;
 
-    [Tooltip("Where the player gets teleported to when a battle begins.")]
-    [SerializeField] private Transform _battleArea;
-    [SerializeField] private Camera _battleCamera;
+    [SerializeField][Tooltip("Where the player gets teleported to when a battle begins.")]
+        private Transform _battleArea;
+    [SerializeField] 
+        private Camera _battleCamera;
 
     [Header("Spawn Points")]
-    [Tooltip("What player fighter UI spawn under.")]
-    [SerializeField] private Transform _playerFighterUiSP;
-    [Tooltip("What enemy fighter UI spawn under.")]
-    [SerializeField] private Transform _enemyFighterUiSP;
-    [Tooltip("Where player fighters spawn in.")]
-    [SerializeField] private Transform[] _playerFighterSPs;
-    [Tooltip("Where enemy fighters spawn in.")]
-    [SerializeField] private Transform[] _enemyFighterSPs;
+    [SerializeField][Tooltip("What player fighter UI spawn under.")]
+        private Transform _playerFighterUiSP;
+    [SerializeField][Tooltip("What enemy fighter UI spawn under.")]
+        private Transform _enemyFighterUiSP;
+    [SerializeField][Tooltip("Where player fighters spawn in.")]
+        private Transform[] _playerFighterSPs;
+    [SerializeField][Tooltip("Where enemy fighters spawn in.")]
+        private Transform[] _enemyFighterSPs;
 
     [Header("Prefabs")]
-    [SerializeField] private GameObject _fighterPfb;
-    [SerializeField] private GameObject _fighterUiPfb;
+    [SerializeField] 
+        private GameObject _fighterPfb;
+    [SerializeField] 
+        private GameObject _fighterUiPfb;
 
+    [Header("Visuals")]
+    [SerializeField][MinValue(0)][Tooltip("How long after a party dies, until the battle ends; Time win animations play out.")]
+        private float _timeAfterBattle;
 
+    private PlayerManager pm;
     private List<ActiveFighter> pParty = new List<ActiveFighter>();
     private List<ActiveFighter> eParty = new List<ActiveFighter>();
 
@@ -61,8 +69,10 @@ public class BattleManager : Manager
     }
 
     //Starts a battle.
-    public void StartBattle(PlayerFighter[] playerParty, EnemyFighter[] enemyParty)
+    public void StartBattle(PlayerManager pm, EnemyFighter[] enemyParty)
     {
+        this.pm = pm;
+
         //SET-UP
         ui.Ui.SetActive(true);
         ui.BattleMenu.Enable();
@@ -71,9 +81,9 @@ public class BattleManager : Manager
         ActiveFighter clone;
         for (int pfID = 0; pfID < _playerFighterSPs.Length; pfID++)
         {
-            if (pfID >= playerParty.Length) break;
+            if (pfID >= pm.Data.Party.Length) break;
 
-            clone = InstantiateFighter(playerParty[pfID], _fighterPfb, _playerFighterSPs[pfID], _playerFighterUiSP);
+            clone = InstantiateFighter(pm.Data.Party[pfID], _fighterPfb, _playerFighterSPs[pfID], _playerFighterUiSP);
             clone.Party = pParty;
             pParty.Add(clone);
         }
@@ -90,15 +100,54 @@ public class BattleManager : Manager
         SwitchCurrentFighter(pParty[0]);
     }
 
-    private void EndBattle()
+    private IEnumerator EndBattle(List<ActiveFighter> winningParty)
     {
+        foreach (ActiveFighter actFighter in winningParty)
+        {
+            actFighter.Go.OnWin();
+            actFighter.Ui.OnWin();
+        }
 
+        yield return new WaitForSeconds(_timeAfterBattle);
+
+        ui.Ui.SetActive(false);
+
+        foreach (ActiveFighter actFighter in winningParty)
+            Destroy(actFighter.Go.gameObject);
+
+        actions.List.Clear();
+        pParty.Clear();
+        eParty.Clear();
+
+        pm.InBattle = false;
+
+        //Add Transition Actions
+        pm.Ui.OnEndTransition.AddListener(() => pm.Move.EnableInput());
+        pm.Ui.OnEndTransition.AddListener(() => GenericMethods.SwitchCamera(_battleCamera, pm.Move.MainCamera));
+        pm.Ui.OnEndTransition.AddListener(() => GenericMethods.SetDefault(pm));
+        pm.Ui.PlayOverlay("END_BATTLE", NextAnim.Next);
     }
 
-    private void StartTurn()
+    public void StartTurn()
     {
+        foreach (ActiveFighter actFighter in pParty)
+            actFighter.ResetTurnVariables();
 
+        foreach(ActiveFighter actFighter in eParty)
+            actFighter.ResetTurnVariables();
+
+        SwitchCurrentFighter(pParty[0]);
     }
+
+    public bool CheckPartyDead(List<ActiveFighter> party)
+    {
+        if (party.Count > 0) return false;
+
+        StartCoroutine(EndBattle(GetOppositeParty(party)));
+
+        return true;
+    }
+
     #region Fighter
     //Returns the index of the fighter with the same ID as the target in the list.
     public int FindFighter(Fighter target, List<ActiveFighter> list)
@@ -227,6 +276,10 @@ public class BattleManager : Manager
         return actFighter;
     }
     #endregion
+    private List<ActiveFighter> GetOppositeParty(List<ActiveFighter> party)
+    {
+        return (party == pParty)? eParty : pParty;
+    }
 
 }
 
@@ -279,7 +332,8 @@ public class ActiveFighter
 
     private void Die()
     {
-        go.Animator.SetBool("IS_DEAD", data.CurHP == 0);
+        go.OnKill();
+        ui.OnKill();
         party.RemoveAt(bm.FindFighter(data, party));
     }
 
@@ -322,14 +376,12 @@ public class ActiveAction
         this.user = user;
     }
 
-
     public virtual void UseAction()
     {
         ValidateTargets();
         if (targets.Count == 0)
         {
             bm.Actions.NextAction();
-            Debug.Log("Target dead.");
             return;
         }
 
@@ -449,19 +501,20 @@ public class ActionList
 
     public void NextAction()
     {
-        Debug.Log(list.Count);
+        if (bm.CheckPartyDead(bm.PParty) || bm.CheckPartyDead(bm.EParty)) return;
+
         if (list.Count > 0)
             UseFirstAction();
         else
+        {
+            bm.StartTurn();
             bm.Ui.BattleMenu.Enable();
+        }
+
     }
     public void UseFirstAction()
     {
-        Debug.Log(list[0].Data.Name);
         DataMethods.RemoveAt(list, 0).UseAction();
-        //if (list.Count == 0) return;
-        //list[0].UseAction();
-        //list.RemoveAt(0);
     }
 
     #region Utility

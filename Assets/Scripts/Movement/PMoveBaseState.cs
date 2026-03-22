@@ -1,6 +1,6 @@
 public abstract class PMoveBaseState
 {
-    public abstract void ConstructState(PMoveStateManager manager);
+    public abstract void ConstructState(PlayerMovement manager);
     public abstract void EnterState();
     public abstract void ExitState();
     public abstract void FixedUpdateState();

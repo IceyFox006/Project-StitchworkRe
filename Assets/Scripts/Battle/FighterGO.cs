@@ -34,6 +34,15 @@ public class FighterGO : MonoBehaviour
         vfx.Initialize(bm, actFighter);
     }
 
+    public void OnKill()
+    {
+        animator.SetBool("IS_DEAD", true);
+    }
+    public void OnWin()
+    {
+        animator.SetTrigger("WIN");
+    }
+
     public void SelectAsTarget() //@UsedLocal_ObjectButton
     {
         bm.CurAction.AddTarget(actFighter);
@@ -44,6 +53,9 @@ public class FighterGO : MonoBehaviour
         foreach (ActiveFighter target in bm.CurAction.Targets)
         {
             tempAnimator = target.Go.Vfx.Animator;
+
+            if (tempAnimator == null) return;
+
             tempAnimator.runtimeAnimatorController = bm.CurAction.Data.VfxAc;
             tempAnimator.Play("PLAY");
         }

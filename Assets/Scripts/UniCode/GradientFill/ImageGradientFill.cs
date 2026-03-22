@@ -2,24 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class GradientFill : MonoBehaviour
+public class ImageGradientFill : GradientFill
 {
     private Image image;
 
-    [SerializeField] private Gradient _gradient;
-    private void Start()
+    public override void Initialize()
     {
-        Initialize();
-    }
-
-    public void Initialize()
-    {
+        base.Initialize();
         image = GetComponent<Image>();
     }
 
-    [HideInInspector]
-    public void Fill(float amount)
+    public override void Fill(float amount)
     {
+        base.Fill(amount);
+        fillAmount = amount;
+
         image.fillAmount = amount;
         image.color = _gradient.Evaluate(amount);
     }

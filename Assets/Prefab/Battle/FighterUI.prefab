@@ -231,6 +231,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _duration: 1
+  _curve: 2
 --- !u!114 &6240394218191258125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +372,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _duration: 0
+  _curve: 0
 --- !u!114 &5333039578682077953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,6 +1209,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _duration: 0
+  _curve: 0
 --- !u!114 &8634119314954567885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1528,6 +1531,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   _duration: 1
+  _curve: 6
 --- !u!114 &8813902789633480740
 MonoBehaviour:
   m_ObjectHideFlags: 0

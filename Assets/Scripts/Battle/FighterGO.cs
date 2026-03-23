@@ -48,6 +48,7 @@ public class FighterGO : MonoBehaviour
     {
         bm.CurAction.AddTarget(actFighter);
     }
+
     public void PlayVFXAnimation() //@UsedLocal_Animation
     {
         Animator tempAnimator;

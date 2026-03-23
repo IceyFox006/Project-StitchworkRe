@@ -1,5 +1,16 @@
 using UnityEngine;
 
+public enum LerpCurve
+{
+    LINEAR, //!Unimplemented
+    EASE_IN,
+    EASE_OUT,
+    EASE_IN_OUT,
+    EASE_IN_EXPO,
+    EASE_OUT_EXPO,
+    SPIKE,
+}
+
 public class Lerp
 {
     public static float Flip(float x) => 1 - x;
@@ -24,6 +35,7 @@ public class Lerp
     public static float EaseOutExpo(float t) => 
         (t == 1f)? 1f : 1f - Mathf.Pow(2f, -10f * t);
 
+    //Fast snap in middle.
     public static float Spike(float t, float pow = 2)
     {
         if (t <= 0.5f) return EaseIn(t / 0.5f, pow);

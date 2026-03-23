@@ -9,7 +9,6 @@ public enum DamageType
     Status,
 }
 
-
 [CreateAssetMenu(fileName = "MoveSO", menuName = "Scriptable Objects/Battle/Actions/Move")]
 public class MoveSO : ActionSO
 {

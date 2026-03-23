@@ -12,6 +12,8 @@ public class GradientFill : MonoBehaviour
     [Header("Slow Fill")]
     [SerializeField][MinValue(0)]
         private float _duration;
+    [SerializeField]
+        private LerpCurve _curve;
     private UnityEvent onSlowFillFinish;
     private bool isFilling;
     private float targetAmount;
@@ -52,9 +54,9 @@ public class GradientFill : MonoBehaviour
     {
         isFilling = true;
 
-        while (time <= _duration)//(fillAmount != targetAmount)
+        while (time <= _duration)
         {
-            Fill(Mathf.Lerp(fillAmount, targetAmount, Lerp.EaseOut(time / _duration)));
+            Fill(Mathf.Lerp(fillAmount, targetAmount, CalculateLerp(time / _duration)));//Lerp.EaseOut(time / _duration)));
             yield return null;
             time += Time.deltaTime;
         }
@@ -62,5 +64,19 @@ public class GradientFill : MonoBehaviour
         onSlowFillFinish.RemoveAllListeners();
 
         isFilling = false;
+    }
+
+    private float CalculateLerp(float value)
+    {
+        switch (_curve)
+        {
+            case LerpCurve.EASE_IN: return Lerp.EaseIn(value);
+            case LerpCurve.EASE_OUT: return Lerp.EaseOut(value);
+            case LerpCurve.EASE_IN_OUT: return Lerp.EaseInOut(value);
+            case LerpCurve.EASE_IN_EXPO: return Lerp.EaseInExpo(value);
+            case LerpCurve.EASE_OUT_EXPO: return Lerp.EaseOutExpo(value);
+            case LerpCurve.SPIKE: return Lerp.Spike(value);
+            default: return (value);
+        }
     }
 }

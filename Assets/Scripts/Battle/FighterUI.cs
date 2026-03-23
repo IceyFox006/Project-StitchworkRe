@@ -56,7 +56,7 @@ public class FighterUI : MonoBehaviour
     public void UpdateHPVisuals(bool doNextAction = false)
     {
         if (doNextAction)
-            bm.StartNextActionCD(_hpFill.Duration);
+            bm.StartNextActionWait(_hpFill.Duration);
 
         if (actFighter.Data.CurHP == 0)
             _hpFill.OnSlowFillFinish.AddListener(() => {actFighter.Die();});

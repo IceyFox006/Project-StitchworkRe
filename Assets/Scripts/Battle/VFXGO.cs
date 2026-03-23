@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -20,10 +21,13 @@ public class VFXGO : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void UpdateUI() //@UsedLocal_Animation
+    //Waits for the VFX clip to finish playing then updates HP UI.
+    public IEnumerator UpdateHpUiWait(float time)
     {
+        yield return new WaitForSeconds(time);
         actFighter.Ui.UpdateHPVisuals(true);
     }
+
     public void PlayHurtAnimation() //@UsedLocal_Animation
     {
         if (actFighter.WasHurt)

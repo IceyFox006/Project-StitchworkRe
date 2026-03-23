@@ -142,16 +142,16 @@ public class BattleManager : Manager
     }
 
     //Starts the countdown for the next action if it is not already being performed.
-    public void StartNextActionCD(float time)
+    public void StartNextActionWait(float time)
     {
         if (isWaitingForNextAction)
             return;
 
-        StartCoroutine(NextActionCD(time));
+        StartCoroutine(NextActionWait(time));
     }
 
     //Performs the next action after the hp ui has run its duration.
-    private IEnumerator NextActionCD(float time)
+    private IEnumerator NextActionWait(float time)
     {
         isWaitingForNextAction = true;
 

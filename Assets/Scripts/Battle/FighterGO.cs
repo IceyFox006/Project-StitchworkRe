@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -58,6 +59,7 @@ public class FighterGO : MonoBehaviour
 
             tempAnimator.runtimeAnimatorController = bm.CurAction.Data.VfxAc;
             tempAnimator.Play("PLAY");
+            StartCoroutine(target.Go.Vfx.UpdateHpUiWait(tempAnimator.GetCurrentAnimatorClipInfo(0).Length));
         }
     }
 }

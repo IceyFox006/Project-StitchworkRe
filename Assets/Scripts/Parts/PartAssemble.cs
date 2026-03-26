@@ -1,26 +1,57 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ApplyPartColorRegions))]
 public class PartAssemble : MonoBehaviour
 {
     [SerializeField] private EntityParts _parts;
-    [SerializeField] private ApplyPartColorRegions _regions;
+    private ApplyPartColorRegions regions;
 
     private GameObject body;
     private GameObject head;
     private GameObject tail;
 
     private PartBaseScalingPoints baseScalingPoints;
+
+    #region
+    public ApplyPartColorRegions Regions { get => regions; set => regions = value; }
+    #endregion
+
     private void Start()
     {
-        Assemble();
+        //regions = GetComponent<ApplyPartColorRegions>();
 
-        _regions.ApplyColorRegions();
-
-        baseScalingPoints = body.GetComponentInChildren<PartBaseScalingPoints>();
-        Scale(baseScalingPoints.HeadMesh, head.transform);
-        Scale(baseScalingPoints.TailMesh, tail.transform);
+        //Initialize();
     }
 
+    [HideInInspector]
+    public void Initialize()
+    {
+        Initialize(_parts);
+    }
+
+    [HideInInspector]
+    public void Initialize(EntityParts parts)
+    {
+        _parts = parts;
+        regions = GetComponent<ApplyPartColorRegions>();
+
+        Assemble();
+        regions.ApplyColorRegions();
+        ScaleAll();
+    }
+
+    [HideInInspector]
+    public void Initialize(EntityParts parts, ColorPaletteSO[] palettes)
+    {
+        _parts = parts;
+        regions = GetComponent<ApplyPartColorRegions>();
+
+        Assemble();
+        regions.ApplyColorRegions(palettes);
+        ScaleAll();
+    }
+
+    #region Assemble
     //Instantiates parts
     private void Assemble()
     {
@@ -38,6 +69,15 @@ public class PartAssemble : MonoBehaviour
                 case PartType.Tail: tail = Instantiate(_parts.Tail.Model, connectionPoint.transform); break;
             }
         }
+    }
+    #endregion
+
+    #region Scale
+    private void ScaleAll()
+    {
+        baseScalingPoints = body.GetComponentInChildren<PartBaseScalingPoints>();
+        Scale(baseScalingPoints.HeadMesh, head.transform);
+        Scale(baseScalingPoints.TailMesh, tail.transform);
     }
 
     //Scales connecting parts to match the largest value (x or y) of the base part.
@@ -58,4 +98,5 @@ public class PartAssemble : MonoBehaviour
 
         scalePart.localScale = newScale;
     }
+    #endregion
 }

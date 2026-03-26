@@ -8,6 +8,13 @@ public class ApplyPartColorRegions : MonoBehaviour
 
     //Changes the colors in the renderer's materials to match the palettes' colors.
     [HideInInspector]
+    public void ApplyColorRegions(ColorPaletteSO[] palettes)
+    {
+        _palettes = palettes;
+        ApplyColorRegions();
+    }
+
+    [HideInInspector]
     public void ApplyColorRegions()
     {
         if (renderers == null) 
@@ -17,7 +24,6 @@ public class ApplyPartColorRegions : MonoBehaviour
         {
             for (int c = 0; c < _palettes.Length; c++)
             {
-                Debug.Log(_palettes[c].Name);
                 if (!DoesColorExist(renderer.material, "_COLOR" + c + "_" + 0)) break;
 
                 for (int s = 0; s < _palettes[c].Colors.Length; s++)

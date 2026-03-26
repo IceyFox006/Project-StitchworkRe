@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [System.Serializable]
@@ -14,11 +15,11 @@ public class Stats
 
     public Stats()
     {
-        _health = 0;
-        _endurance = 0;
-        _strength = 0;
-        _magic = 0;
-        _agility = 0;
+        new Stats(1);
+    }
+    public Stats(float all)
+    {
+        new Stats(all, all, all, all, all);
     }
     public Stats(float health, float endurance, float strength, float magic, float agility)
     {
@@ -41,9 +42,52 @@ public class Stats
     {
         return _health + _endurance + _strength + _magic + _agility;
     }
-
-    public Stats Multiply(Stats stats)
+    public string AsString()
     {
-        return new Stats(_health * stats.Health, _endurance * stats.Endurance, _strength * stats.Strength, _magic * stats.Magic, _agility * stats.Agility);
+        return "( HP_" + _health + ", End_" + _endurance + ", Str_" + _strength + ", Mag_" + _magic + ", Agi_" + _agility + ")";
     }
+
+    #region Math
+    //Adds value to this stats.
+    public void Add(Stats value)
+    {
+        _health += value.Health;
+        _endurance += value.Endurance;
+        _strength += value.Strength;
+        _magic += value.Magic;
+        _agility += value.Agility;
+    }
+
+    //Multiplies value to this stats.
+    public void Multiply(Stats value)
+    {
+        _health *= value.Health;
+        _endurance *= value.Endurance;
+        _strength *= value.Strength;
+        _magic *= value.Magic;
+        _agility *= value.Agility;
+    }
+    public static Stats Multiply(Stats s1, Stats s2)
+    {
+        Stats temp = Clone(s1);
+        temp.Multiply(s2);
+        return temp;
+    }
+
+    //Divide value from this stats.
+    public void Divide(float value)
+    {
+        _health /= value;
+        _endurance /= value;
+        _strength /= value;
+        _magic /= value;
+        _agility /= value;
+    }
+    #endregion
+    #region Utility
+    public static Stats Clone(Stats stats)
+    {
+        return new Stats(stats.Health, stats.Endurance, stats.Strength, stats.Magic, stats.Agility);
+    }
+    #endregion
 }

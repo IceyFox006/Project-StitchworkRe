@@ -17,12 +17,13 @@ MonoBehaviour:
   _sortTag: 1
   _stackSize: 1
   _model: {fileID: 1948698485575291010, guid: ad4bc988b1c846948a1743290ecd9a56, type: 3}
+  _part: 0
   _stats:
-    _health: 0
-    _endurance: 0
-    _strength: 0
-    _magic: 0
-    _agility: 0
+    _health: 100
+    _endurance: 100
+    _strength: 100
+    _magic: 100
+    _agility: 100
     _luck: 1
     _regen: 1
   _growthRate: 2

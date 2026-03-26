@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class RaycastDrawer : MonoBehaviour
 {
-    private static RaycastDrawer instance;
+    private static RaycastDrawer inst;
 
-    public static RaycastDrawer Instance { get => instance; set => instance = value; }
+    public static RaycastDrawer Inst { get => inst; set => inst = value; }
 
     private void Awake()
     {
-        instance = this;
+        inst = this;
     }
     public static RaycastData RaycastAndDraw(Vector3 origin, Vector3 direction, float distance, string layer)
     {

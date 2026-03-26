@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataMethods : MonoBehaviour
@@ -61,6 +62,12 @@ public class DataMethods : MonoBehaviour
         T value = list[index];
         list.RemoveAt(index);
         return value;
+    }
+
+    public static void Combine<T>(ref List<T> l1, List<T> l2)
+    {
+        for (int i = 0; i < l2.Count; i++)
+            l1.Add(l2[i]);
     }
     #endregion
 }

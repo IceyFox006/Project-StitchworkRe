@@ -74,6 +74,7 @@ public class BattleUI : MonoBehaviour
         else
         {
             FinishChooseAction();
+            bm.DetermineEnemyActions();
             bm.Actions.UseFirstAction();
         }
     }

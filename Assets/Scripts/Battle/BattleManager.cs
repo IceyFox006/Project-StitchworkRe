@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BattleUI))]
@@ -40,6 +41,8 @@ public class BattleManager : Manager
 
     private PlayerManager pm;
     private List<ActiveFighter> pParty = new List<ActiveFighter>();
+
+    private int aiLevel;
     private List<ActiveFighter> eParty = new List<ActiveFighter>();
 
     private ActionList actions;
@@ -58,6 +61,7 @@ public class BattleManager : Manager
     public List<ActiveFighter> EParty { get => eParty; set => eParty = value; }
     public ActionList Actions { get => actions; set => actions = value; }
     public ActiveFighter CurFighter { get => curFighter; set => curFighter = value; }
+    public int AiLevel { get => aiLevel; set => aiLevel = value; }
     #endregion
     public override void Load()
     {
@@ -71,7 +75,7 @@ public class BattleManager : Manager
     }
 
     //Starts a battle.
-    public void StartBattle(PlayerManager pm, EnemyFighter[] enemyParty)
+    public void StartBattle(PlayerManager pm, EnemyFighter[] enemyParty, int aiLevel)
     {
         this.pm = pm;
 
@@ -91,6 +95,7 @@ public class BattleManager : Manager
         }
 
         //Enemy Party
+        this.aiLevel = aiLevel;
         for (int efID = 0; efID < _enemyFighterSPs.Length; efID++)
         {
             if (efID >= enemyParty.Length) break;
@@ -141,6 +146,12 @@ public class BattleManager : Manager
         SwitchCurrentFighter(pParty[0]);
     }
 
+    public void DetermineEnemyActions()
+    {
+        //foreach (ActiveEnemyFighter actEnemy in eParty)
+        //    actions.Add(actEnemy.DetermineAction());
+    }
+
     //Starts the countdown for the next action if it is not already being performed.
     public void StartNextActionWait(float time)
     {
@@ -160,6 +171,7 @@ public class BattleManager : Manager
         isWaitingForNextAction = false;
     }
 
+    //If the party is dead, ends the battle.
     public bool CheckPartyDead(List<ActiveFighter> party)
     {
         if (party.Count > 0) return false;
@@ -218,6 +230,9 @@ public class BattleManager : Manager
             case TargetType.ALL: 
                 EnableAllButtons();
                 ObjectEventSystem.Current.SwitchHover(eParty[0].Go.Button);
+                break;
+            case TargetType.ALL_EXSELF:
+                Debug.LogError("Unimplemented.");
                 break;
             case TargetType.SINGLE_ENEMY:
             case TargetType.ALL_ENEMIES:
@@ -279,6 +294,35 @@ public class BattleManager : Manager
         foreach (ActiveFighter actFighter in eParty)
             actFighter.Go.Button.Interactable = false;
     }
+
+
+    //Returns a list that contains all eligable targets. Used for enemy ai target selection.
+    public List<ActiveFighter> GetEligableTargets(ActiveAction action)
+    {
+        List<ActiveFighter> possibleTargets = new List<ActiveFighter>();
+        switch (action.Data.Target)
+        {
+            case TargetType.SELF: possibleTargets.Add(action.User); break;
+            case TargetType.ALL:
+                DataMethods.Combine(ref possibleTargets, pParty); 
+                DataMethods.Combine(ref possibleTargets, eParty);
+                break;
+            case TargetType.ALL_EXSELF: 
+                Debug.LogError("Unimplemented.");
+                break;
+            case TargetType.SINGLE_ENEMY:
+            case TargetType.ALL_ENEMIES: 
+                DataMethods.Combine(ref possibleTargets, GetOppositeParty(action.User.Party));
+                break;
+            case TargetType.SINGLE_ALLY:
+            case TargetType.ALL_ALLIES: 
+                DataMethods.Combine(ref possibleTargets, action.User.Party);
+                break;
+        }
+        return possibleTargets;
+    }
+
+
     #endregion
 
     #region Instantiate
@@ -296,6 +340,19 @@ public class BattleManager : Manager
 
         return actFighter;
     }
+    private ActiveEnemyFighter InstantiateFighter(EnemyFighter fighter, GameObject prefab, Transform goSP, Transform uiSP)
+    {
+        fighter.Initialize();
+
+        FighterGO go = Instantiate(prefab, goSP).GetComponent<FighterGO>();
+        FighterUI ui = Instantiate(_fighterUiPfb, uiSP).GetComponent<FighterUI>();
+
+        ActiveEnemyFighter actFighter = new ActiveEnemyFighter(this, fighter, ui, go);
+        go.Initialize(this, actFighter);
+        ui.Initialize(this, actFighter);
+
+        return actFighter;
+    }
     #endregion
     private List<ActiveFighter> GetOppositeParty(List<ActiveFighter> party)
     {
@@ -307,10 +364,10 @@ public class BattleManager : Manager
 //=====================================================================================================================
 public class ActiveFighter
 {
-    private BattleManager bm;
+    protected BattleManager bm;
     private List<ActiveFighter> party;
 
-    private Fighter data;
+    protected Fighter data;
     private FighterUI ui;
     private FighterGO go;
 
@@ -377,6 +434,16 @@ public class ActiveFighter
     }
     #endregion
 }
+//---------------------------------------------------------------------------------------------------------------------
+public class ActiveEnemyFighter : ActiveFighter
+{
+    private EnemyFighter enemyData;
+    public ActiveEnemyFighter(BattleManager bm, EnemyFighter data, FighterUI ui, FighterGO go) : base(bm, data, ui, go)
+    {
+        enemyData = data;
+    }
+    
+}
 //=====================================================================================================================
 public class ActiveAction
 {
@@ -414,7 +481,7 @@ public class ActiveAction
     }
     #region Target
     //Adds actFighter as a target and if there are enough targets brings up the confirm action menu.
-    public void AddTarget(ActiveFighter actFighter)
+    public void AddPTarget(ActiveFighter actFighter)
     {
         targets.Add(actFighter);
         if (HasCorrectTargetCount())
@@ -422,6 +489,16 @@ public class ActiveAction
             bm.Ui.ConfirmActionMenu.Enable();
             ObjectEventSystem.Current.DisableInput();
         }
+    }
+
+    public void AddETarget(ActiveFighter actFighter)
+    {
+        targets.Add(actFighter);
+    }
+    public void AddETargets(List<ActiveFighter> actFighters)
+    {
+        foreach (ActiveFighter actFighter in actFighters)
+            AddETarget(actFighter);
     }
 
     //Returns true if the number of targets is equal to the required amount.

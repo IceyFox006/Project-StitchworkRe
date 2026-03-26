@@ -8,21 +8,29 @@ public class Fighter
     //Data
     [SerializeField] private string _name;
     private string id;
-    [SerializeField] protected EntityParts _parts;
+    [SerializeField] 
+        protected EntityParts _parts;
 
-    [SerializeField] private ElementSO[] _elements;
+    [SerializeField]
+        private ElementSO[] _elements;
     private List<ElementEffectiveness> effectiveness;
 
-    [SerializeField] protected int _level;
-    [SerializeField] protected List<MoveSO> _moves;
+    [SerializeField] 
+        protected int _level;
+    [SerializeField] 
+        protected List<MoveSO> _moves;
+    protected Dictionary<int, List<MoveSO>> levelMoves = new Dictionary<int, List<MoveSO>>();
 
     private int maxHP;
     private int maxEnergy;
-    [SerializeField]private Stats totalStats; 
-    private Stats baseStats;
-    [SerializeField] private Stats _madeStats = new Stats(15); //Determined on creation. (IVs)
-    [SerializeField] private Stats _trainedStats = new Stats(0); //Determined by experience. (EVs)
-    [SerializeField] private Stats _personalityStats = new Stats();
+    private Stats totalStats; 
+    private Stats baseStats; //Average of all part stats. 
+    [SerializeField] 
+        private Stats _madeStats = new Stats(15); //Determined on creation. (IVs)
+    [SerializeField] 
+        private Stats _trainedStats = new Stats(0); //Determined by experience. (EVs)
+    [SerializeField] 
+        private Stats _personalityStats = new Stats();
 
     //Item
 
@@ -70,6 +78,7 @@ public class Fighter
     public float GetEffectivenessMultiplier(ElementSO attackingElement)
     {
         int index = ElementEffectiveness.FindElement(attackingElement, effectiveness);
+
         if (index < 0) return 1;
         return effectiveness[index].Multiplier;
     }
@@ -155,6 +164,7 @@ public class Fighter
             }
         }
     }
+
     #endregion
     #region Utility
     public string AsString()
@@ -174,16 +184,51 @@ public class Fighter
     private void ClampEnergy() =>
         curEnergy = Mathf.Clamp(curEnergy, 0, maxEnergy);
     #endregion
+
+    #region Moves
+    //Generates level moves with no duplicates.
+    protected void GenerateLevelMoves()
+    {
+        levelMoves.Clear();
+        foreach (PartSO part in _parts.ToList()) //Iterate parts
+        {
+            for (int lvlID = 0; lvlID < levelMoves.Count; lvlID++) //Iterate levels in part level moves
+            {
+                foreach (MoveSO move in levelMoves[lvlID]) //Iterate moves in level
+                {
+                    if (IsDuplicateInLevelMoves(move)) continue;
+
+                    if (!levelMoves.ContainsKey(lvlID)) levelMoves.Add(lvlID, new List<MoveSO>());
+                    levelMoves[lvlID].Add(move);
+                }
+            }
+        }
+    }
+    //Returns true if move is already in level moves.
+    private bool IsDuplicateInLevelMoves(MoveSO move)
+    {
+        int count = 0;
+        for (int lvlID = 0; lvlID < levelMoves.Count; lvlID++) //Iterate levels in level moves
+        {
+            foreach (MoveSO moveC in levelMoves.ElementAt(lvlID).Value) //Iterate moves in level
+            {
+                if (moveC == move) count++;
+                if (count > 1) return true;
+            }
+        }
+        return false;
+    }
+    #endregion
 }
 
-//=====================================================================================================================
+//---------------------------------------------------------------------------------------------------------------------
 [System.Serializable]
 public class PlayerFighter : Fighter
 {
     private GrowthRate growthRate;
     private int expToNextLvl;
     private float currentExp;
-    private Dictionary<int, List<MoveSO>> levelMoves = new Dictionary<int, List<MoveSO>>();
+
 
     public override void Initialize()
     {
@@ -230,40 +275,6 @@ public class PlayerFighter : Fighter
     #endregion
 
     #region Move
-    //Generates level moves with no duplicates.
-    private void GenerateLevelMoves()
-    {
-        levelMoves.Clear();
-        foreach (PartSO part in _parts.ToList()) //Iterate parts
-        {
-            for (int lvlID = 0; lvlID < levelMoves.Count; lvlID++) //Iterate levels in part level moves
-            {
-                foreach (MoveSO move in levelMoves[lvlID]) //Iterate moves in level
-                {
-                    if (IsDuplicateInLevelMoves(move)) continue;
-
-                    if (!levelMoves.ContainsKey(lvlID)) levelMoves.Add(lvlID, new List<MoveSO>());
-                    levelMoves[lvlID].Add(move);
-                }
-            }
-        }
-    }
-
-    //Returns true if move is already in level moves.
-    private bool IsDuplicateInLevelMoves(MoveSO move)
-    {
-        int count = 0;
-        for (int lvlID = 0; lvlID < levelMoves.Count; lvlID++) //Iterate levels in level moves
-        {
-            foreach (MoveSO moveC in levelMoves.ElementAt(lvlID).Value) //Iterate moves in level
-            {
-                if (moveC == move) count++;
-                if (count > 1) return true;
-            }
-        }
-        return false;
-    }
-
     private void LearnMove(MoveSO move)
     {
         //!!!CLAMP AMOUNT OF MOVES
@@ -272,15 +283,27 @@ public class PlayerFighter : Fighter
     #endregion
 }
 
-//=====================================================================================================================
+//---------------------------------------------------------------------------------------------------------------------
 [System.Serializable]
 public class EnemyFighter : Fighter
 {
+}
 
+//---------------------------------------------------------------------------------------------------------------------
+[System.Serializable]
+public class WildFighter : EnemyFighter
+{
+    public override void Initialize()
+    {
+        base.Initialize();
+        GenerateLevelMoves();
+        GenerateWildMoves();
+    }
     private void GenerateWildMoves()
     {
 
     }
 }
+
 
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Breeze
   _vfxAc: {fileID: 22100000, guid: 31e93e408065f8747bb8dc6c6446e407, type: 2}
-  target: 3
+  target: 30
   _power: 40
   _priority: 0
   _effects: []

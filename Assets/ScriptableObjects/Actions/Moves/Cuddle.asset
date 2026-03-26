@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Cuddle
   _vfxAc: {fileID: 22100000, guid: 70a9aefa7e983594b9349cdef9679d2b, type: 2}
-  target: 5
+  target: 50
   _power: 0
   _priority: 0
   _effects: []

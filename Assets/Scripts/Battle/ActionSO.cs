@@ -4,12 +4,13 @@ using UnityEngine;
 
 public enum TargetType
 {
-    SELF,
-    ALL,
-    SINGLE_ENEMY,
-    ALL_ENEMIES,
-    SINGLE_ALLY,
-    ALL_ALLIES,
+    SELF = 0,
+    ALL = 10,
+    ALL_EXSELF = 11,
+    SINGLE_ENEMY = 20,
+    ALL_ENEMIES = 30,
+    SINGLE_ALLY = 40,
+    ALL_ALLIES = 50,
 }
 [CreateAssetMenu(fileName = "ActionSO", menuName = "Scriptable Objects/Battle/Actions/Action")]
 public class ActionSO : ScriptableObject

@@ -4,7 +4,8 @@ using UnityEngine;
 public class BattleTrigger : MonoBehaviour
 {
     [Tooltip("Max capacity is 8.")]
-    [SerializeField] private EnemyFighter[] _enemyParty;
+    [SerializeField] private int _aiLevel;
+    [SerializeField] private WildFighter[] _enemyParty;
 
     private PlayerManager pm;
     private void OnTriggerEnter(Collider collision)
@@ -19,7 +20,7 @@ public class BattleTrigger : MonoBehaviour
 
         //Add Transition Actions
         pm.Ui.OnEndTransition.AddListener(() => {GenericMethods.SwitchCamera(pm.Move.MainCamera, BattleManager.Inst.BattleCamera);});
-        pm.Ui.OnEndTransition.AddListener(() => {BattleManager.Inst.StartBattle(pm, _enemyParty);});
+        pm.Ui.OnEndTransition.AddListener(() => {BattleManager.Inst.StartBattle(pm, _enemyParty, _aiLevel);});
         pm.Ui.OnEndTransition.AddListener(() => {GenericMethods.SetDefault(pm);});
         pm.Ui.PlayOverlay("START_BATTLE", NextAnim.Next);
     }

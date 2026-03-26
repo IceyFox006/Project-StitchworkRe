@@ -46,7 +46,7 @@ public class FighterGO : MonoBehaviour
 
     public void SelectAsTarget() //@UsedLocal_ObjectButton
     {
-        bm.CurAction.AddTarget(actFighter);
+        bm.CurAction.AddPTarget(actFighter);
     }
 
     public void PlayVFXAnimation() //@UsedLocal_Animation

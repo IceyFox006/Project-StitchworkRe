@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveSO
   _name: Growl
   _vfxAc: {fileID: 22100000, guid: 76fc70312dd46064b8f626c41eb9b869, type: 2}
-  target: 2
+  target: 20
   _power: 0
   _priority: 0
   _effects: []

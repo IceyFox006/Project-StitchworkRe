@@ -148,8 +148,8 @@ public class BattleManager : Manager
 
     public void DetermineEnemyActions()
     {
-        //foreach (ActiveEnemyFighter actEnemy in eParty)
-        //    actions.Add(actEnemy.DetermineAction());
+        foreach (ActiveEnemyFighter actEnemy in eParty)
+            actEnemy.DetermineAction();
     }
 
     //Starts the countdown for the next action if it is not already being performed.
@@ -442,6 +442,22 @@ public class ActiveEnemyFighter : ActiveFighter
     {
         enemyData = data;
     }
+
+    public void DetermineAction()
+    {
+        ActiveAction actAction = null;
+        if (bm.AiLevel == 0)
+            actAction = DetermineRandomMove();
+
+        bm.Actions.Add(actAction);
+    }
+
+    private ActiveMove DetermineRandomMove()
+    {
+        ActiveMove actAction = new ActiveMove(bm, data.Moves[0], this);
+        actAction.AddETarget(bm.PParty[0]);
+        return actAction;
+    }
     
 }
 //=====================================================================================================================
@@ -596,6 +612,7 @@ public class ActionList
         }
         if (action != null)
             list.Add(action);
+        Debug.Log(AsString());
     }
 
     public void NextAction()

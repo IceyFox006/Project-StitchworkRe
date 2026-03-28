@@ -1,6 +1,5 @@
-using NaughtyAttributes;
-using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -48,4 +47,23 @@ public class MenuUI
         EventSystem.current.sendNavigationEvents |= true;
     }
 }
+//---------------------------------------------------------------------------------------------------------------------
+[System.Serializable]
+public class TextVisualUI
+{
+    [SerializeField] private GameObject _visual;
+    [SerializeField] private TMP_Text _text;
+
+    public void Enable(string text)
+    {
+        _visual.SetActive(true);
+        _text.text = text;
+    }
+
+    public void Disable()
+    {
+        _visual.SetActive(false);
+    }
+}
+
 

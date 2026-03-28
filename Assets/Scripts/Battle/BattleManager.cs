@@ -246,7 +246,6 @@ public class BattleManager : Manager
                 break;
         }
     }
-
     //Enables interaction on the party's buttons and sets their navigation.
     private void EnablePartyButtons(List<ActiveFighter> party)
     {
@@ -446,16 +445,47 @@ public class ActiveEnemyFighter : ActiveFighter
     public void DetermineAction()
     {
         ActiveAction actAction = null;
+        List<MoveSO> possibleActions = DataMethods.Clone(data.Moves);
         if (bm.AiLevel == 0)
-            actAction = DetermineRandomMove();
+            actAction = DetermineRandomMove(possibleActions);
 
         bm.Actions.Add(actAction);
     }
 
-    private ActiveMove DetermineRandomMove()
+    private ActiveMove DetermineRandomMove(List<MoveSO> possibleActions)
     {
-        ActiveMove actAction = new ActiveMove(bm, data.Moves[0], this);
-        actAction.AddETarget(bm.PParty[0]);
+        if (possibleActions.Count == 0) //No possible actions? Endbattle.
+        {
+            Debug.LogError("Unimplemented.");
+        }
+
+        int ranAction = Random.Range(0, possibleActions.Count);
+        ActiveMove actAction = new ActiveMove(bm, possibleActions[ranAction], this);
+        List<ActiveFighter> possibleTargets = bm.GetEligableTargets(actAction);
+
+        if (possibleTargets.Count == 0) //No possible targets? Redetermine.
+        {
+            possibleActions.RemoveAt(ranAction);
+            DetermineRandomMove(possibleActions);
+        }
+        else
+        {
+            switch (actAction.Data.Target)
+            {
+                case TargetType.SELF:
+                case TargetType.SINGLE_ENEMY:
+                case TargetType.SINGLE_ALLY:
+                    actAction.AddETarget(possibleTargets[Random.Range(0, possibleTargets.Count)]);
+                    break;
+                case TargetType.ALL:
+                case TargetType.ALL_EXSELF:
+                case TargetType.ALL_ENEMIES:
+                case TargetType.ALL_ALLIES:
+                    actAction.AddETargets(possibleTargets);
+                    break;
+                default: Debug.LogError("Unimplemented."); break;
+            }
+        }
         return actAction;
     }
     
@@ -566,6 +596,7 @@ public class ActiveMove : ActiveAction
     {
         base.UseAction();
         PlayMoveAnimation();
+        bm.Ui.CurActionVisual.Enable(data.Name);
     }
 
     private void PlayMoveAnimation()
@@ -612,7 +643,6 @@ public class ActionList
         }
         if (action != null)
             list.Add(action);
-        Debug.Log(AsString());
     }
 
     public void NextAction()

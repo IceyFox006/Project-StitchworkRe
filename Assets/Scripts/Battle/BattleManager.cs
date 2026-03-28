@@ -1,7 +1,6 @@
 using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(BattleUI))]
@@ -146,6 +145,7 @@ public class BattleManager : Manager
         SwitchCurrentFighter(pParty[0]);
     }
 
+    //Adds actions for each enemy into the actions list.
     public void DetermineEnemyActions()
     {
         foreach (ActiveEnemyFighter actEnemy in eParty)
@@ -442,6 +442,7 @@ public class ActiveEnemyFighter : ActiveFighter
         enemyData = data;
     }
 
+    //Adds an action based on AI level to the actions list.
     public void DetermineAction()
     {
         ActiveAction actAction = null;
@@ -452,6 +453,7 @@ public class ActiveEnemyFighter : ActiveFighter
         bm.Actions.Add(actAction);
     }
 
+    //Returns a random action from possible actions with random targets.
     private ActiveMove DetermineRandomMove(List<MoveSO> possibleActions)
     {
         if (possibleActions.Count == 0) //No possible actions? Endbattle.
@@ -645,6 +647,12 @@ public class ActionList
             list.Add(action);
     }
 
+    public ActiveAction RemoveAction(int index)
+    {
+        list[index].User.HasActed = false;
+        return DataMethods.RemoveAt(list, index);
+    }
+
     public void NextAction()
     {
         if (bm.CheckPartyDead(bm.PParty) || bm.CheckPartyDead(bm.EParty)) return;
@@ -660,10 +668,17 @@ public class ActionList
     }
     public void UseFirstAction()
     {
+        list[0].User.HasActed = false;
         DataMethods.RemoveAt(list, 0).UseAction();
     }
 
     #region Utility
+    public int FindActionOfFighter(Fighter fighter)
+    {
+        for (int i = 0; i < list.Count; i++)
+            if (list[i].User.Data.EqualTo(fighter)) return i;
+        return -1;
+    }
     public string AsString()
     {
         string str = "-----\n";

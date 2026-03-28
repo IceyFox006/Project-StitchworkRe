@@ -40,6 +40,11 @@ public class MenuUI
             EventSystem.current.SetSelectedGameObject(button.gameObject);
     }
 
+    public void SetSelectedToThis()
+    {
+        EventSystem.current.SetSelectedGameObject(_firstSelected.gameObject);
+    }
+
     private IEnumerator DelayInput()
     {
         EventSystem.current.sendNavigationEvents = false;

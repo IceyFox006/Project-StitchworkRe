@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BattleUI : MonoBehaviour
 {
@@ -92,6 +93,13 @@ public class BattleUI : MonoBehaviour
         bm.DisableAllFighterButtons();              //Disable all fighter buttons.
         bm.CurAction = null;                        //Reset curAction.
         _confirmActionMenu.Disable();               //Closes confirm action menu.
+    }
+
+    public void UndoAction() //@UsedGlobal_Button
+    {
+        bm.Actions.RemoveAction(bm.Actions.FindActionOfFighter(bm.CurFighter.Data));
+        bm.SwitchCurrentFighter(bm.CurFighter);
+       _battleMenu.SetSelectedToThis();
     }
     #endregion
 }

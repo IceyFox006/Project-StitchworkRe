@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataMethods : MonoBehaviour
@@ -68,6 +67,14 @@ public class DataMethods : MonoBehaviour
     {
         for (int i = 0; i < l2.Count; i++)
             l1.Add(l2[i]);
+    }
+
+    public static List<T> Clone<T>(List<T> list)
+    {
+        List<T> clone = new List<T>();
+        foreach(T var in list)
+            clone.Add(var);
+        return clone;
     }
     #endregion
 }

@@ -15,12 +15,14 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject _playerMoveUiPfb;
     [SerializeField] private Transform _playerMovesUiSP;
     [SerializeField] private GameObject _hasActedVisual;
+    [SerializeField] private TextVisualUI _curActionVisual;
 
     #region GS
     public MenuUI ConfirmActionMenu { get => _confirmActionMenu; set => _confirmActionMenu = value; }
     public GameObject Ui { get => _ui; set => _ui = value; }
     public MenuUI BattleMenu { get => _battleMenu; set => _battleMenu = value; }
     public GameObject HasActedVisual { get => _hasActedVisual; set => _hasActedVisual = value; }
+    public TextVisualUI CurActionVisual { get => _curActionVisual; set => _curActionVisual = value; }
     #endregion
 
     public void Initialize(BattleManager bm)

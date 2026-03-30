@@ -33,6 +33,7 @@ public class GradientFill : MonoBehaviour
 
     private void OnDestroy()
     {
+        isFilling = false;
         StopAllCoroutines();
     }
 
@@ -58,7 +59,7 @@ public class GradientFill : MonoBehaviour
     {
         isFilling = true;
 
-        while (time <= _duration)
+        while (time <= _duration && isFilling)
         {
             Fill(Mathf.Lerp(fillAmount, targetAmount, CalculateLerp(time / _duration)));//Lerp.EaseOut(time / _duration)));
             yield return null;

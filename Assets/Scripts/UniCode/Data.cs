@@ -48,8 +48,8 @@ public class MenuUI
     private IEnumerator DelayInput()
     {
         EventSystem.current.sendNavigationEvents = false;
-        yield return new WaitForSeconds(0.1f);
-        EventSystem.current.sendNavigationEvents |= true;
+        yield return new WaitForSecondsRealtime(0.1f);
+        EventSystem.current.sendNavigationEvents = true;
     }
 }
 //---------------------------------------------------------------------------------------------------------------------

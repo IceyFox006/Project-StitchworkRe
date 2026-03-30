@@ -28,6 +28,7 @@ public class GenericMethods : MonoBehaviour
     }
     #endregion
     #region Object
+    #region Destroy
     public void DestroySelf()
     {
         Destroy(gameObject);
@@ -42,6 +43,22 @@ public class GenericMethods : MonoBehaviour
         for (int i = childCount - 1; i > -1; i--)
             Destroy(parent.GetChild(i).gameObject);
     }
+    #endregion
+
+    #region SetActive
+    public void SetActiveSelf(bool active)
+    {
+        gameObject.SetActive(active);
+    }
+    public void SetActiveTrue(GameObject go)
+    {
+        go.SetActive(true);
+    }
+    public void SetActiveFalse(GameObject go)
+    {
+        go.SetActive(false);
+    }
+    #endregion
     #endregion
     #region Scene
     public static void LoadScene(string name)
@@ -58,6 +75,12 @@ public class GenericMethods : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+    #endregion
+    #region Time
+    public static void SetTimeScale(float amount)
+    {
+        Time.timeScale = amount;
     }
     #endregion
 }

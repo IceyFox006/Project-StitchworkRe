@@ -31,6 +31,11 @@ public class GradientFill : MonoBehaviour
         Initialize();
     }
 
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+    }
+
     public virtual void Initialize()
     {
         onSlowFillFinish = new UnityEvent();
